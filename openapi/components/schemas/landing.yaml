@@ -1,0 +1,153 @@
+title: Root Type for landing
+description: ''
+required:
+  - disposition_code
+  - market_code
+  - reported_quantity
+  - species_itis
+  - unit_measure
+type: object
+properties:
+  supplier_landing_id:
+    description: unique identifier for landing supplied by sender
+    type: string
+  species_itis:
+    description: ITIS code of the fish caught
+    type: string
+  disposition_code:
+    description: the final disposition of the catch made
+    type: string
+  gear_code:
+    description: gear used to catch the landing
+    type: string
+  grade_code:
+    description: Grade of catch
+    type: string
+  unit_measure:
+    description: Code for unit of measure used to reference the reported_quantity field
+    type: string
+  reported_quantity:
+    description: >-
+      numeric quantity of fish caught. Always used in conjunction with
+      unit_of_measure field.
+    type: string
+  price:
+    description: US Dollar price of landing per specified unit
+    type: string
+  market_code:
+    description: Market code of catch
+    type: string
+  area_fished:
+    description: 3 character area-code for effort location
+    type: string
+  sub_area_fished:
+    description: 4 character area-code for effort location
+    type: string
+  local_area_code:
+    description: 5 character area-code for effort location
+    type: string
+  hms_area_code:
+    description: character hms area code
+    type: string
+  catch_source:
+    description: source of catch. Defaults to Standard (S) for wild-caught catch
+    type: string
+  temp_unit:
+    description: unit of temperature used
+    type: string
+  gear_quantity:
+    description: Numerical gear quantity of gear reflected in gear code
+    type: string
+  in_state:
+    description: 2 character state abreviations
+    type: string
+  total_gear_in_water:
+    type: string
+  fishing_hours:
+    description: Amount of fishing hours
+    type: string
+  hours_days_flag:
+    type: string
+  bft_sale_nature":
+    description: bft sale description
+    type: string
+  bft_color:
+    description: color of the species
+    type: string
+  bft_shape:
+    description: shape of the species
+    type: string
+  bft_fat:
+    description: bft fat
+    type: string
+  bft_freshness:
+    description: bft freshness
+    type: string
+  bft_tag_prefix:
+    description: bft tag prefix
+    type: string
+  bft_tag_nbr:
+    description: bft tag number
+    type: string
+  bft_length:
+    description: bft length
+    type: string
+  bft_area_code:
+    description: bft area code
+    type: string
+  bft_destination_code:
+    description: bft destination code
+    type: string
+  bft_measure_type:
+    description: bft measure type
+    type: string
+  hms_fins_attached:
+    description: is HMS fins attached
+    type: string
+  hms_explanation:
+    description: hms explanation
+    type: string
+  landings_additional_attributes:
+    description: ''
+    type: array
+    items:
+      $ref: ./landings_additional_attributes.yaml
+example:
+  species_itis: 79872
+  disposition_code: '001'
+  gear_code: '500'
+  grade_code: '02'
+  unit_measure: CN
+  reported_quantity: '2500'
+  price: '.65'
+  market_code: UN
+  area_fished: '514'
+  sub_area_fished: '0057'
+  local_area_code: CCB42
+  hms_area_code: BF56B
+  supplier_landing_id: ZCB41-888448-HSHSh-39LksksL
+  catch_source: A
+  temp_unit: F
+  gear_quantity: '1'
+  in_state: MA
+  total_gear_in_water: '1'
+  fishing_hours: '3'
+  hours_days_flag: H
+  bft_sale_nature: D
+  bft_color: B
+  bft_shape: C
+  bft_fat: A
+  bft_freshness: A
+  bft_tag_prefix: 3
+  bft_tag_nbr: 48322
+  bft_length: 27
+  bft_area_code: 3
+  bft_destination_code: X
+  bft_measure_type: 2
+  hms_fins_attached: U
+  hms_explanation": we're not sure what happened to fins
+  landings_additional_attributes:
+    - code: '321'
+      value: Z
+    - code: '5432'
+      value: '7'

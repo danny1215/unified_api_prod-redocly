@@ -1,0 +1,17 @@
+title: Root Type for neg_trips_download_request
+description: ''
+required:
+  - p_license_nbr
+  - p_date
+type: object
+properties:
+  p_license_nbr:
+    description: permit number/license number of the requested trips
+    type: string
+  p_date:
+    format: date
+    description: earliest negative trip report date requested. Format MM/DD/YYYY
+    type: string
+example:
+  p_license_nbr: '112233'
+  p_date: 11/14/2020

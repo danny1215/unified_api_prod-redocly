@@ -1,0 +1,13 @@
+title: Root Type for trip_processed
+description: ''
+type: object
+properties:
+  p_listname:
+    description: ''
+    type: string
+  p_supplier_trip_id:
+    description: Associated supplier_trip that was given in the request.
+    type: string
+example:
+  p_listname: TRIP_PROCESSED
+  p_supplier_trip_id: '123456789'

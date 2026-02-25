@@ -1,0 +1,22 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/neg_dealer_reports.yaml
+    required: true
+  tags:
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/neg_dealer_reports_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'neg_reports_upload '
+  description: >-
+    Send a set of negative dealer reports to safis. They can be sent as single
+    records (with no end date). Or as a range (including an end date)

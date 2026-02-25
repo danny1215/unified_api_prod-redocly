@@ -1,0 +1,40 @@
+title: Root Type for neg_trips_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure
+    type: string
+example:
+  row:
+    - neg_trips:
+        - trip_date: 01/12/2022
+          cf_license_nbr: MAFISHER2
+          issuing_agency: 18
+          vessel_name: Deborah Ann
+          coast_guard_nbr: '8877991'
+          vessel_permit: '555555'
+          sector: C
+          date_entered: 14-DEC-2022
+        - trip_date: 05/12/2022
+          cf_license_nbr: MAFISHER2
+          issuing_agency: 18
+          vessel_name: DUAL-PERMIT FED TEST VESSEL
+          coast_guard_nbr: '8877991'
+          vessel_permit: '555555'
+          sector: F
+          date_entered: 14-DEC-2022
+  status: OK
+  'description:': 'retrieved negative trip count: 5'

@@ -1,0 +1,10 @@
+description: ''
+required:
+  - reports
+type: object
+properties:
+  reports:
+    description: ''
+    type: array
+    items:
+      $ref: ./dealer_report.yaml

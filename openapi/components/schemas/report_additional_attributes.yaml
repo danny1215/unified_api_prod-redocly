@@ -1,0 +1,83 @@
+title: REPORT_ADDITIONAL_ATTRIBUTE
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          description: name of attribute
+          type: string
+        attribute_desc:
+          description: attribute description
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              FIN:
+                description: Finfish
+                type: string
+              SHE:
+                description: Shellfish
+                type: string
+              NOR:
+                description: Unknown
+                type: string
+        attribute_count:
+          description: attribute count
+          type: string
+        partner_id:
+          description: partner id
+          type: string
+        type:
+          description: type
+          type: string
+        dealer_rpt_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N)
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        in_use:
+          description: indicates if attribute is in use (Y), not in use (N)
+          type: string
+  status:
+    type: string
+  description:
+    type: string
+example:
+  row:
+    - attribute_code: 5001
+      attribute_name: VTR number
+      attribute_desc: VTR or Trip ID
+      attribute_count: S
+      partner_id: '0016'
+      type: STRING
+      dealer_rpt_flag: 'Y'
+      in_use: 'Y'
+    - attribute_code: 5003
+      attribute_name: REP_TYPE
+      attribute_desc: Attribute 2 (test only)
+      options:
+        - FIN: Finfish
+        - SHE: Shellfish
+        - NOR: Unknown
+      attribute_count: S
+      list_type: S
+      partner_id: '0016'
+      type: STRING
+      dealer_rpt_flag: 'Y'
+      in_use: 'Y'
+  status: OK
+  description: 2 Attribute(s) Returned

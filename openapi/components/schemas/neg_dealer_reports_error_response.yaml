@@ -1,0 +1,39 @@
+title: Root Type for neg_trips_error_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        ERR_DESC:
+          description: error message to the user
+          type: string
+        SUPPLIER_ROW_ID:
+          description: unique id given for negative dealer report
+          type: string
+        EVENT_ID:
+          description: associated event_id from the request.
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - SUPPLIER_ROW_ID: 21231-12313-23123
+      ERR_DESC: Invalid start date format
+      EVENT_ID: '816672'
+    - ERR_DESC: dealer license entered is not valid.
+      SUPPLIER_ROW_ID: 22211-12713-2373
+      EVENT_ID: '816672'
+  status: OK
+  description: Total Errors 2

@@ -1,0 +1,22 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/event_id.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/neg_trips_error_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'neg_trips_upload_errors '
+  description: >-
+    fetch a list of errors from negative/did not fish reports that didn’t load
+    after calling neg_trips_upload.

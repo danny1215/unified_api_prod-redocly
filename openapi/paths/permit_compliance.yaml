@@ -1,0 +1,19 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/permit_compliance_request.yaml
+  tags:
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/permit_compliance_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'permit_compliance '
+  description: checks the current compliance status of a dealer permit

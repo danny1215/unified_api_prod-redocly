@@ -1,0 +1,22 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/lookup_list_attribute_request.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/lookup_list_attribute_response.yaml
+      description: output of the endpoint
+  security:
+    - Non-Confidential: []
+  summary: lookup_list_by_attribute
+  description: >-
+    fetch a set of rows for specified attribute lookup list. Used in combination
+    with _additional_attributes lookup_list

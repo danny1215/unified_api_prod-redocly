@@ -1,0 +1,40 @@
+title: SWIPE_CARDS
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        card_nbr:
+          description: unique idenitifier for the card.
+          type: string
+        license_nbr:
+          description: agency issued license/permit number.
+          type: string
+        in_use:
+          description: flag for whether card is currently in use.
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the status of request
+    type: string
+example:
+  row:
+    - card_nbr: '*0103131487*Y16*SMS3557AZ'
+      license_nbr: '131487'
+      in_use: 'Y'
+    - card_nbr: '*0103156979*Y16'
+      license_nbr: '156979'
+      in_use: 'Y'
+  status: OK
+  description: 'Swipe_Cards count: 2'

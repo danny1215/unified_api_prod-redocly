@@ -1,0 +1,46 @@
+title: TRIP_TYPE
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        trip_type:
+          description: trip type of the vessel used.
+          type: string
+        trip_type_desc:
+          description: discription of the trip type.
+          type: string
+        in_use:
+          description: status of the trip type.
+          type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure
+    type: string
+example:
+  row:
+    - trip_type: C
+      trip_type_desc: Commercial
+      in_use: ACTIVE
+    - trip_type: P
+      trip_type_desc: For-Hire (keep-historical)
+      in_use: INACTIVE
+    - trip_type: A
+      trip_type_desc: 'For-Hire: Charter'
+      in_use: ACTIVE
+    - trip_type: H
+      trip_type_desc: 'For-Hire: Headboat/Party'
+      in_use: ACTIVE
+    - trip_type: R
+      trip_type_desc: Recreational
+      in_use: ACTIVE
+  status: OK
+  description: 5 trip_types(s) Returned

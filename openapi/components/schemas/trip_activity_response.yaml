@@ -1,0 +1,14 @@
+title: TRIP_ACTIVITY
+description: >-
+  Provides a list of trip activity types for a given partner (p_partner). List
+  types for older applications and versions are available by specifying a
+  listtype using the p_listtype parameter (e.g. p_listtype = "ETRIPS").
+type: object
+example:
+  activity_type: 1
+  activity_description: Set only trip
+  comm_flag: 'Y'
+  for_hire_charter_flag: 'Y'
+  for_hire_hb_flag: 'Y'
+  rec_flag: 'N'
+  status: 'Y'

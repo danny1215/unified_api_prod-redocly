@@ -1,0 +1,10 @@
+description: ''
+required:
+  - neg_reports
+type: object
+properties:
+  neg_reports:
+    description: ''
+    type: array
+    items:
+      $ref: ./neg_dealer_report.yaml

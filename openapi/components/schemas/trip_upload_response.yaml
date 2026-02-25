@@ -1,0 +1,85 @@
+description: 'response to successful trips_upload call. '
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        event_id:
+          description: unique ID of this upload process
+          type: string
+        upload_date:
+          description: date the upload was received by server. Format MM/DD/YYYY hh24:mi
+          type: string
+        process_date:
+          description: >-
+            date the server completed processing upload request. Format
+            MM/DD/YYYY hh24:mi
+          type: string
+        total_count:
+          description: Number of trips found in the upload
+          type: string
+        errored_count:
+          description: Number of trips NOT processed due to one or more errors
+          type: string
+        trips_accepted:
+          description: details for accepted trips
+          type: array
+          items:
+            type: object
+            properties:
+              supplier_trip_id:
+                description: unique supplier id for supplied to the upload
+                type: string
+              accsp_trip_id:
+                description: >-
+                  accsp internal identifier for this matching the supplier trip
+                  id
+                type: number
+        errors:
+          description: errors messages
+          type: array
+          items:
+            type: object
+            properties:
+              msg:
+                description: human readable error description
+                type: string
+              supplier_trip_id:
+                description: unique supplier trip id on which this errror occurred
+                type: string
+              supplier_effort_id:
+                description: unique supplier effort id on which this errror occurred
+                type: string
+              supplier_catch_id:
+                description: unique supplier catch id on which this errror occurred
+                type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure.
+    type: string
+example:
+  row:
+    - event_id: '121582'
+      upload_date: '2018-08-30 12:56:28'
+      process_date: '12:56:32'
+      total_count: '2'
+      errored_count: '0'
+      trips_accepted:
+        - supplier_trip_id: 192929
+          accsp_trip_id: 1231213
+        - supplier_trip_id: 141229
+          accsp_trip_id: 1211213
+      errors:
+        - msg: Gear Used is not valid for this Trip Type
+          supplier_effort_id: 9299393-893
+        - msg: Trip Start Date cannot occur in the future
+          supplier_trip_id: 93939-83838
+  status: OK
+  description: UPDATE EVENTS UPLOAD

@@ -1,0 +1,65 @@
+title: Root Type for participants_response
+description: 'participants response combines succesful trip information and errors. '
+type: object
+properties:
+  participants:
+    type: array
+    items:
+      type: object
+      properties:
+        supplier_user_id:
+          description: unique record id given in the payload.
+          type: string
+        safis_participant_id:
+          format: int32
+          description: >-
+            SAFIS system participant id of the given user. Required in
+            trips_upload API if downloading records without username.
+          type: integer
+        safis_license_nbr:
+          description: License Number stored in the SAFIS system for this user's record.
+          type: string
+        issuing_agency:
+          description: 4 character id of license issuing agency.
+          type: string
+  errors:
+    description: all errors encountered in the upload attempt
+    type: array
+    items:
+      type: object
+      properties:
+        supplier_user_id:
+          description: unique record id given in the payload
+          type: string
+        messages:
+          type: array
+          items:
+            description: individual error message descriptions
+            type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  processed:
+    format: int32
+    description: number of participant records processed
+    type: integer
+  description:
+    description: human readable explanation of the request attempt result
+    type: string
+example:
+  participants:
+    - supplier_user_id: '1111'
+      safis_participant_id: 196973
+      safis_license_nbr: '1111'
+      issuing_agency: 18
+  errors:
+    - supplier_user_id: '1112'
+      messages:
+        - Phone Number is not in the right format
+        - Birth Date Value is not valid.
+  status: OK
+  processed: 2
+  description: 'Rows processed: 2 Event_id: 815428'

@@ -1,0 +1,116 @@
+title: SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        sale_disp_flag:
+          description: sale disposition code
+          type: string
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          description: name of attribute
+          type: string
+        help_text:
+          description: accompanying help text
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in For-Hire Charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in For-Hire Headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in Recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        attribute_count:
+          description: indicates whether a single (S) value is returned or Multiple (M)
+          enum:
+            - S
+            - M
+          type: string
+        list_type:
+          description: indicates whether the list is static (S) or Dynamic (D)
+          enum:
+            - S
+            - D
+          type: string
+        options:
+          description: display and return value options for this attribute.
+          type: array
+          items:
+            type: object
+        type:
+          type: string
+        order_seq:
+          format: int32
+          description: display order of attribute relative to others
+          type: integer
+  status:
+    description: status of request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of request status
+    type: string
+example:
+  row:
+    - attribute_code: 6005
+      attribute_name: Price
+      sale_disp_flag: S
+      type: NUMBER(13,3)
+      help_text: Price - Dollar value or price for each species that is landed or sold
+      comm_flag: 'Y'
+      for_hire_charter_flag: 'Y'
+      for_hire_hb_flag: 'Y'
+      rec_flag: 'N'
+      order_seq: 10
+    - attribute_code: 6002
+      attribute_name: OFFLOAD PORT
+      sale_disp_flag: 'N'
+      type: NUMBER
+      list_type: D
+      list_name: PORTS
+      help_text: OFFLOAD PORT FOR CATCH
+      comm_flag: 'N'
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+      order_seq: 2
+  status: OK
+  description: 'Sale_Dispositions_Additional_Attributes count: 2'

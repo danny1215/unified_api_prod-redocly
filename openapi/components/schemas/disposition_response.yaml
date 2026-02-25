@@ -1,0 +1,105 @@
+title: DISPOSITION
+description: disposition response
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        code:
+          description: disposition code. Expected value by trips_upload  and reports_upload
+          type: string
+        desc:
+          description: name of the disposition
+          type: string
+        category_code:
+          description: category code of disposition
+          type: string
+        category_name:
+          description: category name of disposition
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_ch_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rule_groups:
+          description: >-
+            indicates a letter coded group that this disposition belongs to for
+            the purpose of inclusion and exclusion of certain species fields.
+          type: array
+          items:
+            enum:
+              - A
+              - D
+              - F
+              - H
+              - I
+              - J
+              - L
+              - P
+            type: string
+  status:
+    description: status of request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of request status
+    type: string
+example:
+  row:
+    - code: '001'
+      desc: 'General : Food'
+      category_code: '000'
+      category_name: General Utilization
+      comm_flag: 'N'
+      for_hire_ch_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+    - code: '200'
+      desc: 'Discarded Alive : Other'
+      category_code: 8
+      category_name: Discarded Alive
+      comm_flag: 'Y'
+      for_hire_ch_flag: 'Y'
+      for_hire_hb_flag: 'Y'
+      rec_flag: 'Y'
+      rule_groups:
+        - F
+        - A
+  status: OK
+  description: 'Disposition count: 2'

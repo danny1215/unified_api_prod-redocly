@@ -1,0 +1,40 @@
+title: CATCH_SOURCE
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        source_code:
+          description: single character return code for catch source
+          type: string
+        source_description:
+          description: description of catch source
+          type: string
+        in_use:
+          description: flag for whether catch source record is currently active
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the status of request
+    type: string
+example:
+  row:
+    - source_code: S
+      source_description: Standard
+      in_use: 'Y'
+    - source_code: A
+      source_description: Aquaculture
+      in_use: 'Y'
+  status: OK
+  description: 'Catch_Source count: 2'

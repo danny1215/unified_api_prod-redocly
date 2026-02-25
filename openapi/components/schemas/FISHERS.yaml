@@ -1,0 +1,65 @@
+title: FISHERS
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        corporate_name:
+          description: corporate name of the fisher
+          type: string
+        first_name:
+          description: first name of the fisher.
+          type: string
+        last_name:
+          description: last name of the fisher
+          type: string
+        license_nbr:
+          description: License number of the fisher
+          type: string
+        license_type:
+          description: License type of the fisher
+          type: string
+        permit_type:
+          description: permit type of the fisher holding
+          type: string
+        agency:
+          description: partner id of the fisher.
+          type: string
+        in_use:
+          description: if the permit is in use or Not.
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+        permit_id:
+          description: permit id of the user.
+          type: string
+  status:
+    type: string
+  description:
+    type: string
+example:
+  row:
+    - corporate_name: TEST NE FED OPERATOR
+      first_name: GAR OPERATOR
+      last_name: TEST
+      license_nbr: '99999999'
+      license_type: TEST GARFO OPERATOR
+      permit_type: FED OPERATOR
+      agency: '0016'
+      in_use: 'Y'
+      permit_id: 123456
+    - first_name: FREDERICK
+      middle_name: A
+      last_name: BACKMAN
+      license_nbr: '888888888'
+      license_type: OPERATOR
+      permit_type: FED OPERATOR
+      agency: '0016'
+      in_use: 'Y'
+      permit_id: 123456
+  status: OK
+  description: 11447 Fishers count

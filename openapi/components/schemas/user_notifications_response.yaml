@@ -1,0 +1,50 @@
+title: USER_NOTIFICATIONS
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        m_id:
+          format: int32
+          description: >-
+            unique message id. Helps to tell when message is updated vs. new
+            message
+          type: integer
+        priority:
+          format: int32
+          description: priority order of message
+          type: integer
+        message:
+          description: HTML escaped text message to the user.
+          type: string
+        start_date:
+          format: date-time
+          description: earliest date to show the message
+          type: string
+        end_date:
+          format: date-time
+          description: expiration date of message.
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the status of request
+    type: string
+example:
+  row:
+    - m_id: 7430
+      priority: 2
+      message: >-
+        <p>TEST Commercial to users. Medium Priority. Set to expire 06.18.20. at
+        1500 hrs.&nbsp;</p>
+      start_date: '2020-06-18T07:32:56'
+      end_date: '2020-09-16T07:32:56'
+  status: OK
+  description: 'User_Notifications count: 1'

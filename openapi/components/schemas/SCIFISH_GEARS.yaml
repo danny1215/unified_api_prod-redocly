@@ -1,0 +1,42 @@
+title: SCIFISH_GEARS
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+        desc:
+          type: string
+        category_code:
+          type: string
+        category_name:
+          type: string
+        in_use:
+          type: string
+  status:
+    type: string
+  description:
+    type: string
+example:
+  row:
+    - code: '631'
+      desc: RAKES/SHOVELS/PITCHFORKS
+      category_code: '631'
+      category_name: RAKES/SHOVELS/PITCHFORKS
+      in_use: 'Y'
+    - code: '632'
+      desc: PICKS
+      category_code: '632'
+      category_name: PICKS
+      in_use: 'Y'
+    - code: '306'
+      desc: HOOK AND LINE, TROLL
+      category_code: '300'
+      category_name: HOOK AND LINE
+      in_use: 'Y'
+  status: OK
+  description: 3 Gear(s) Returned

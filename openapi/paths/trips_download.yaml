@@ -1,0 +1,24 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/trips_download_request.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/trips_download_response.yaml
+      description: output of the endpoint
+  summary: trips_download
+  description: >-
+    retrieve set of trips rows from safis. 
+
+    A list of trips is requested from the SAFIS system within the upper and
+    lower limits of the start and end dates (inclusive) . This list will only
+    contain successfully uploaded trips and will be sent to same format as the
+    trips_upload call. 

@@ -1,0 +1,21 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/lookup_list_date_changed_request.yaml
+    required: true
+  tags:
+    - eTrips
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/lookup_list_date_changed_response.yaml
+      description: output of the endpoint
+  security:
+    - Non-Confidential: []
+  summary: lookup_list_date_changed
+  description: fetch the last date that the specified lookup table(s) were changed.

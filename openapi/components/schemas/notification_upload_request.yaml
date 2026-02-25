@@ -1,0 +1,83 @@
+title: Root Type for notification_upload_request
+description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  The response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"
+required:
+  - p_arrival_port
+  - p_license_nbr
+  - p_notif_type
+  - p_trip_type
+  - p_start_time
+  - p_start_date
+type: object
+properties:
+  p_license_nbr:
+    description: alphanumeric value representing a user's license number.
+    type: string
+  p_partner:
+    description: Partner or issuing agency code.
+    type: string
+  p_participant_id:
+    description: Participant id of a participant associated with p_license_nbr
+    type: string
+  p_vessel_cgn:
+    description: >-
+      vessel coast guard number.  a vessel coast guard or state registration
+      number is required.
+    type: string
+  p_vessel_srn:
+    description: >-
+      vessel state registration number.  a vessel coast guard or state
+      registration number is required.
+    type: string
+  p_trip_type:
+    description: >-
+      code to define the type of trip.  allowed values are C = Commercial, R =
+      Recreational, H = For Hire-Headboat, A = For Hire-Charter. 
+    type: string
+  p_device_id:
+    description: 'unique identification of a device. '
+    type: string
+  p_start_date:
+    format: date
+    description: trip start date in format MM/DD/YYYY.
+    type: string
+  p_start_time:
+    description: trip start time in format HHMM.
+    type: string
+  p_arrival_port:
+    description: port code for the arrival (ending) port.
+    type: string
+  p_notif_type:
+    description: >-
+      trip notification type being submitted.  Allowed values are 1 = Pre Trip,
+      2 =    Fishing, 3 = Landing, 4 = Post-Trip, 5 = Cancellation, 6 = Hail
+      Out, and 7 = Closed.  If no value is provided, Hail Out (Type = 6) is used
+      as the default.
+    type: string
+  partner_attributes:
+    description: >-
+      list of optional partner-managed notification attributes submitted as a
+      JSON array.
+    type: array
+    items:
+      $ref: ./partner_attribute.yaml
+example:
+  p_license_nbr: '991011'
+  p_vessel_cgn: ''
+  p_vessel_srn: NH0258BA
+  p_trip_type: C
+  p_device_id: '4321'
+  p_start_date: 05/03/2020
+  p_start_time: '1845'
+  p_arrival_port: '222109'
+  p_notif_type: '6'
+  partner_attributes:
+    - element_id: '400'
+      element_value: 'Y'
+    - element_id: '401'
+      element_value: 05/06/2022
+    - element_id: '402'
+      element_value: '1400'
+    - element_id: '406'
+      element_value: EST
+    - element_id: '405'
+      element_value: '1077'

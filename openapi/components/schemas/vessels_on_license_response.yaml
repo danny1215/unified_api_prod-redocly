@@ -1,0 +1,67 @@
+title: vessels_on_license
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        Vessel_ID:
+          description: unique identifier of vessel in SAFIS
+          type: string
+        Name:
+          description: vessel name
+          type: string
+        State_Reg:
+          description: state registration number of vessel
+          type: string
+        License_NBR:
+          type: string
+        permits:
+          type: array
+          items:
+            type: object
+            properties:
+              num:
+                description: permit number of vessel
+                type: string
+              agency:
+                description: 4 character issuing agency of the vessel permit number
+                type: string
+        In_Use:
+          description: flag indicating whether record is active
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - Vessel_ID: '314544'
+      Name: ROCKIN ROBIN
+      State_Reg: MS8609BL
+      License_NBR: '177095'
+      permits:
+        - num: '3441070'
+          agency: '0012'
+        - num: '556363'
+          agency: 18
+      In_Use: 'Y'
+    - Vessel_ID: '305727'
+      Name: ANNIES SONG
+      State_Reg: MS3314BJ
+      License_NBR: '176219'
+      permits:
+        - num: SERO-1070
+          agency: '0016'
+        - num: '556365'
+          agency: 18
+      In_Use: 'N'
+  status: OK
+  description: 'Vessels assigned for Fisherman endorsement(s): 2'

@@ -1,0 +1,58 @@
+title: Root Type for lookup_list_attribute_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        code:
+          description: return value for this element
+          type: string
+        desc:
+          description: display value of element
+          type: string
+        comm_flag:
+          description: indicator flag for whether element is needed for Commercial Trip.
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicator flag for whether element is needed for For-Hire Charter
+            Trip.
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicator flag for whether element is needed for For-Hire Headboat
+            Trip.
+          type: string
+        rec_flag:
+          description: indicator flag for whether element is needed for Recreational Trip.
+          type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure.
+    type: string
+example:
+  row:
+    - code: '031'
+      desc: PURSE SEINE, TARP
+      comm_flag: R
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+    - code: 93
+      desc: OTTER TRAWL BOTTOM, LOBSTER
+      comm_flag: 'Y'
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+  status: OK
+  description: Attribute(s) Found

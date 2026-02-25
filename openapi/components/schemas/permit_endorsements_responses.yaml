@@ -1,0 +1,7 @@
+oneOf:
+  - $ref: ./endorsements_on_license_reponse.yaml
+  - $ref: ./species_by_endorsement_response.yaml
+  - $ref: ./species_by_license_response.yaml
+  - $ref: ./vessels_on_license_response.yaml
+description: ''
+type: object

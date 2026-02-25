@@ -1,0 +1,51 @@
+title: species_by_license
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        License_Type:
+          type: string
+        Species_Itis:
+          description: ITIS code of the species
+          type: string
+        Name:
+          description: common name of the species.
+          type: string
+        Health_Dept:
+          description: flag indicating whether dept of health fields are required
+          type: string
+        Area:
+          description: flag indicating whether area fished is required
+          type: string
+        In_Use:
+          description: flag indicating whether record is active
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - License_Type: GA ADMINISTRATOR
+      Species_Itis: '167687'
+      Name: BASS, BLACK SEA
+      Health_Dept: 'N'
+      Area: 'N'
+      In_Use: 'Y'
+    - License_Type: GA ADMINISTRATOR
+      Species_Itis: '167759'
+      Name: GROUPER, GAG
+      Health_Dept: 'N'
+      Area: 'N'
+      In_Use: 'Y'
+  status: OK
+  description: 'Species allowed by license type(s): 2'

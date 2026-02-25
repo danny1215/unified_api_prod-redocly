@@ -1,0 +1,31 @@
+title: Root Type for notification_upload_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        universal_trip_id:
+          format: int32
+          description: accsp unique id for the associated trip
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the result status
+    type: string
+example:
+  row:
+    - universal_trip_id: '75000695'
+  status: OK
+  'description:': >-
+    trip notification submitted 2020-07-30 12:27:58 with universal trip ID:
+    75000695 and 0 partner-managed attributes.

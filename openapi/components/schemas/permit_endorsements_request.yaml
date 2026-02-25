@@ -1,0 +1,26 @@
+title: Root Type for permit_endorsements_request
+description: ''
+required:
+  - p_partner
+  - p_listname
+type: object
+properties:
+  p_partner:
+    description: 4 character value of permit issuing agency
+    type: string
+  p_listname:
+    description: name of endorsement list requested
+    enum:
+      - VESSELS_ON_LICENSE
+      - ENDORSEMENTS_ON_LICENSE
+      - SPECIES_BY_ENDORSEMENT
+      - SPECIES_BY_LICENSE
+    type: string
+  p_lastdate:
+    format: date-time
+    description: oldest date of changes requested. Format MM/DD/YYYY hh24:mi
+    type: string
+example:
+  p_partner: '0014'
+  p_listname: SPECIES_BY_LICENSE
+  p_lastdate: 12/27/2000 14:45:00

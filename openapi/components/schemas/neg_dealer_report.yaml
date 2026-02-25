@@ -1,0 +1,29 @@
+title: Root Type for neg_dealer_report
+description: ''
+required:
+  - start_date
+type: object
+properties:
+  supplier_row_id:
+    description: unique id of the report. Used to return errors and for updates
+    type: string
+  iss_agency:
+    description: 4 character identifier of issuing agency of dealer permit in use
+    type: string
+  start_date:
+    format: date
+    description: first date of reporting range. Format MM/DD/YYYY
+    type: string
+  end_date:
+    format: date
+    description: last date of reporting range. Format MM/DD/YYYY
+    type: string
+  dea_license_nbr:
+    description: Permit/License Number of Dealer in use
+    type: string
+example:
+  supplier_row_id: '1231231'
+  iss_agency: '0003'
+  start_date: 11/22/2015
+  end_date: 11/22/2015
+  dea_license_nbr: '999999'

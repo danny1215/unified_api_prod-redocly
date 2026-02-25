@@ -1,0 +1,131 @@
+title: GEAR_ATTRIBUTES
+description: GEAR_ATTRIBUTES
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          description: name of the attribute
+          type: string
+        attribute_desc:
+          description: help text of the attribute
+          type: string
+        category_code:
+          description: category of the gear
+          type: string
+        gear_code:
+          description: gear code value to be returned where gear is requested.
+          type: string
+        options:
+          description: static list of options for this attribute
+          type: array
+          items:
+            type: object
+        order_seq:
+          format: int32
+          description: numerical order of listing relative to other attributes
+          type: integer
+        attribute_count:
+          description: indicates whether a single (S) value is returned or Multiple (M) are
+          enum:
+            - S
+            - M
+          type: string
+        list_type:
+          description: indicates whether the list is static (S) or Dynamic (D)
+          enum:
+            - S
+            - D
+          type: string
+        list_name:
+          description: The name of the LOOKUP_LIST to be used (if applicable)
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        type:
+          description: format of the attribute
+          type: string
+  status:
+    description: 'status of the request '
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the result status
+    type: string
+example:
+  row:
+    - attribute_code: 142
+      attribute_name: Number of traps
+      attribute_desc: Number of traps
+      category_code: '160'
+      gear_code: '160'
+      order_seq: 83
+      comm_flag: R
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+      type: NUMBER (38,0)
+    - attribute_code: 1321
+      attribute_name: LMA
+      attribute_desc: Lobster Management Area
+      category_code: '160'
+      gear_code: '160'
+      options:
+        - '1': LMA 1
+        - '2': LMA 2
+        - '3': LMA 3
+        - '4': LMA 4
+        - '5': LMA 5
+        - '6': LMA 6
+        - O: OCC
+      order_seq: 25
+      comm_flag: R
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+      type: STRING
+  status: OK
+  description: 2 Gear Attribute(s) Returned

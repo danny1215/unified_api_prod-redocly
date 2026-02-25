@@ -1,0 +1,42 @@
+title: Reports_upload_error_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        ERR_DESC:
+          description: error message to the user
+          type: string
+        SUPPLIER_DR_ID:
+          description: unique report id from report_upload associated with error.
+          type: string
+        SUPPLIER_LANDING_ID:
+          description: unique landing id from report_upload associated with error.
+          type: string
+        EVENT_ID:
+          description: associated event_id from the request.
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - ERR_DESC: Fishing license entered is not valid.
+      SUPPLIER_DR_ID: 83123-2323-232-12-2212
+      EVENT_ID: '816672'
+    - ERR_DESC: 'A valid unit of measure must be entered '
+      SUPPLIER_LANDING_ID: 83123-2323-232-12-2212
+      EVENT_ID: '816672'
+  status: OK
+  description: Total Errors 2

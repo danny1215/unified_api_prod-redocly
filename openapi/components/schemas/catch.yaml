@@ -1,0 +1,79 @@
+title: Catch
+description: ''
+required:
+  - disposition
+  - species_itis
+  - supplier_catch_id
+  - unit_of_measure
+  - reported_quantity
+  - catch_source
+  - grade_code
+  - market_code
+type: object
+properties:
+  species_itis:
+    description: ITIS code of the fish caught
+    type: string
+  disposition:
+    description: The final disposition or fate of the catch.
+    type: string
+  unit_of_measure:
+    description: Code for unit of measure used to reference the reported_quantity field
+    type: string
+  market_code:
+    description: Factors affecting market price (such as size).
+    type: string
+  grade_code:
+    description: Grade, or how catch was processed.
+    type: string
+  reported_quantity:
+    description: >-
+      Numeric quantity of fish caught. Always used in conjunction with
+      unit_of_measure field. 
+    type: string
+  nbr_of_fish:
+    description: Count of fish caught
+    type: string
+  supplier_catch_id:
+    description: >-
+      Unique catch id given by the caller. Only used to communicate errors and
+      for updates.
+    type: string
+  catch_source:
+    description: >-
+      Source of a fisher’s catch (S = Standard wild-caught; A = Aquaculture; R =
+      Research Set Aside; C = Carred).
+    enum:
+      - S
+      - A
+      - R
+      - C
+    type: string
+  sale_disposition_flag:
+    description: Code indicating whether catch was sold, kept, or discarded.
+    type: string
+  catch_additional_attributes:
+    description: Collection of supplemental attributes defining the catch.
+    type: array
+    items:
+      $ref: ./attribute.yaml
+  sale_disposition_attributes:
+    description: Collection of supplemental attributes defining the sale.
+    type: array
+    items:
+      $ref: ./attribute.yaml
+  species_attributes:
+    description: Collection of species-specific supplemental attributes defining the catch.
+    type: array
+    items:
+      $ref: ./attribute.yaml
+example:
+  species_itis: '170425'
+  disposition: '001'
+  unit_of_measure: LB
+  market_code: UN
+  grade_code: '01'
+  reported_quantity: '25'
+  nbr_of_fish: '4'
+  catch_source: S
+  supplier_catch_id: '6'

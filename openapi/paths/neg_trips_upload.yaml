@@ -1,0 +1,31 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/neg_trips.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/neg_trips_response.yaml
+      description: >-
+        A HTTP status code 200/OK refers to the status of the HTTP request and
+        does not indicate whether or not ACCSP data validations were successful.
+        Data validation errors are generated during record processing and are
+        returned as “errors” in the response.
+  security:
+    - Confidential-API: []
+  summary: 'neg_trips_upload '
+  description: >-
+    The neg_trips_upload endpoint accepts multiple reports within a single API
+    call (see example request).  However, to avoid unexpected validation
+    failures we recommend sending reports from the same fishing license,
+    participant and vessel within individual API calls.  Including different
+    fishing licenses or vessels within a single API call may result in
+    unexpected validation failures and misleading errors. the sector payload is
+    a required value for SERO partners.

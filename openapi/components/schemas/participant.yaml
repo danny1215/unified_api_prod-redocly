@@ -1,0 +1,78 @@
+title: Participant
+description: ''
+required:
+  - birth_date
+  - first_name
+  - last_name
+  - supplier_user_id
+  - license_type
+type: object
+properties:
+  supplier_user_id:
+    description: >-
+      unique identifier for this user. Used to communicate back errors and for
+      updates
+    type: string
+  email:
+    description: users valid email address
+    type: string
+  first_name:
+    description: user's legal first name
+    type: string
+  last_name:
+    description: users legal last name
+    type: string
+  birth_date:
+    format: date
+    description: date of birth. Format MM/DD/YYYY
+    type: string
+  iss_agency:
+    description: 4 character identification of license issuing agency
+    type: string
+  license_nbr:
+    description: license/permit number given by the issuing agency
+    type: string
+  address_1:
+    description: address line 1
+    type: string
+  address_2:
+    description: address line 2
+    type: string
+  city:
+    description: address city
+    type: string
+  state:
+    description: US State or Territory
+    type: string
+  county:
+    description: address county
+    type: string
+  postal_code:
+    description: US Postal Code
+    type: string
+  phone_nbr:
+    description: users 10 digit phone number
+    type: string
+  license_type:
+    description: 'The type of license based on expected trip types. '
+    enum:
+      - COMMERCIAL
+      - FOR-HIRE
+      - MYFISHCOUNT
+    type: string
+example:
+  supplier_user_id: '1222'
+  email: testemail@example.com
+  first_name: Jonas
+  last_name: Brother
+  birth_date: 04/13/1980
+  iss_agency: 18
+  license_nbr: '526783'
+  license_type: MYFISHCOUNT
+  address_1: 909 Georgia Ave
+  address_2: Suite 100
+  city: Silver Spring
+  state: MD
+  county: Montgomery
+  postal_code: '20910'
+  phone_nbr: '5559900647'

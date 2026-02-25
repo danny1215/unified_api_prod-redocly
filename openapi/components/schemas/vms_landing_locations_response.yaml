@@ -1,0 +1,65 @@
+title: VMS_LANDING_LOCATIONS
+description: List of VMS landing locations.
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        vms:
+          format: int32
+          type: integer
+        area_code:
+          type: string
+        port:
+          type: string
+        name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        state:
+          type: string
+        county:
+          type: string
+  status:
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    type: string
+example:
+  row:
+    - vms: 1054
+      area_code: 19
+      port: '460903'
+      name: 909 BEATEN ST.
+      city: FREEPORT
+      street: 909 BEATEN ST
+      zipcode: '77541'
+      latitude: 28.114123
+      longitude: -93.318698
+      state: TX
+      county: BRAZORIA
+    - vms: 1047
+      area_code: 18
+      port: '460911'
+      name: 1904 LOOKOUT LANE
+      city: GALVESTON
+      street: 1904 LOOKOUT LANE
+      zipcode: '77550'
+      latitude: 29.110565
+      longitude: -92.489955
+      state: TX
+      county: GALVESTON
+  status: OK
+  description: 1+ VMS Location(s) Returned

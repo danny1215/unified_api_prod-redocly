@@ -1,0 +1,245 @@
+# This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
+# See https://redocly.com/docs/cli/ for more information.
+openapi.yaml:
+  info-license:
+    - '#/info'
+  operation-operationId:
+    - '#/paths/~1user_permits/post/operationId'
+    - '#/paths/~1trips_download/post/operationId'
+    - '#/paths/~1lookup_list_date_changed/post/operationId'
+    - '#/paths/~1neg_reports_upload/post/operationId'
+    - '#/paths/~1neg_reports_upload_errors/post/operationId'
+    - '#/paths/~1neg_trips_upload_errors/post/operationId'
+    - '#/paths/~1participants/post/operationId'
+    - '#/paths/~1permit_compliance/post/operationId'
+    - '#/paths/~1permit_endorsements/post/operationId'
+    - '#/paths/~1reports_upload/post/operationId'
+    - '#/paths/~1reports_upload_errors/post/operationId'
+    - '#/paths/~1trips_upload_errors/post/operationId'
+    - '#/paths/~1lookup_list_by_attribute/post/operationId'
+    - '#/paths/~1notification_upload/post/operationId'
+    - '#/paths/~1neg_trips_not_processed/post/operationId'
+    - '#/paths/~1trip_locations/post/operationId'
+    - '#/paths/~1trips_upload/post/operationId'
+    - '#/paths/~1lookup_list/post/operationId'
+    - '#/paths/~1neg_trips_upload/post/operationId'
+  operation-4xx-response:
+    - '#/paths/~1user_permits/post/responses'
+    - '#/paths/~1trips_download/post/responses'
+    - '#/paths/~1lookup_list_date_changed/post/responses'
+    - '#/paths/~1neg_reports_upload/post/responses'
+    - '#/paths/~1neg_reports_upload_errors/post/responses'
+    - '#/paths/~1neg_trips_upload_errors/post/responses'
+    - '#/paths/~1participants/post/responses'
+    - '#/paths/~1permit_compliance/post/responses'
+    - '#/paths/~1permit_endorsements/post/responses'
+    - '#/paths/~1reports_upload/post/responses'
+    - '#/paths/~1reports_upload_errors/post/responses'
+    - '#/paths/~1trips_upload_errors/post/responses'
+    - '#/paths/~1lookup_list_by_attribute/post/responses'
+    - '#/paths/~1notification_upload/post/responses'
+    - '#/paths/~1neg_trips_not_processed/post/responses'
+    - '#/paths/~1trip_locations/post/responses'
+    - '#/paths/~1trips_upload/post/responses'
+    - '#/paths/~1lookup_list/post/responses'
+    - '#/paths/~1neg_trips_upload/post/responses'
+  no-invalid-schema-examples:
+    - '#/components/schemas/trips_download_request/example/p_start_date'
+    - '#/components/schemas/trips_download_request/example/p_end_date'
+    - '#/components/schemas/trip/example/trip_start_date'
+    - '#/components/schemas/trip/example/trip_end_date'
+    - '#/components/schemas/trip/example/supplier_trip_id'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/supplier_catch_id'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/dealer_license_nbr'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/date_sold'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/price'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/dea_iss_agency'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/catch_latitude'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/catch_longitude'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/offload_port'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/unit_of_length'
+    - '#/components/schemas/trip/example/efforts/0/catches/0/length'
+    - '#/components/schemas/trip/example/efforts/0/gear_attributes/0/values'
+    - '#/components/schemas/trip/example/efforts/0/gear_attributes/1/values'
+    - '#/components/schemas/trip/example/efforts/0/gear_attributes/2/values'
+    - '#/components/schemas/trip/example/efforts/0/lma'
+    - '#/components/schemas/trip/example/efforts/0/gear_sets'
+    - '#/components/schemas/trip/example/efforts/0/mesh_ring_length'
+    - '#/components/schemas/trip/example/efforts/0/mesh_ring_width'
+    - '#/components/schemas/trip/example/efforts/0/stretch_size'
+    - '#/components/schemas/trip/example/efforts/0/target_species'
+    - '#/components/schemas/trip/example/efforts/0/avg_depth'
+    - '#/components/schemas/trip/example/state'
+    - '#/components/schemas/trip/example/report_completion_date'
+    - >-
+      #/components/schemas/lookup_list_date_changed_response/example/row/0/last_date
+    - >-
+      #/components/schemas/lookup_list_date_changed_response/example/row/1/last_date
+    - '#/components/schemas/neg_dealer_report/example/start_date'
+    - '#/components/schemas/neg_dealer_report/example/end_date'
+    - '#/components/schemas/neg_dealer_reports_response/example/row/0/upload_date'
+    - '#/components/schemas/participant/example/birth_date'
+    - '#/components/schemas/participant/example/iss_agency'
+    - >-
+      #/components/schemas/participants_response/example/participants/0/issuing_agency
+    - >-
+      #/components/schemas/permit_compliance_response/example/row/0/last_record_date
+    - '#/components/schemas/permit_endorsements_request/example/p_lastdate'
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/0/First_Name
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/0/Middle_Initial
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/0/Last_Name
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/0/Endorsement_Number
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/1/First_Name
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/1/Last_Name
+    - >-
+      #/components/schemas/endorsements_on_license_reponse/example/row/1/Endorsement_Number
+    - >-
+      #/components/schemas/species_by_endorsement_response/example/row/0/Species_Itis
+    - >-
+      #/components/schemas/vessels_on_license_response/example/row/0/permits/1/agency
+    - >-
+      #/components/schemas/vessels_on_license_response/example/row/1/permits/1/agency
+    - '#/components/schemas/report_additional_attributes/example/row/1/list_type'
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/0/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/1/BF12356
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/2/BF12378
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/3/BF12391
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/4/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/5/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/6/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/7/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/8/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/9/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/10/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/11/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/12/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/13/BF123
+    - >-
+      #/components/schemas/landings_additional_attributes/example/row/2/options/14/BF123
+    - '#/components/schemas/landings_additional_attributes/example/status'
+    - '#/components/schemas/landings_additional_attributes/example/description'
+    - '#/components/schemas/landing/example/species_itis'
+    - '#/components/schemas/landing/example/bft_tag_prefix'
+    - '#/components/schemas/landing/example/bft_tag_nbr'
+    - '#/components/schemas/landing/example/bft_length'
+    - '#/components/schemas/landing/example/bft_area_code'
+    - '#/components/schemas/landing/example/bft_measure_type'
+    - '#/components/schemas/landing/example/landings_additional_attributes/0/code'
+    - >-
+      #/components/schemas/landing/example/landings_additional_attributes/0/value
+    - '#/components/schemas/landing/example/landings_additional_attributes/1/code'
+    - >-
+      #/components/schemas/landing/example/landings_additional_attributes/1/value
+    - '#/components/schemas/landing/example/bft_sale_nature'
+    - '#/components/schemas/landing/example/hms_explanation"'
+    - '#/components/schemas/dealer_report/example'
+    - '#/components/schemas/dealer_report/example/reports'
+    - '#/components/schemas/dealer_reports_response/example/row/0/upload_date'
+    - >-
+      #/components/schemas/dealer_reports_response/example/row/0/errorred_report_count
+    - >-
+      #/components/schemas/dealer_reports_response/example/row/0/errorred_landing_count
+    - '#/components/schemas/trip_upload_error/example/SUPPLIER_TRIP_ID'
+    - '#/components/schemas/trip_upload_error/example/SUPPLIER_EFFORT_ID'
+    - '#/components/schemas/trip_upload_error/example/SUPPLIER_CATCH_ID'
+    - '#/components/schemas/lookup_list_attribute_request/example/p_partner'
+    - '#/components/schemas/lookup_list_attribute_request/example/p_lastdate'
+    - '#/components/schemas/lookup_list_attribute_response/example/row/1/code'
+    - '#/components/schemas/notification_upload_request/example/p_start_date'
+    - '#/components/schemas/notification_upload_response/example/description:'
+    - '#/components/schemas/neg_trips_download_request/example/p_date'
+    - '#/components/schemas/neg_trips_download_response/example/row/0'
+    - '#/components/schemas/neg_trips_download_response/example/description:'
+    - '#/components/schemas/location/example/timestamp'
+    - '#/components/schemas/trip_locations_response/example/row/0/upload_date'
+    - >-
+      #/components/schemas/trip_upload_response/example/row/0/trips_accepted/0/supplier_trip_id
+    - >-
+      #/components/schemas/trip_upload_response/example/row/0/trips_accepted/1/supplier_trip_id
+    - '#/components/schemas/lookup_list_request/example/p_lastdate'
+    - '#/components/schemas/lookup_list_request/example/p_listtype'
+    - '#/components/schemas/gears_list_response/example/row/0/type'
+    - '#/components/schemas/gears_list_response/example/row/1/type'
+    - '#/components/schemas/disposition_response/example/row/1/category_code'
+    - '#/components/schemas/species_response/example/row/0/comm_flag'
+    - '#/components/schemas/species_response/example/row/0/for_hire_ch_flag'
+    - '#/components/schemas/species_response/example/row/0/for_hire_hb_flag'
+    - '#/components/schemas/species_response/example/row/0/rec_flag'
+    - '#/components/schemas/species_response/example/row/0/dealer_rpt_flag'
+    - '#/components/schemas/species_response/example/row/1/comm_flag'
+    - '#/components/schemas/species_response/example/row/1/for_hire_ch_flag'
+    - '#/components/schemas/species_response/example/row/1/for_hire_hb_flag'
+    - '#/components/schemas/species_response/example/row/1/rec_flag'
+    - '#/components/schemas/species_response/example/row/1/dealer_rpt_flag'
+    - '#/components/schemas/user_notifications_response/example/row/0/start_date'
+    - '#/components/schemas/user_notifications_response/example/row/0/end_date'
+    - '#/components/schemas/vessels_response/example/row/0/permits/0/end_date'
+    - >-
+      #/components/schemas/vessels_response/example/row/0/permits/0/permit_type_list
+    - '#/components/schemas/vessels_response/example/row/0/permits/1/agency'
+    - '#/components/schemas/vessels_response/example/row/0/permits/1/end_date'
+    - >-
+      #/components/schemas/vessels_response/example/row/0/permits/1/permit_type_list
+    - '#/components/schemas/vessels_response/example/row/1/permits/0/end_date'
+    - >-
+      #/components/schemas/vessels_response/example/row/1/permits/0/permit_type_list
+    - '#/components/schemas/vessels_response/example/row/1/permits/1/agency'
+    - '#/components/schemas/vessels_response/example/row/1/permits/1/end_date'
+    - >-
+      #/components/schemas/vessels_response/example/row/1/permits/1/permit_type_list
+    - '#/components/schemas/dealers_response/example/row/0/in_use'
+    - '#/components/schemas/dealers_response/example/row/1/license_nbr'
+    - '#/components/schemas/dealers_response/example/row/1/in_use'
+    - '#/components/schemas/sale_dispositions_response/example/row/1/list_name'
+    - >-
+      #/components/schemas/vms_landing_locations_response/example/row/0/area_code
+    - >-
+      #/components/schemas/vms_landing_locations_response/example/row/1/area_code
+    - '#/components/schemas/SCIFISH_SPECIES_RESPONCE/example/row/0/code'
+    - >-
+      #/components/schemas/partner_managed_footer_response/example/row/3/partner_id
+    - >-
+      #/components/schemas/partner_managed_footer_response/example/row/3/list_name
+    - '#/components/schemas/LANDING_SPECIES_ATTRIBUTES/example/row/1/list_type'
+    - '#/components/schemas/LANDING_SPECIES_ATTRIBUTES/example/row/1/list_name'
+    - '#/components/schemas/FISHERS/example/row/0/permit_id'
+    - '#/components/schemas/FISHERS/example/row/1/permit_id'
+    - '#/components/schemas/FISHERS/example/row/1/middle_name'
+    - '#/components/schemas/neg_trip/example/iss_agency'
+    - '#/components/schemas/neg_trip/example/start_date'
+    - '#/components/schemas/neg_trip/example/end_date'
+    - '#/components/schemas/neg_trip/example/device_id'
+    - '#/components/schemas/neg_trips/example/neg_trips/0/start_date'
+    - '#/components/schemas/neg_trips/example/neg_trips/0/end_date'
+    - '#/components/schemas/neg_trips/example/neg_trips/0/device_id'
+    - '#/components/schemas/neg_trips/example/neg_trips/1/start_date'
+    - '#/components/schemas/neg_trips/example/neg_trips/1/end_date'
+    - '#/components/schemas/neg_trips/example/neg_trips/1/device_id'
+    - '#/components/schemas/neg_trips_response/example/row/0/upload_date'
+  no-unused-components:
+    - '#/components/schemas/trip_processed_request'
+    - '#/components/schemas/hms_target_species_request'
+    - '#/components/schemas/hms_gears_request'
+  security-defined:
+    - '#/paths/~1trips_download/post'
+    - '#/paths/~1neg_trips_not_processed/post'

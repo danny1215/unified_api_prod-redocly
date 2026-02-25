@@ -1,0 +1,13 @@
+title: additional attribute
+description: ''
+required:
+  - code
+type: object
+properties:
+  code:
+    type: string
+  value:
+    type: string
+example:
+  code: '040'
+  value: 'Y'

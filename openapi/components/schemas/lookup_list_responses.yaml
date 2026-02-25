@@ -1,0 +1,35 @@
+oneOf:
+  - $ref: ./gears_list_response.yaml
+  - $ref: ./attributes_list_response.yaml
+  - $ref: ./gear_attributes_response.yaml
+  - $ref: ./disposition_response.yaml
+  - $ref: ./partner_managed_species_response.yaml
+  - $ref: ./areas_fished_response.yaml
+  - $ref: ./species_response.yaml
+  - $ref: ./catch_source_response.yaml
+  - $ref: ./user_notifications_response.yaml
+  - $ref: ./participants_lookup_response.yaml
+  - $ref: ./vessels_response.yaml
+  - $ref: ./swipe_cards_response.yaml
+  - $ref: ./ports_response.yaml
+  - $ref: ./dealers_response.yaml
+  - $ref: ./partner_managed_notifications_response.yaml
+  - $ref: ./sale_dispositions_response.yaml
+  - $ref: ./vms_landing_locations_response.yaml
+  - $ref: ./lookup_list_responses.yaml
+  - $ref: ./trip_activity_response.yaml
+  - $ref: ./SCIFISH_SPECIES_RESPONCE.yaml
+  - $ref: ./SCIFISH_TRIP_ACTIVITY_RESPONCE.yaml
+  - $ref: ./SCIFISH_GEARS.yaml
+  - $ref: ./trip_processed_response.yaml
+  - $ref: ./hms_target_species_response.yaml
+  - $ref: ./hms_gears_response.yaml
+  - $ref: ./partner_managed_footer_response.yaml
+  - $ref: ./sector_response.yaml
+  - $ref: ./trip_type_response.yaml
+  - $ref: ./report_additional_attributes.yaml
+  - $ref: ./landings_additional_attributes.yaml
+  - $ref: ./LANDING_SPECIES_ATTRIBUTES.yaml
+  - $ref: ./FISHERS.yaml
+description: ''
+type: object

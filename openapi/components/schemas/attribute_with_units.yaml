@@ -1,0 +1,16 @@
+title: gear attributes
+description: ''
+required:
+  - code
+type: object
+properties:
+  code:
+    type: string
+  value:
+    type: string
+  units:
+    type: string
+example:
+  code: '231'
+  value: '1233'
+  units: CM

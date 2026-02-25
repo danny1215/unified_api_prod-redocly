@@ -1,0 +1,43 @@
+title: endorsements_on_license
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        License_NBR:
+          description: Permit/License number given by the issuing agency
+          type: string
+        Endorsement_Type:
+          type: string
+        In_Use:
+          description: flag for whether the record is active.
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - License_NBR: '13037'
+      First_Name: JOHN
+      Middle_Initial: E
+      Last_Name: APPLE
+      Endorsement_Type: SUH
+      Endorsement_Number: 230P
+      In_Use: 'Y'
+    - License_NBR: '12345'
+      First_Name: HAN
+      Last_Name: SOLO
+      Endorsement_Type: SUB
+      Endorsement_Number: 160K
+      In_Use: 'Y'
+  status: OK
+  description: 'Endorsements associated with license type(s): 2'

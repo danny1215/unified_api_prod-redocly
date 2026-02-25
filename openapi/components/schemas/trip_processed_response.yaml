@@ -1,0 +1,34 @@
+title: TRIP_PROCESSED
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        event_id:
+          description: the last event_id assosiated with trip_processed.
+          type: string
+        accsp_trip_id:
+          description: Associated accsp trip id that was given  if trip is processed.
+          type: string
+        processed:
+          description: trip is processed or not on accsp database.
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the status of request
+    type: string
+example:
+  row:
+    - event_id: '12345'
+      accsp_trip_id: '012345'
+      processed: 'Y'
+  status: OK
+  description: processed status of trip returned.

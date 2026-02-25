@@ -1,0 +1,33 @@
+title: Root Type for trips_upload_error
+description: ''
+required:
+  - ERR_DESC
+type: object
+properties:
+  ERR_DESC:
+    description: Human readable description of error.
+    type: string
+  SUPPLIER_TRIP_ID:
+    description: >-
+      supplier_trip_id of record with error. Only shown when error is at trip
+      level. 
+    type: string
+  SUPPLIER_EFFORT_ID:
+    description: >-
+      supplier_effort_id of record with error. Only shown when error is at
+      effort level. 
+    type: string
+  SUPPLIER_CATCH_ID:
+    description: >-
+      supplier_catch_id of record with error. Only shown when error is at catch
+      level. 
+    type: string
+  EVENT_ID:
+    description: 'the event id of error returned. '
+    type: string
+example:
+  ERR_DESC: Date Sold is not in the correct format (MM/DD/YYYY)
+  SUPPLIER_TRIP_ID: 52620093047881
+  SUPPLIER_EFFORT_ID: 52620093047882
+  SUPPLIER_CATCH_ID: 52620093047883
+  EVENT_ID: '807053'

@@ -1,0 +1,11 @@
+title: Root Type for event_id
+description: ''
+required:
+  - p_event_id
+type: object
+properties:
+  p_event_id:
+    description: 'Event id passed back by server in previous upload request. '
+    type: string
+example:
+  p_event_id: '54321'

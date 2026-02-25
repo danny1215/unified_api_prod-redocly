@@ -1,0 +1,119 @@
+title: PARTNER_MANAGED_NOTIFICATIONS
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        notification_type_id:
+          description: notification type
+          type: string
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          type: string
+        attribute_desc:
+          description: accompanying help text
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in For-Hire Charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in For-Hire Headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in Recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        attribute_count:
+          description: indicates whether a single (S) value is returned or Multiple (M)
+          enum:
+            - S
+            - M
+          type: string
+        list_type:
+          description: indicates whether the list is static (S) or Dynamic (D)
+          enum:
+            - S
+            - D
+          type: string
+        options:
+          description: display and return value options for this attribute.
+          type: array
+          items:
+            type: object
+        type:
+          type: string
+        order_seq:
+          format: int32
+          description: display order of attribute relative to others
+          type: integer
+  status:
+    description: status of request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of request status
+    type: string
+example:
+  row:
+    - notification_type_id: '6'
+      attribute_code: 400
+      attribute_name: Intending to Fish?
+      attribute_desc: Is the vessel leaving the dock with intention to fish? (Y/N)
+      comm_flag: 'N'
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: 'Y'
+      attribute_count: S
+      list_type: S
+      options:
+        - 'Y': 'Yes'
+        - 'N': 'No'
+      type: STRING
+      order_seq: 3
+    - notification_type_id: '6'
+      attribute_code: 401
+      attribute_name: Trip End Date
+      attribute_desc: Intended trip end date
+      comm_flag: 'N'
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: 'N'
+      attribute_count: S
+      type: DATE
+      order_seq: 1
+  status: OK
+  description: Partner_Managed_Notifications count:2

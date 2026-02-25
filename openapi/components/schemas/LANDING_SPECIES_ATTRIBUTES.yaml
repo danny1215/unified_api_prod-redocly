@@ -1,0 +1,56 @@
+title: LANDING_SPECIES_ATTRIBUTES
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        partner_id:
+          type: string
+        attribute_code:
+          format: int32
+          type: integer
+        attribute_name:
+          type: string
+        attribute_desc:
+          type: string
+        species_itis:
+          type: string
+        attribute_count:
+          type: string
+        type:
+          type: string
+        dealer_rpt_flag:
+          type: string
+        in_use:
+          type: string
+  status:
+    type: string
+  description:
+    type: string
+example:
+  row:
+    - partner_id: '0016'
+      attribute_code: 5518
+      attribute_name: Species Length
+      attribute_desc: '** EXAMPLE ATTRIBUTE: From the HMS Bluefin Tuna extra questions **'
+      species_itis: '172421'
+      attribute_count: S
+      type: NUMBER(3)
+      dealer_rpt_flag: R
+      in_use: 'Y'
+    - partner_id: '0016'
+      attribute_code: 5520
+      attribute_name: BFT Area Code
+      attribute_desc: '** EXAMPLE ATTRIBUTE: From the HMS Bluefin Tuna extra questions **'
+      species_itis: '172421'
+      attribute_count: S
+      list_type: D
+      list_name: BFT_AREAS
+      type: NUMBER(2)
+      dealer_rpt_flag: R
+      in_use: 'Y'
+  status: OK
+  description: 2 Attribute(s) Returned.

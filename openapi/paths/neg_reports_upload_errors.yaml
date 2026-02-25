@@ -1,0 +1,20 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/event_id.yaml
+    required: true
+  tags:
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/neg_dealer_reports_error_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'neg_reports_upload_errors '
+  description: 'Fetch a list of errors from a neg_reports_upload attempt that did not load. '

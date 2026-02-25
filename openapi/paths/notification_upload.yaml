@@ -1,0 +1,26 @@
+summary: submits trip notification and returns universal trip ID
+description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  \r\nThe response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/notification_upload_request.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/notification_upload_response.yaml
+      description: >-
+        A HTTP status code 200/OK refers to the status of the HTTP request and
+        does not indicate whether or not ACCSP data validations were successful.
+        Data validation errors are generated during record processing and are
+        returned as “errors” in the response.
+  security:
+    - Confidential-API: []
+  summary: notification_upload
+  description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  The response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"

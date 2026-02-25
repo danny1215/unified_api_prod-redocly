@@ -1,0 +1,13 @@
+title: partner_attributes
+description: ''
+type: object
+properties:
+  element_id:
+    description: 'element id '
+    type: string
+  element_value:
+    description: element value in string form
+    type: string
+example:
+  element_id: '400'
+  element_value: 'Y'

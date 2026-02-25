@@ -1,0 +1,103 @@
+title: dealer_report_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        event_id:
+          description: the unique job-id/event_id for this upload assigned by the system
+          type: string
+        upload_date:
+          format: date-time
+          description: when the upload was received
+          type: string
+        process_date:
+          description: When the upload was processed.
+          type: string
+        total_report_count:
+          description: total count of dealer reports records received.
+          type: string
+        total_landing_count:
+          description: total count of landings records received.
+          type: string
+        errored_report_count:
+          description: >-
+            total count of dealer reports that were not processed due to one or
+            more errors.
+          type: string
+        errored_landing_count:
+          description: >-
+            total count of landings that were not processed due to one or more
+            errors.
+        errored_report_Attr_count:
+          description: >-
+            total count of reports attributes that were not processed due to one
+            or more errors.
+        errored_landing_Attr_count:
+          description: >-
+            total count of landings attributes that were not processed due to
+            one or more errors.
+          type: string
+        reports_accepted:
+          description: details for accepted dealer reports
+          type: array
+          items:
+            type: object
+            properties:
+              supplier_dr_id:
+                description: unique supplier id for report supplied to the upload
+                type: string
+              accsp_dealer_rpt_id:
+                description: accsp internal identifier for this matching the supplier_dr_id
+                type: number
+        errors:
+          description: errors messages
+          type: array
+          items:
+            type: object
+            properties:
+              msg:
+                description: human readable error description
+                type: string
+              supplier_dr_id:
+                description: unique supplier_dr_id on which this errror occurred
+                type: string
+              supplier_landing_id:
+                description: unique supplier landing id on which this errror occurred
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure
+    type: string
+example:
+  row:
+    - event_id: '765841'
+      upload_date: '2020-04-16 15:12:14'
+      process_date: '15:12:15'
+      total_report_count: '3'
+      total_landing_count: '3'
+      errorred_report_count: '1'
+      errorred_landing_count: '1'
+      errored_report_Attr_count: '2'
+      errored_landing_Attr_count: '2'
+      reports_accepted:
+        - supplier_dr_id: 0192929-JSJSJ-LLJS
+          accsp_dealer_rpt_id: 103121395
+        - supplier_dr_id: 0141229-KAK-1221-U
+          accsp_dealer_rpt_id: 121121343
+      errors:
+        - msg: Landing date cannot be later than the purchase date.
+          supplier_dr_id: 9299393-893
+        - msg: Species unit of measure combination is not valid
+          supplier_landing_id: 93939-83838
+  status: OK
+  description: Total rows inserted 3

@@ -1,0 +1,99 @@
+title: Effort
+description: ''
+required:
+  - distance
+  - in_state
+  - area_code
+  - sub_area_code
+  - gear
+  - gear_quantity
+  - fishing_hours
+type: object
+properties:
+  distance:
+    description: Distance from shore of fishing location.
+    type: string
+  in_state:
+    description: >-
+      State postal if fishing in state waters.  'US' if fishing in federal
+      waters.
+    type: string
+  area_code:
+    description: 3 character area-code of fishing location.
+    type: string
+  sub_area_code:
+    description: 4 character sub-area code of fishing location.
+    type: string
+  local_area_code:
+    description: Local-area code of fishing location.
+    type: string
+  latitude:
+    description: Latitude of effort in decimal degrees.
+    type: string
+  longitude:
+    description: Longitude of effort in decimal degrees.
+    type: string
+  gear:
+    description: Gear code used in this effort.
+    type: string
+  gear_quantity:
+    format: int32
+    description: Quantity of gear used.
+    type: string
+  fishing_hours:
+    description: Total amount of active fishing time in this effort.
+    type: string
+  hours_days:
+    description: Hours or Days indicator of fishing time
+    enum:
+      - H
+      - D
+    type: string
+  total_gear:
+    description: Total gear in water.
+    type: string
+  gear_size:
+    description: >-
+      Indicates how mesh size wass measured. Stretch Size (S) or Mesh length and
+      width (M).
+    type: string
+  supplier_effort_id:
+    description: >-
+      Unique effort id given by the caller. Only used to communicate errors and
+      updates.
+    type: string
+  anything_caught:
+    description: anything caught flag (Y, N for YES, NO respectively).
+    type: string
+  catches:
+    description: Collection of catches made with this effort
+    type: array
+    items:
+      $ref: ./catch.yaml
+  gear_attributes:
+    description: >-
+      Collection of supplemental attributes defining the gear configuration or
+      effort.
+    type: array
+    items:
+      $ref: ./attribute_with_units.yaml
+  effort_additional_attributes:
+    description: Collection of supplemental attributes defining the effort.
+    type: array
+    items:
+      $ref: ./attribute_multi_value.yaml
+example:
+  distance: '1'
+  in_state: RI
+  area_code: '539'
+  sub_area_code: '0132'
+  local_area_code: '00'
+  latitude: '41.4450635115479'
+  longitude: '-71.3559923529778'
+  gear: '300'
+  gear_quantity: '16'
+  fishing_hours: '6.0'
+  hours_days: H
+  total_gear: '0'
+  gear_size: ''
+  supplier_effort_id: '120119073102827'

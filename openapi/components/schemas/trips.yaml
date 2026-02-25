@@ -1,0 +1,10 @@
+description: 'collection of trip objects. '
+required:
+  - trips
+type: object
+properties:
+  trips:
+    description: collection of trips
+    type: array
+    items:
+      $ref: ./trip.yaml

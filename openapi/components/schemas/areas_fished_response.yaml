@@ -1,0 +1,74 @@
+title: AREAS_FISHED
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        area_code:
+          description: 3 character ACCSP standard area code
+          type: string
+        area_name:
+          description: area name
+          type: string
+        sub_area_code:
+          description: 4 character ACCSP standard sub area code
+          type: string
+        sub_area_name:
+          description: sub area name
+          type: string
+        local_area_code:
+          description: ACCSP local area code
+          type: string
+        local_area_name:
+          description: Name of local area
+          type: string
+        state:
+          description: 2 character state abbreviation.
+          type: string
+        area_display_name:
+          description: area fished name.
+          type: string
+        waters:
+          description: indicator for state or federal waters fished
+          type: string
+        in_use:
+          description: indicator for whether area is currently active
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the status of request
+    type: string
+example:
+  row:
+    - area_code: '514'
+      area_name: EASTERN MASS
+      sub_area_code: '0106'
+      sub_area_name: MASSACHUSETTS BAY
+      local_area_code: GBH3
+      local_area_name: MA GBH3 - NEPONSET RIV AND DORCHESTER BAY
+      state: MA
+      area_display_name: MA GBH3 - NEPONSET RIV AND DORCHESTER BAY
+      waters: S
+      in_use: 'Y'
+    - area_code: '011'
+      area_name: ALABAMA-MISSISSIPPI
+      sub_area_code: '0000'
+      sub_area_name: OFFSHORE WATERS
+      local_area_code: '00'
+      state: MS
+      area_display_name: 'ALABAMA-MISSISSIPPI 011: OFFSHORE WATERS'
+      waters: S
+      in_use: 'Y'
+  status: OK
+  description: 2 Areas(s) Returned

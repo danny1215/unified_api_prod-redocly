@@ -1,0 +1,52 @@
+title: negative trip
+description: no-fishing report/negative trip
+required:
+  - cf_license_nbr
+  - start_date
+  - supplier_row_id
+  - iss_agency
+type: object
+properties:
+  supplier_row_id:
+    description: >-
+      unique identifier given by sender. Useful for updating information and
+      retrieving errors. 
+    type: string
+  iss_agency:
+    description: 4 digit identification of the issuing agency of permit
+    type: string
+  start_date:
+    format: date
+    description: start date of the negative/no fishing report
+    type: string
+  end_date:
+    format: date
+    description: last date of negative report if a range is being given
+    type: string
+  cf_license_nbr:
+    description: license number given by issuing agency
+    type: string
+  state_reg_nbr:
+    description: >-
+      State Registration number of vessel. If no vessel used, provide
+      'FROM_SHORE'.
+    type: string
+  coast_guard_nbr:
+    description: Coast Guard Number/Hull Number of vessel.
+    type: string
+  sector:
+    description: >-
+      sector is a trip type value for DNF reports. for COMM_FLAG use sector =
+      'C' and for FH_FLAG would include ("Charter" and "Headboat") use sector =
+      'F'. The sector is a required value for SERO.
+    type: string
+example:
+  supplier_row_id: '1231231'
+  iss_agency: 18
+  start_date: 11/23/2017
+  end_date: 11/23/2017
+  cf_license_nbr: '123456'
+  state_reg_nbr: ''
+  coast_guard_nbr: '12345689'
+  device_id: '4321'
+  sector: F

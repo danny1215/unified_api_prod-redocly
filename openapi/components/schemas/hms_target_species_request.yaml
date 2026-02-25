@@ -1,0 +1,8 @@
+title: hms_target_species_request
+description: ''
+type: object
+properties:
+  p_listname:
+    type: string
+example:
+  p_listname: HMS_TARGET_SPECIES

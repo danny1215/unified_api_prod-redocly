@@ -1,0 +1,13 @@
+title: Root Type for user_permits_request
+description: ''
+required:
+  - p_usertype
+type: object
+properties:
+  p_usertype:
+    enum:
+      - FISHER
+      - DEALER
+    type: string
+example:
+  p_usertype: FISHER

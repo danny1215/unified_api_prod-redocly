@@ -1,0 +1,28 @@
+title: Root Type for location
+description: single location
+required:
+  - latitude
+  - longitude
+  - timestamp
+type: object
+properties:
+  latitude:
+    description: latitude in decimal degrees of 5 decimal precision and (range 20 to 50)
+    type: string
+  longitude:
+    description: >-
+      longitude in decimal degrees of 5 decimal precision and (range -100 to
+      -60)
+    type: string
+  timestamp:
+    format: date-time
+    description: 'timestamp in UTC format: YYYY-MM-DDThh24:mi:ssZ'
+    type: string
+  horizontal_acc:
+    description: horizontal accuracy
+    type: string
+example:
+  latitude: some text
+  longitude: some text
+  timestamp: 2018-02-10T09:30Z
+  horizontal_acc: '1.0'

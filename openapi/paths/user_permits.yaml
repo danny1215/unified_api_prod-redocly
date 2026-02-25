@@ -1,0 +1,44 @@
+post:
+  requestBody:
+    description: ''
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/user_permits_request.yaml
+        examples:
+          fisher_permit_request:
+            value:
+              p_usertype: FISHER
+    required: true
+  tags:
+    - eTrips
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/user_permits_response.yaml
+          examples:
+            2_license_example:
+              value:
+                row:
+                  - license_nbr: MAFISHER
+                    license_type: Commercial Fisher
+                    permit_type: Commercial
+                    agency: '0003'
+                    in_use: 'Y'
+                  - license_nbr: MAFISHER2
+                    license_type: For-hire
+                    permit_type: For-Hire
+                    agency: '0003'
+                    in_use: 'Y'
+                status: OK
+                description: 'User: Active Permit Count:0'
+      description: successful response
+  security:
+    - Confidential-API: []
+  summary: user_permits
+  description: >-
+    This call retrieves a list of fisher or dealer permits for the logged in
+    user with a valid username, password and API key.

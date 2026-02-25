@@ -1,0 +1,30 @@
+description: An Array of negative trips.
+required:
+  - neg_trips
+type: object
+properties:
+  neg_trips:
+    description: Collection of negative trip reports
+    type: array
+    items:
+      $ref: ./neg_trip.yaml
+example:
+  neg_trips:
+    - supplier_row_id: '12345611'
+      iss_agency: '0004'
+      start_date: 11/22/2017
+      end_date: 11/22/2017
+      cf_license_nbr: '123456'
+      state_reg_nbr: ''
+      coast_guard_nbr: '8877990'
+      device_id: '4321'
+      sector: C
+    - supplier_row_id: '12345612'
+      iss_agency: '0004'
+      start_date: 11/23/2017
+      end_date: 11/23/2017
+      cf_license_nbr: '123456'
+      state_reg_nbr: ''
+      coast_guard_nbr: '8877990'
+      device_id: '4321'
+      sector: F

@@ -1,0 +1,23 @@
+title: Root Type for lookup_list_attribute_request
+description: ''
+required:
+  - p_attribute
+  - p_partner
+type: object
+properties:
+  p_partner:
+    description: 4 character issuing agency of the attributes list
+    type: string
+  p_attribute:
+    description: attribute code corresponding to attribute_code given by lookup_list
+    type: string
+  p_lastdate:
+    format: date-time
+    description: >-
+      the earliest date filter for the list request. Format MM/DD/YYYY
+      hh24:mi:ss
+    type: string
+example:
+  p_partner: 18
+  p_attribute: '403'
+  p_lastdate: '12/27/2010 14:45:00 '

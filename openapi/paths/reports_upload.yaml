@@ -1,0 +1,20 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/dealer_reports_upload_request.yaml
+    required: true
+  tags:
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/dealer_reports_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'reports_upload '
+  description: 'Upload an array of dealer reports including associated landings '

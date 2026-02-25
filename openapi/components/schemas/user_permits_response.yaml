@@ -1,0 +1,54 @@
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        license_nbr:
+          description: Permit/License number given by the issuing agency
+          type: string
+        license_type:
+          description: License type as defined by the issuing agency
+          type: string
+        permit_type:
+          description: Permit type as defined by ACCSP.
+          enum:
+            - For-Hire
+            - Commercial
+            - Operator
+            - Dealer
+          type: string
+        agency:
+          description: 4 character issuing agency of permit
+          type: string
+        in_use:
+          description: Is the permit currently active?
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure.
+    type: string
+example:
+  row:
+    - license_nbr: MAFISHER
+      license_type: Commercial Fisher
+      permit_type: Commercial
+      agency: '0003'
+      in_use: 'Y'
+    - license_nbr: MAFISHER2
+      license_type: For-hire
+      permit_type: For-Hire
+      agency: '0003'
+      in_use: 'Y'
+  status: OK
+  description: 'User: Active Permit Count:0'

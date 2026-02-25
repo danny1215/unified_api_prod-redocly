@@ -1,0 +1,30 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/lookup_list_request.yaml
+    required: true
+  tags:
+    - eTrips
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/lookup_list_responses.yaml
+      description: Successful Response
+  security:
+    - Non-Confidential: []
+  summary: lookup_list
+  description: >-
+    fetch a set of rows for a specified lookup table.
+
+
+    All lists accept the p_partner parameter and are partner specific with the
+    exception of VESSELS, PORTS, USER_NOTIFICATIONS, VMS_LANDING_LOCATIONS,
+    SCIFISH_SPECIES AND
+    SCIFISH_TRIP_ACTIVITY,TRIP_PROCESSED,HMS_TARGET_SPECIES,HMS_GEARS,PARTNER_MANAGED_FOOTER.
+
+    All vessels returned are federally permitted vessels. 

@@ -1,0 +1,47 @@
+title: neg_reports_response for negative dealer reports
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        event_id:
+          description: the unique job-id/event_id for this upload assigned by the system
+          type: string
+        upload_date:
+          format: date-time
+          description: when the upload was received
+          type: string
+        process_date:
+          description: When the upload was processed.
+          type: string
+        total_count:
+          description: total count of negative dealer reports records received.
+          type: string
+        errored_count:
+          description: >-
+            total count ofn negative dealer reports records that were not
+            processed due to one or more errors.
+          type: string
+  status:
+    description: status of the upload attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure
+    type: string
+example:
+  row:
+    - event_id: '765841'
+      upload_date: '2020-04-16 15:12:14'
+      process_date: '15:12:15'
+      total_count: '2'
+      errored_count: '1'
+  status: OK
+  description: Total rows inserted 2

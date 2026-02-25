@@ -1,0 +1,16 @@
+title: Root Type for permit_compliance_request
+description: ''
+required:
+  - p_license_nbr
+  - p_partner
+type: object
+properties:
+  p_license_nbr:
+    description: license/permit number given by the issuing agency
+    type: string
+  p_partner:
+    description: 4 character identification of license issuing agency
+    type: string
+example:
+  p_license_nbr: '54321'
+  p_partner: '0023'

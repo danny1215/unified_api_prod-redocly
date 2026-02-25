@@ -1,0 +1,45 @@
+title: species_by_endorsement
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        Endorsement_Type:
+          type: string
+        Species_Itis:
+          description: ITIS code of the species
+          type: string
+        Name:
+          description: common name of the species.
+          type: string
+        Health_Dept:
+          description: flag indicating whether dept of health fields are required
+          type: string
+        Area:
+          description: flag indicating whether area fished is required
+          type: string
+        In_Use:
+          description: flag indicating whether record is active
+          type: string
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status given.
+    type: string
+example:
+  row:
+    - Endorsement_Type: SHELL
+      Species_Itis: 72878
+      Name: SNAILS, MOON
+      Health_Dept: 'N'
+      Area: 'N'
+      In_Use: 'Y'
+  status: OK
+  description: 'Species allowed by endorsement(s): 1'

@@ -1,0 +1,26 @@
+title: Root Type for trips_download_request
+description: ''
+required:
+  - p_start_date
+  - p_end_date
+type: object
+properties:
+  p_start_date:
+    format: date
+    description: earliest trip report date requested.  Format MM/DD/YYYY
+    type: string
+  p_end_date:
+    format: date
+    description: latest trip report date requested. Format MM/DD/YYYY
+    type: string
+  p_license_nbr:
+    description: permit number/license number of the requested trips
+    type: string
+  p_partner:
+    description: 4 character issuing agency of the license number given
+    type: string
+example:
+  p_start_date: 12/01/2016
+  p_end_date: 12/31/2016
+  p_license_nbr: '12223344'
+  p_partner: '0003'

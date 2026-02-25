@@ -1,0 +1,36 @@
+title: Root Type for lookup_list_date_changed_response
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    description: lookup_lists requested
+    type: array
+    items:
+      type: object
+      properties:
+        list:
+          description: listname from p_listnames
+          type: string
+        last_date:
+          format: date
+          description: last modified date of requested list. Format MM/DD/YYYY hh24:mi:ss
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure.
+    type: string
+example:
+  row:
+    - list: GEARS
+      last_date: 09/26/2018 16:55:04
+    - list: VESSELS
+      last_date: 09/01/2016 12:44:01
+  status: OK
+  description: Date(s) Found

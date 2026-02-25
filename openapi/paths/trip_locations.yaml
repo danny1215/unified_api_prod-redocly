@@ -1,0 +1,33 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/locations.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/trip_locations_response.yaml
+      description: >-
+        A HTTP status code 200/OK refers to the status of the HTTP request and
+        does not indicate whether or not ACCSP data validations were successful.
+        Data validation errors are generated during record processing and are
+        returned as “errors” in the response.
+  security:
+    - Confidential-API: []
+  summary: trip_locations
+  description: >-
+    This endpoint is used to send a set of trip locations to SAFIS. Records in
+    the locations array should include a timestamp in UTC format. The ACCSP API
+    expects a 'Z' or Zulu offset (e.g. 2021-11-26T18:31:30Z) and timestamps
+    submitted without a time offset will be interpreted as not having one.
+    Location records should also include latitude and longitude (5-decimal
+    precision) within the range 20 to 50 and -100 to -60, respectively. See
+    Request Sample. A vessel coast number or state registration number is
+    required, if both values are sent the coast guard number will be used to
+    validate the vessel.

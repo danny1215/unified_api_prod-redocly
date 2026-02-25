@@ -1,0 +1,56 @@
+title: Root Type for lookup_list_request
+description: ''
+required:
+  - p_listname
+  - p_partner
+type: object
+properties:
+  p_partner:
+    description: 4 character value of permit issuing agency
+    type: string
+  p_listname:
+    description: Lookup list name being requested
+    enum:
+      - GEARS
+      - GEAR_ATTRIBUTES
+      - TRIP_ADDITIONAL_ATTRIBUTES
+      - EFFORT_ADDITIONAL_ATTRIBUTES
+      - PARTNER_MANAGED_SPECIES
+      - PARTNER_MANAGED_FOOTER
+      - DISPOSITION
+      - AREASFISHED
+      - SPECIES
+      - CATCH_SOURCE
+      - USER_NOTIFICATIONS
+      - PARTICIPANTS
+      - VESSELS
+      - SWIPE_CARDS
+      - TRIP_ACTIVITY
+      - PORTS
+      - DEALERS
+      - PARTNER_MANAGED_NOTIFICATIONS
+      - SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES
+      - LANDING_ADDITIONAL_ATTRIBUTES
+      - LANDING_SPECIES_ATTRIBUTES
+      - REPORT_ADDITIONAL_ATTRIBUTES
+      - VMS_LANDING_LOCATIONS
+      - GARFO_ACCSP_GEAR_MAPPING
+      - SCIFISH_SPECIES
+      - SCIFISH_GEARS
+      - SCIFISH_TRIP_ACTIVITY
+      - TRIP_PROCESSED
+      - HMS_TARGET_SPECIES
+      - HMS_GEARS
+      - TRIP_TYPE
+      - FISHERS
+      - SECTOR
+    type: string
+  p_lastdate:
+    format: date-time
+    description: oldest date of changes requested. Format MM/DD/YYYY hh24:mi
+    type: string
+example:
+  p_partner: '0023'
+  p_listname: GEARS
+  p_listtype: EDR
+  p_lastdate: '12/27/2010 14:45:00 '

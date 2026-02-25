@@ -1,0 +1,10 @@
+description: ''
+required:
+  - participants
+type: object
+properties:
+  participants:
+    description: ''
+    type: array
+    items:
+      $ref: ./participant.yaml

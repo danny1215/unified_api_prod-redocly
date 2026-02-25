@@ -1,0 +1,150 @@
+title: PARTNER_MANAGED_FOOTER
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        partner_id:
+          type: string
+        attribute_code:
+          format: int32
+          type: integer
+        partner_element_name:
+          type: string
+        partner_help_text:
+          type: string
+        switchboard_behavior:
+          type: string
+        condition_field:
+          type: string
+        condition_value:
+          type: string
+        type:
+          type: string
+        list_type:
+          type: string
+        component_id:
+          type: string
+        component_desc:
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for hire charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in For-Hire Headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in Recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        in_use:
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the result status
+    type: string
+example:
+  row:
+    - partner_id: '0016'
+      attribute_code: 180
+      partner_element_name: Total Number of Pots in Water
+      partner_help_text: At the start of the trip, the total number of pots in all areas.
+      switchboard_behavior: G
+      condition_field: GEAR_CODE
+      condition_value: '160'
+      type: NUMBER
+      list_type: D
+      component_id: T
+      component_desc: Trip Header
+      comm_flag: R
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: R
+      in_use: 'Y'
+    - partner_id: '0016'
+      attribute_code: 181
+      partner_element_name: Total Number of Buoy Lines in Water
+      partner_help_text: At the start of the trip, the total number of buoy lines in all areas.
+      switchboard_behavior: G
+      condition_field: GEAR_CODE
+      condition_value: '160'
+      type: NUMBER
+      list_type: S
+      component_id: T
+      component_desc: Trip Header
+      comm_flag: R
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: R
+      in_use: 'Y'
+    - partner_id: '0016'
+      attribute_code: 182
+      partner_element_name: Total Average Number of Pots Per String in Water
+      partner_help_text: >-
+        At the start of the trip, the average number of pots per string in all
+        areas.
+      switchboard_behavior: G
+      condition_field: GEAR_CODE
+      condition_value: '160'
+      type: NUMBER
+      list_type: D
+      component_id: T
+      component_desc: Trip Header
+      comm_flag: R
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: R
+      in_use: 'Y'
+    - partner_id: 18
+      attribute_code: 3
+      partner_element_name: Target Species
+      partner_help_text: Choose one or more targeted species.
+      switchboard_behavior: G
+      condition_field: GEAR_CODE
+      condition_value: '411'
+      type: STRING
+      list_type: D
+      list_name: SPECIES
+      component_id: E
+      component_desc: Trip Effort
+      comm_flag: R
+      for_hire_charter_flag: 'N'
+      for_hire_hb_flag: 'N'
+      rec_flag: 'N'
+      in_use: 'Y'
+  status: OK
+  description: 3 Attribute(s) Returned.

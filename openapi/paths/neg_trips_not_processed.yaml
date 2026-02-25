@@ -1,0 +1,22 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/neg_trips_download_request.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/neg_trips_download_response.yaml
+      description: output of the endpoint
+  summary: neg_trips_not_processed
+  description: >-
+    This endpoint provides a list of negative (did not fish) trips submitted
+    under the provided license (p_license_nbr) which either 1) did not fully
+    process after being received by the ACCSP or 2) processed successfully but
+    were subsequently deleted by a partner administrator.

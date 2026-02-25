@@ -1,0 +1,51 @@
+title: Root Type for permit_compliance_response
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        compliant:
+          description: a flag (Y or N) to identify whether a given permit is compliant
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+        last_record_type:
+          description: >-
+            the type of record last entered (P/N) for positive or negative
+            report
+          enum:
+            - P
+            - 'N'
+          type: string
+        last_record_date:
+          format: date
+          description: >-
+            the date of the last report entered into the system. Format
+            MM/DD/YYYY
+          type: string
+        non_compliance_dates:
+          description: >-
+            A list of dates that the dealer is not compliant in the format
+            MM/DD/YYYY that are delimited by a semi-colon.
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status request
+    type: string
+example:
+  row:
+    - compliant: 'N'
+      last_record_type: P
+      last_record_date: 04/15/2019
+      non_compliance_dates: 04/16/2020;04/17/2020;04/18/2020
+  status: OK
+  description: Record(s) Found

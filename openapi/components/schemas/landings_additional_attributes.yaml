@@ -1,0 +1,102 @@
+title: LANDING_ADDITIONAL_ATTRIBUTE
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          description: name of attribute
+          type: string
+        attribute_desc:
+          description: attribute description
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              'Y':
+                description: 'Yes'
+                type: string
+              'N':
+                description: 'No'
+                type: string
+        attribute_count:
+          description: attribute count
+          type: string
+        list_type:
+          description: list type
+          type: string
+        partner_id:
+          description: partner id
+          type: string
+        type:
+          description: type
+          type: string
+        dealer_rpt_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N)
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        in_use:
+          description: indicates if attribute is in use (Y), not in use (N)
+          type: string
+example:
+  row:
+    - attribute_code: 1234
+      attribute_name: Fins Attached
+      attribute_desc: Fins Attached
+      options:
+        - 'Y': 'Yes'
+        - 'N': 'No'
+      attribute_count: S
+      list_type: S
+      partner_id: '0031'
+      type: STRING
+      dealer_rpt_flag: R
+      in_use: 'Y'
+    - attribute_code: 1234
+      attribute_name: Fins Explanation
+      attribute_desc: Fins Explanation
+      attribute_count: S
+      partner_id: '0031'
+      type: STRING
+      dealer_rpt_flag: 'Y'
+      in_use: 'Y'
+    - attribute_code: 1234
+      attribute_name: HMS Area Code
+      attribute_desc: HMS Area Code
+      options:
+        - BF123: BF123
+        - BF12356: BF12356
+        - BF12378: BF12378
+        - BF12391: BF12391
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+        - BF123: BF123
+      attribute_count: S
+      partner_id: '0031'
+      type: STRING
+      dealer_rpt_flag: R
+      in_use: 'Y'
+  status: OK
+  description: 3 Attribute(s) Returned.

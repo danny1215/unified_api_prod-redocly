@@ -1,0 +1,22 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/event_id.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/trip_upload_error_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: trips_upload_errors
+  description: >-
+    fetch a list of errors from trip rows that did not load. Should be called
+    after trips_upload call if one or moreerrored records are indicated

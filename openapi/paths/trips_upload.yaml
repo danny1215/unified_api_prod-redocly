@@ -1,0 +1,46 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/trips.yaml
+    required: true
+  tags:
+    - eTrips
+  parameters:
+    - example: 'AppVersion : 2.2.11232'
+      name: AppVersion
+      schema:
+        type: string
+      in: header
+      required: true
+    - example: 'Platform : iOS'
+      name: Platform
+      schema:
+        type: string
+      in: header
+    - example: 'AppName : ETRIPS'
+      name: AppName
+      schema:
+        type: string
+      in: header
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/trip_upload_response.yaml
+      description: >-
+        A HTTP status code 200/OK refers to the status of the HTTP request and
+        does not indicate whether or not ACCSP data validations were successful.
+        Data validation errors are generated during record processing and are
+        returned as “errors” in the response.
+  security:
+    - Confidential-API: []
+  summary: 'trips_upload '
+  description: >-
+    send a set of trips rows to safis using the request showen a trip submission
+    that include three gear attributes. Resubmissions of trips previously
+    submitted and processed successfully should include the accsp_trip_id
+    (provided in response for successful submissions) and a trip_update flag
+    (set value to Y). See example request.

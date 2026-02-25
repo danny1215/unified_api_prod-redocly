@@ -1,0 +1,24 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/participants.yaml
+    required: true
+  tags:
+    - eTrips
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/participants_response.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'participants '
+  description: >
+    Check for/update users with the given information.
+
+    This call retrieves a list of participants in the SAFIS system with the
+    supplier user identifiable information. 

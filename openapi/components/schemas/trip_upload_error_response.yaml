@@ -1,0 +1,21 @@
+title: Root Type for trip_upload_error_response
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      $ref: ./trip_upload_error.yaml
+  status:
+    description: status of the request attempt
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status reason or failure.
+    type: string
+example:
+  row: []
+  status: OK
+  description: Total Errors 1

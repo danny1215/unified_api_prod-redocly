@@ -1,0 +1,24 @@
+title: additional attributes
+description: ''
+required:
+  - code
+type: object
+properties:
+  code:
+    type: string
+  value:
+    type: string
+  values:
+    description: only used when attribute allows multiple values to be selected
+    type: array
+    items:
+      type: string
+  units:
+    type: string
+example:
+  code: '231'
+  value: '1233'
+  values:
+    - '21312'
+    - '231231'
+  units: CM

@@ -1,0 +1,198 @@
+title: PARTNER_MANAGED_SPECIES
+description: ''
+required:
+  - status
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        attribute_code:
+          format: int32
+          description: unique attribute code/id
+          type: integer
+        attribute_name:
+          description: name of attribute
+          type: string
+        attribute_desc:
+          description: accompanying help text
+          type: string
+        species_itis:
+          description: ITIS code of species
+          type: string
+        type:
+          description: format of attribute.
+          enum:
+            - NUMBER*
+            - STRING
+            - DATE
+            - TIMESTAMP
+          type: string
+        list_type:
+          description: denotes whether list returned is static (S) or dynamic(D)
+          enum:
+            - S
+            - D
+          type: string
+        options:
+          description: >-
+            JSON key-value pairs showing the return and display value of static
+            list items respectively
+          type: array
+          items:
+            type: object
+        order_seq:
+          format: int32
+          description: display order of attribute relative to others
+          type: integer
+        attribute_count:
+          description: >-
+            expected number of values returned. default is Single(S). Multiple
+            (M).
+          enum:
+            - S
+            - M
+          type: string
+        comm_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in commercial trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_charter_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire charter trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        for_hire_hb_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in for-hire headboat trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        rec_flag:
+          description: >-
+            indicates if attribute is required (R), optional (Y) or Not
+            displayed (N) in recreational trip
+          enum:
+            - R
+            - 'Y'
+            - 'N'
+          type: string
+        limit_to_groups:
+          description: indicates if element is limited to specific rule groups specified
+          type: object
+          properties:
+            comm:
+              description: >-
+                the commercial trip rule group for which this attribute should
+                display
+              enum:
+                - A
+                - D
+                - F
+                - H
+                - I
+                - J
+                - L
+                - P
+              type: string
+            hb:
+              description: >-
+                the headboat trip rule group for which this attribute should
+                display
+              enum:
+                - A
+                - D
+                - F
+                - H
+                - I
+                - J
+                - L
+                - P
+              type: string
+            charter:
+              description: >-
+                the charter trip rule group for which this attribute should
+                display
+              enum:
+                - A
+                - D
+                - F
+                - H
+                - I
+                - J
+                - L
+                - P
+              type: string
+            rec:
+              description: >-
+                the recreational trip rule group for which this attribute should
+                display
+              enum:
+                - A
+                - D
+                - F
+                - H
+                - I
+                - J
+                - L
+                - P
+              type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: human readable description of the result status
+    type: string
+example:
+  row:
+    - attribute_code: 1212
+      attribute_name: Length Qualifier
+      attribute_desc: How was the length taken? (measured or estimated)
+      species_itis: '172421'
+      type: STRING
+      list_type: S
+      options:
+        - M: Measured
+        - E: Estimated
+        - U: Unknown
+      order_seq: 6
+      attribute_count: S
+      limit_to_groups: {}
+      comm_flag: R
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: R
+    - attribute_code: 1200
+      attribute_name: HMS Catch Area
+      attribute_desc: 'Highly Migratory Species: Catch Area'
+      species_itis: '172423'
+      order_seq: 63
+      attribute_count: S
+      type: STRING
+      limit_to_groups:
+        hb: H
+        charter: H
+        rec: H
+      comm_flag: R
+      for_hire_charter_flag: R
+      for_hire_hb_flag: R
+      rec_flag: 'N'
+  status: OK
+  description: 'Partner_Managed_Species count: 2'

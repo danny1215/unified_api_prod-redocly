@@ -1,0 +1,5155 @@
+openapi: 3.0.2
+info:
+  title: Unified SAFIS API -Test
+  version: 1.0.71
+  description: |-
+    **Overview**
+
+    This API is used by remote applications   to communicate with the SAFIS backend database server. It is not intended for any other purpose. This document is intended as a programmer’s reference manual. It is used by both application developers who build a front-end, and the programmers who maintain this   API back-end. 
+
+    To request an API key, please contact us. 
+  contact:
+    email: support@accsp.org
+  x-logo:
+    url: https://raw.githubusercontent.com/accsp-software/spec-unified-api-test/master/docs/accsp_logo.jpg
+servers:
+  - url: https://safis.accsp.org/safis_test/safist/api
+    description: ''
+tags:
+  - name: eTrips
+    description: eTrips
+  - name: eDR
+    description: eDR
+paths:
+  /user_permits:
+    post:
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_permits_request'
+            examples:
+              fisher_permit_request:
+                value:
+                  p_usertype: FISHER
+        required: true
+      tags:
+        - eTrips
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_permits_response'
+              examples:
+                2_license_example:
+                  value:
+                    row:
+                      - license_nbr: MAFISHER
+                        license_type: Commercial Fisher
+                        permit_type: Commercial
+                        agency: '0003'
+                        in_use: 'Y'
+                      - license_nbr: MAFISHER2
+                        license_type: For-hire
+                        permit_type: For-Hire
+                        agency: '0003'
+                        in_use: 'Y'
+                    status: OK
+                    description: 'User: Active Permit Count:0'
+          description: successful response
+      security:
+        - Confidential-API: []
+      summary: user_permits
+      description: This call retrieves a list of fisher or dealer permits for the logged in user with a valid username, password and API key.
+  /trips_download:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trips_download_request'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trips_download_response'
+          description: output of the endpoint
+      summary: trips_download
+      description: |-
+        retrieve set of trips rows from safis. 
+        A list of trips is requested from the SAFIS system within the upper and lower limits of the start and end dates (inclusive) . This list will only contain successfully uploaded trips and will be sent to same format as the trips_upload call. 
+  /lookup_list_date_changed:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lookup_list_date_changed_request'
+        required: true
+      tags:
+        - eTrips
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lookup_list_date_changed_response'
+          description: output of the endpoint
+      security:
+        - Non-Confidential: []
+      summary: lookup_list_date_changed
+      description: fetch the last date that the specified lookup table(s) were changed.
+  /neg_reports_upload:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/neg_dealer_reports'
+        required: true
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/neg_dealer_reports_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'neg_reports_upload '
+      description: Send a set of negative dealer reports to safis. They can be sent as single records (with no end date). Or as a range (including an end date)
+  /neg_reports_upload_errors:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_id'
+        required: true
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/neg_dealer_reports_error_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'neg_reports_upload_errors '
+      description: 'Fetch a list of errors from a neg_reports_upload attempt that did not load. '
+  /neg_trips_upload_errors:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_id'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/neg_trips_error_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'neg_trips_upload_errors '
+      description: fetch a list of errors from negative/did not fish reports that didn’t load after calling neg_trips_upload.
+  /participants:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/participants'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/participants_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'participants '
+      description: |
+        Check for/update users with the given information.
+        This call retrieves a list of participants in the SAFIS system with the supplier user identifiable information. 
+  /permit_compliance:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/permit_compliance_request'
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permit_compliance_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'permit_compliance '
+      description: checks the current compliance status of a dealer permit
+  /permit_endorsements:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/permit_endorsements_request'
+        required: true
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/permit_endorsements_responses'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'permit_endorsements '
+      description: fetch a list of endorsements for a given a partner
+  /reports_upload:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dealer_reports_upload_request'
+        required: true
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dealer_reports_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'reports_upload '
+      description: 'Upload an array of dealer reports including associated landings '
+  /reports_upload_errors:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_id'
+        required: true
+      tags:
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dealer_reports_error_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: 'reports_upload_errors '
+      description: 'Fetch a list of errors from a dealer reports_upload attempt that did not load. '
+  /trips_upload_errors:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/event_id'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trip_upload_error_response'
+          description: output of the endpoint
+      security:
+        - Confidential-API: []
+      summary: trips_upload_errors
+      description: fetch a list of errors from trip rows that did not load. Should be called after trips_upload call if one or moreerrored records are indicated
+  /lookup_list_by_attribute:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lookup_list_attribute_request'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lookup_list_attribute_response'
+          description: output of the endpoint
+      security:
+        - Non-Confidential: []
+      summary: lookup_list_by_attribute
+      description: fetch a set of rows for specified attribute lookup list. Used in combination with _additional_attributes lookup_list
+  /notification_upload:
+    summary: submits trip notification and returns universal trip ID
+    description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  \r\nThe response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/notification_upload_request'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notification_upload_response'
+          description: A HTTP status code 200/OK refers to the status of the HTTP request and does not indicate whether or not ACCSP data validations were successful. Data validation errors are generated during record processing and are returned as “errors” in the response.
+      security:
+        - Confidential-API: []
+      summary: notification_upload
+      description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  The response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"
+  /neg_trips_not_processed:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/neg_trips_download_request'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/neg_trips_download_response'
+          description: output of the endpoint
+      summary: neg_trips_not_processed
+      description: This endpoint provides a list of negative (did not fish) trips submitted under the provided license (p_license_nbr) which either 1) did not fully process after being received by the ACCSP or 2) processed successfully but were subsequently deleted by a partner administrator.
+  /trip_locations:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/locations'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trip_locations_response'
+          description: A HTTP status code 200/OK refers to the status of the HTTP request and does not indicate whether or not ACCSP data validations were successful. Data validation errors are generated during record processing and are returned as “errors” in the response.
+      security:
+        - Confidential-API: []
+      summary: trip_locations
+      description: This endpoint is used to send a set of trip locations to SAFIS. Records in the locations array should include a timestamp in UTC format. The ACCSP API expects a 'Z' or Zulu offset (e.g. 2021-11-26T18:31:30Z) and timestamps submitted without a time offset will be interpreted as not having one. Location records should also include latitude and longitude (5-decimal precision) within the range 20 to 50 and -100 to -60, respectively. See Request Sample. A vessel coast number or state registration number is required, if both values are sent the coast guard number will be used to validate the vessel.
+  /trips_upload:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/trips'
+        required: true
+      tags:
+        - eTrips
+      parameters:
+        - example: 'AppVersion : 2.2.11232'
+          name: AppVersion
+          schema:
+            type: string
+          in: header
+          required: true
+        - example: 'Platform : iOS'
+          name: Platform
+          schema:
+            type: string
+          in: header
+        - example: 'AppName : ETRIPS'
+          name: AppName
+          schema:
+            type: string
+          in: header
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trip_upload_response'
+          description: A HTTP status code 200/OK refers to the status of the HTTP request and does not indicate whether or not ACCSP data validations were successful. Data validation errors are generated during record processing and are returned as “errors” in the response.
+      security:
+        - Confidential-API: []
+      summary: 'trips_upload '
+      description: send a set of trips rows to safis using the request showen a trip submission that include three gear attributes. Resubmissions of trips previously submitted and processed successfully should include the accsp_trip_id (provided in response for successful submissions) and a trip_update flag (set value to Y). See example request.
+  /lookup_list:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/lookup_list_request'
+        required: true
+      tags:
+        - eTrips
+        - eDR
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/lookup_list_responses'
+          description: Successful Response
+      security:
+        - Non-Confidential: []
+      summary: lookup_list
+      description: |-
+        fetch a set of rows for a specified lookup table.
+
+        All lists accept the p_partner parameter and are partner specific with the exception of VESSELS, PORTS, USER_NOTIFICATIONS, VMS_LANDING_LOCATIONS, SCIFISH_SPECIES AND SCIFISH_TRIP_ACTIVITY,TRIP_PROCESSED,HMS_TARGET_SPECIES,HMS_GEARS,PARTNER_MANAGED_FOOTER.
+        All vessels returned are federally permitted vessels. 
+  /neg_trips_upload:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/neg_trips'
+        required: true
+      tags:
+        - eTrips
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/neg_trips_response'
+          description: A HTTP status code 200/OK refers to the status of the HTTP request and does not indicate whether or not ACCSP data validations were successful. Data validation errors are generated during record processing and are returned as “errors” in the response.
+      security:
+        - Confidential-API: []
+      summary: 'neg_trips_upload '
+      description: The neg_trips_upload endpoint accepts multiple reports within a single API call (see example request).  However, to avoid unexpected validation failures we recommend sending reports from the same fishing license, participant and vessel within individual API calls.  Including different fishing licenses or vessels within a single API call may result in unexpected validation failures and misleading errors. the sector payload is a required value for SERO partners.
+components:
+  schemas:
+    user_permits_request:
+      title: Root Type for user_permits_request
+      description: ''
+      required:
+        - p_usertype
+      type: object
+      properties:
+        p_usertype:
+          enum:
+            - FISHER
+            - DEALER
+          type: string
+      example:
+        p_usertype: FISHER
+    trips:
+      description: 'collection of trip objects. '
+      required:
+        - trips
+      type: object
+      properties:
+        trips:
+          description: collection of trips
+          type: array
+          items:
+            $ref: '#/components/schemas/trip'
+    neg_trips_response:
+      title: Root Type for neg_trips_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                description: the unique job-id/event_id for this upload assigned by the system
+                type: string
+              upload_date:
+                format: date-time
+                description: when the upload was received
+                type: string
+              process_date:
+                description: When the upload was processed.
+                type: string
+              total_count:
+                description: total count of neg trip records received.
+                type: string
+              errored_count:
+                description: total count of neg trip records that were not processed due to one or more errors.
+                type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure
+          type: string
+      example:
+        row:
+          - event_id: '765841'
+            upload_date: '2020-04-16 15:12:14'
+            process_date: '15:12:15'
+            total_count: '2'
+            errored_count: '1'
+        status: OK
+        description: Total rows inserted 2
+    lookup_list_attribute_request:
+      title: Root Type for lookup_list_attribute_request
+      description: ''
+      required:
+        - p_attribute
+        - p_partner
+      type: object
+      properties:
+        p_partner:
+          description: 4 character issuing agency of the attributes list
+          type: string
+        p_attribute:
+          description: attribute code corresponding to attribute_code given by lookup_list
+          type: string
+        p_lastdate:
+          format: date-time
+          description: the earliest date filter for the list request. Format MM/DD/YYYY hh24:mi:ss
+          type: string
+      example:
+        p_partner: 18
+        p_attribute: '403'
+        p_lastdate: '12/27/2010 14:45:00 '
+    lookup_list_attribute_response:
+      title: Root Type for lookup_list_attribute_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: return value for this element
+                type: string
+              desc:
+                description: display value of element
+                type: string
+              comm_flag:
+                description: indicator flag for whether element is needed for Commercial Trip.
+                type: string
+              for_hire_charter_flag:
+                description: indicator flag for whether element is needed for For-Hire Charter Trip.
+                type: string
+              for_hire_hb_flag:
+                description: indicator flag for whether element is needed for For-Hire Headboat Trip.
+                type: string
+              rec_flag:
+                description: indicator flag for whether element is needed for Recreational Trip.
+                type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row:
+          - code: '031'
+            desc: PURSE SEINE, TARP
+            comm_flag: R
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+          - code: 93
+            desc: OTTER TRAWL BOTTOM, LOBSTER
+            comm_flag: 'Y'
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+        status: OK
+        description: Attribute(s) Found
+    lookup_list_date_changed_response:
+      title: Root Type for lookup_list_date_changed_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          description: lookup_lists requested
+          type: array
+          items:
+            type: object
+            properties:
+              list:
+                description: listname from p_listnames
+                type: string
+              last_date:
+                format: date
+                description: last modified date of requested list. Format MM/DD/YYYY hh24:mi:ss
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row:
+          - list: GEARS
+            last_date: 09/26/2018 16:55:04
+          - list: VESSELS
+            last_date: 09/01/2016 12:44:01
+        status: OK
+        description: Date(s) Found
+    event_id:
+      title: Root Type for event_id
+      description: ''
+      required:
+        - p_event_id
+      type: object
+      properties:
+        p_event_id:
+          description: 'Event id passed back by server in previous upload request. '
+          type: string
+      example:
+        p_event_id: '54321'
+    trip_upload_error_response:
+      title: Root Type for trip_upload_error_response
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            $ref: '#/components/schemas/trip_upload_error'
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row: []
+        status: OK
+        description: Total Errors 1
+    trip_upload_error:
+      title: Root Type for trips_upload_error
+      description: ''
+      required:
+        - ERR_DESC
+      type: object
+      properties:
+        ERR_DESC:
+          description: Human readable description of error.
+          type: string
+        SUPPLIER_TRIP_ID:
+          description: 'supplier_trip_id of record with error. Only shown when error is at trip level. '
+          type: string
+        SUPPLIER_EFFORT_ID:
+          description: 'supplier_effort_id of record with error. Only shown when error is at effort level. '
+          type: string
+        SUPPLIER_CATCH_ID:
+          description: 'supplier_catch_id of record with error. Only shown when error is at catch level. '
+          type: string
+        EVENT_ID:
+          description: 'the event id of error returned. '
+          type: string
+      example:
+        ERR_DESC: Date Sold is not in the correct format (MM/DD/YYYY)
+        SUPPLIER_TRIP_ID: 52620093047881
+        SUPPLIER_EFFORT_ID: 52620093047882
+        SUPPLIER_CATCH_ID: 52620093047883
+        EVENT_ID: '807053'
+    participants:
+      description: ''
+      required:
+        - participants
+      type: object
+      properties:
+        participants:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/participant'
+    participants_response:
+      title: Root Type for participants_response
+      description: 'participants response combines succesful trip information and errors. '
+      type: object
+      properties:
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              supplier_user_id:
+                description: unique record id given in the payload.
+                type: string
+              safis_participant_id:
+                format: int32
+                description: SAFIS system participant id of the given user. Required in trips_upload API if downloading records without username.
+                type: integer
+              safis_license_nbr:
+                description: License Number stored in the SAFIS system for this user's record.
+                type: string
+              issuing_agency:
+                description: 4 character id of license issuing agency.
+                type: string
+        errors:
+          description: all errors encountered in the upload attempt
+          type: array
+          items:
+            type: object
+            properties:
+              supplier_user_id:
+                description: unique record id given in the payload
+                type: string
+              messages:
+                type: array
+                items:
+                  description: individual error message descriptions
+                  type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        processed:
+          format: int32
+          description: number of participant records processed
+          type: integer
+        description:
+          description: human readable explanation of the request attempt result
+          type: string
+      example:
+        participants:
+          - supplier_user_id: '1111'
+            safis_participant_id: 196973
+            safis_license_nbr: '1111'
+            issuing_agency: 18
+        errors:
+          - supplier_user_id: '1112'
+            messages:
+              - Phone Number is not in the right format
+              - Birth Date Value is not valid.
+        status: OK
+        processed: 2
+        description: 'Rows processed: 2 Event_id: 815428'
+    user_permits_response:
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              license_nbr:
+                description: Permit/License number given by the issuing agency
+                type: string
+              license_type:
+                description: License type as defined by the issuing agency
+                type: string
+              permit_type:
+                description: Permit type as defined by ACCSP.
+                enum:
+                  - For-Hire
+                  - Commercial
+                  - Operator
+                  - Dealer
+                type: string
+              agency:
+                description: 4 character issuing agency of permit
+                type: string
+              in_use:
+                description: Is the permit currently active?
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row:
+          - license_nbr: MAFISHER
+            license_type: Commercial Fisher
+            permit_type: Commercial
+            agency: '0003'
+            in_use: 'Y'
+          - license_nbr: MAFISHER2
+            license_type: For-hire
+            permit_type: For-Hire
+            agency: '0003'
+            in_use: 'Y'
+        status: OK
+        description: 'User: Active Permit Count:0'
+    attributes_list_response:
+      title: ADDITIONAL_ATTRIBUTES
+      description: ''
+      type: object
+      properties:
+        row:
+          description: Data type for TRIP_ADDITIONAL_ATTRIBUTES, EFFORT_ADDITIONAL_ATTRIBUTES, CATCH_ADDITIONAL_ATTRIBUTES
+          type: array
+          items:
+            type: object
+            properties:
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of attribute
+                type: string
+              help_text:
+                description: accompanying help text
+                type: string
+              order_seq:
+                format: int32
+                description: display order of attribute relative to others
+                type: integer
+              attribute_count:
+                description: indicates whether a single (S) value is returned or Multiple (M) are
+                enum:
+                  - S
+                  - M
+                type: string
+              list_type:
+                description: indicates whether the list is static (S) or Dynamic (D)
+                enum:
+                  - S
+                  - D
+                type: string
+              type:
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - attribute_code: 3
+            attribute_name: Target Species
+            help_text: Choose one or more targeted species.
+            order_seq: 1
+            attribute_count: M
+            list_type: D
+            type: STRING
+            comm_flag: 'Y'
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+        status: OK
+        description: 1 Attribute(s) Returned
+    trips_download_response:
+      title: Root Type for trips_download_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/trip'
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable explanation of the request status
+          type: string
+      example:
+        trips: []
+        status: OK
+        description: 0 trip(s) returned
+    trips_download_request:
+      title: Root Type for trips_download_request
+      description: ''
+      required:
+        - p_start_date
+        - p_end_date
+      type: object
+      properties:
+        p_start_date:
+          format: date
+          description: earliest trip report date requested.  Format MM/DD/YYYY
+          type: string
+        p_end_date:
+          format: date
+          description: latest trip report date requested. Format MM/DD/YYYY
+          type: string
+        p_license_nbr:
+          description: permit number/license number of the requested trips
+          type: string
+        p_partner:
+          description: 4 character issuing agency of the license number given
+          type: string
+      example:
+        p_start_date: 12/01/2016
+        p_end_date: 12/31/2016
+        p_license_nbr: '12223344'
+        p_partner: '0003'
+    dealer_reports_upload_request:
+      description: ''
+      required:
+        - reports
+      type: object
+      properties:
+        reports:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/dealer_report'
+    dealer_reports_error_response:
+      title: Reports_upload_error_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              ERR_DESC:
+                description: error message to the user
+                type: string
+              SUPPLIER_DR_ID:
+                description: unique report id from report_upload associated with error.
+                type: string
+              SUPPLIER_LANDING_ID:
+                description: unique landing id from report_upload associated with error.
+                type: string
+              EVENT_ID:
+                description: associated event_id from the request.
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - ERR_DESC: Fishing license entered is not valid.
+            SUPPLIER_DR_ID: 83123-2323-232-12-2212
+            EVENT_ID: '816672'
+          - ERR_DESC: 'A valid unit of measure must be entered '
+            SUPPLIER_LANDING_ID: 83123-2323-232-12-2212
+            EVENT_ID: '816672'
+        status: OK
+        description: Total Errors 2
+    neg_dealer_report:
+      title: Root Type for neg_dealer_report
+      description: ''
+      required:
+        - start_date
+      type: object
+      properties:
+        supplier_row_id:
+          description: unique id of the report. Used to return errors and for updates
+          type: string
+        iss_agency:
+          description: 4 character identifier of issuing agency of dealer permit in use
+          type: string
+        start_date:
+          format: date
+          description: first date of reporting range. Format MM/DD/YYYY
+          type: string
+        end_date:
+          format: date
+          description: last date of reporting range. Format MM/DD/YYYY
+          type: string
+        dea_license_nbr:
+          description: Permit/License Number of Dealer in use
+          type: string
+      example:
+        supplier_row_id: '1231231'
+        iss_agency: '0003'
+        start_date: 11/22/2015
+        end_date: 11/22/2015
+        dea_license_nbr: '999999'
+    neg_dealer_reports:
+      description: ''
+      required:
+        - neg_reports
+      type: object
+      properties:
+        neg_reports:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/neg_dealer_report'
+    neg_dealer_reports_response:
+      title: neg_reports_response for negative dealer reports
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                description: the unique job-id/event_id for this upload assigned by the system
+                type: string
+              upload_date:
+                format: date-time
+                description: when the upload was received
+                type: string
+              process_date:
+                description: When the upload was processed.
+                type: string
+              total_count:
+                description: total count of negative dealer reports records received.
+                type: string
+              errored_count:
+                description: total count ofn negative dealer reports records that were not processed due to one or more errors.
+                type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure
+          type: string
+      example:
+        row:
+          - event_id: '765841'
+            upload_date: '2020-04-16 15:12:14'
+            process_date: '15:12:15'
+            total_count: '2'
+            errored_count: '1'
+        status: OK
+        description: Total rows inserted 2
+    neg_trips_error_response:
+      title: Root Type for neg_trips_error_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              ERR_DESC:
+                description: error message to the user
+                type: string
+              SUPPLIER_ROW_ID:
+                description: unique id given for negative trip report
+                type: string
+              EVENT_ID:
+                description: associated event_id from the request.
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - ERR_DESC: Fishing license entered is not valid. Please check
+            EVENT_ID: '816672'
+          - ERR_DESC: 'A valid start date must be entered '
+            EVENT_ID: '816672'
+        status: OK
+        description: Total Errors 2
+    neg_dealer_reports_error_response:
+      title: Root Type for neg_trips_error_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              ERR_DESC:
+                description: error message to the user
+                type: string
+              SUPPLIER_ROW_ID:
+                description: unique id given for negative dealer report
+                type: string
+              EVENT_ID:
+                description: associated event_id from the request.
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - SUPPLIER_ROW_ID: 21231-12313-23123
+            ERR_DESC: Invalid start date format
+            EVENT_ID: '816672'
+          - ERR_DESC: dealer license entered is not valid.
+            SUPPLIER_ROW_ID: 22211-12713-2373
+            EVENT_ID: '816672'
+        status: OK
+        description: Total Errors 2
+    permit_compliance_request:
+      title: Root Type for permit_compliance_request
+      description: ''
+      required:
+        - p_license_nbr
+        - p_partner
+      type: object
+      properties:
+        p_license_nbr:
+          description: license/permit number given by the issuing agency
+          type: string
+        p_partner:
+          description: 4 character identification of license issuing agency
+          type: string
+      example:
+        p_license_nbr: '54321'
+        p_partner: '0023'
+    permit_compliance_response:
+      title: Root Type for permit_compliance_response
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              compliant:
+                description: a flag (Y or N) to identify whether a given permit is compliant
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              last_record_type:
+                description: the type of record last entered (P/N) for positive or negative report
+                enum:
+                  - P
+                  - 'N'
+                type: string
+              last_record_date:
+                format: date
+                description: the date of the last report entered into the system. Format MM/DD/YYYY
+                type: string
+              non_compliance_dates:
+                description: A list of dates that the dealer is not compliant in the format MM/DD/YYYY that are delimited by a semi-colon.
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status request
+          type: string
+      example:
+        row:
+          - compliant: 'N'
+            last_record_type: P
+            last_record_date: 04/15/2019
+            non_compliance_dates: 04/16/2020;04/17/2020;04/18/2020
+        status: OK
+        description: Record(s) Found
+    permit_endorsements_request:
+      title: Root Type for permit_endorsements_request
+      description: ''
+      required:
+        - p_partner
+        - p_listname
+      type: object
+      properties:
+        p_partner:
+          description: 4 character value of permit issuing agency
+          type: string
+        p_listname:
+          description: name of endorsement list requested
+          enum:
+            - VESSELS_ON_LICENSE
+            - ENDORSEMENTS_ON_LICENSE
+            - SPECIES_BY_ENDORSEMENT
+            - SPECIES_BY_LICENSE
+          type: string
+        p_lastdate:
+          format: date-time
+          description: oldest date of changes requested. Format MM/DD/YYYY hh24:mi
+          type: string
+      example:
+        p_partner: '0014'
+        p_listname: SPECIES_BY_LICENSE
+        p_lastdate: 12/27/2000 14:45:00
+    permit_endorsements_responses:
+      oneOf:
+        - $ref: '#/components/schemas/endorsements_on_license_reponse'
+        - $ref: '#/components/schemas/species_by_endorsement_response'
+        - $ref: '#/components/schemas/species_by_license_response'
+        - $ref: '#/components/schemas/vessels_on_license_response'
+      description: ''
+      type: object
+    endorsements_on_license_reponse:
+      title: endorsements_on_license
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              License_NBR:
+                description: Permit/License number given by the issuing agency
+                type: string
+              Endorsement_Type:
+                type: string
+              In_Use:
+                description: flag for whether the record is active.
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - License_NBR: '13037'
+            First_Name: JOHN
+            Middle_Initial: E
+            Last_Name: APPLE
+            Endorsement_Type: SUH
+            Endorsement_Number: 230P
+            In_Use: 'Y'
+          - License_NBR: '12345'
+            First_Name: HAN
+            Last_Name: SOLO
+            Endorsement_Type: SUB
+            Endorsement_Number: 160K
+            In_Use: 'Y'
+        status: OK
+        description: 'Endorsements associated with license type(s): 2'
+    species_by_license_response:
+      title: species_by_license
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              License_Type:
+                type: string
+              Species_Itis:
+                description: ITIS code of the species
+                type: string
+              Name:
+                description: common name of the species.
+                type: string
+              Health_Dept:
+                description: flag indicating whether dept of health fields are required
+                type: string
+              Area:
+                description: flag indicating whether area fished is required
+                type: string
+              In_Use:
+                description: flag indicating whether record is active
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - License_Type: GA ADMINISTRATOR
+            Species_Itis: '167687'
+            Name: BASS, BLACK SEA
+            Health_Dept: 'N'
+            Area: 'N'
+            In_Use: 'Y'
+          - License_Type: GA ADMINISTRATOR
+            Species_Itis: '167759'
+            Name: GROUPER, GAG
+            Health_Dept: 'N'
+            Area: 'N'
+            In_Use: 'Y'
+        status: OK
+        description: 'Species allowed by license type(s): 2'
+    species_by_endorsement_response:
+      title: species_by_endorsement
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              Endorsement_Type:
+                type: string
+              Species_Itis:
+                description: ITIS code of the species
+                type: string
+              Name:
+                description: common name of the species.
+                type: string
+              Health_Dept:
+                description: flag indicating whether dept of health fields are required
+                type: string
+              Area:
+                description: flag indicating whether area fished is required
+                type: string
+              In_Use:
+                description: flag indicating whether record is active
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - Endorsement_Type: SHELL
+            Species_Itis: 72878
+            Name: SNAILS, MOON
+            Health_Dept: 'N'
+            Area: 'N'
+            In_Use: 'Y'
+        status: OK
+        description: 'Species allowed by endorsement(s): 1'
+    catch_source_response:
+      title: CATCH_SOURCE
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              source_code:
+                description: single character return code for catch source
+                type: string
+              source_description:
+                description: description of catch source
+                type: string
+              in_use:
+                description: flag for whether catch source record is currently active
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - source_code: S
+            source_description: Standard
+            in_use: 'Y'
+          - source_code: A
+            source_description: Aquaculture
+            in_use: 'Y'
+        status: OK
+        description: 'Catch_Source count: 2'
+    user_notifications_response:
+      title: USER_NOTIFICATIONS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              m_id:
+                format: int32
+                description: unique message id. Helps to tell when message is updated vs. new message
+                type: integer
+              priority:
+                format: int32
+                description: priority order of message
+                type: integer
+              message:
+                description: HTML escaped text message to the user.
+                type: string
+              start_date:
+                format: date-time
+                description: earliest date to show the message
+                type: string
+              end_date:
+                format: date-time
+                description: expiration date of message.
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - m_id: 7430
+            priority: 2
+            message: <p>TEST Commercial to users. Medium Priority. Set to expire 06.18.20. at 1500 hrs.&nbsp;</p>
+            start_date: '2020-06-18T07:32:56'
+            end_date: '2020-09-16T07:32:56'
+        status: OK
+        description: 'User_Notifications count: 1'
+    participants_lookup_response:
+      title: PARTICIPANTS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              ID:
+                description: ACCSP unique participant id.
+                type: string
+              Name:
+                description: First and Last Name of User / Corporate Name.
+                type: string
+              License_NBR:
+                description: Agency issued license/ permit number
+                type: string
+              License_Type:
+                description: Agency defined License type.
+                type: string
+              In_Use:
+                description: indicator of whether record is currently in use.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - ID: '125013'
+            Name: MA FISHER (MA FISHER)
+            License_NBR: test12
+            License_Type: TEST
+            In_Use: 'N'
+          - ID: '143080'
+            Name: TEST SUPER (SAFMC)
+            License_NBR: '991011'
+            License_Type: FEDERAL FOR-HIRE (TEST)
+            In_Use: 'Y'
+        status: OK
+        description: 'Participants count: 2'
+    swipe_cards_response:
+      title: SWIPE_CARDS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              card_nbr:
+                description: unique idenitifier for the card.
+                type: string
+              license_nbr:
+                description: agency issued license/permit number.
+                type: string
+              in_use:
+                description: flag for whether card is currently in use.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - card_nbr: '*0103131487*Y16*SMS3557AZ'
+            license_nbr: '131487'
+            in_use: 'Y'
+          - card_nbr: '*0103156979*Y16'
+            license_nbr: '156979'
+            in_use: 'Y'
+        status: OK
+        description: 'Swipe_Cards count: 2'
+    ports_response:
+      title: PORTS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              port:
+                description: fips 6 digit port code.
+                type: string
+              fips_place_name:
+                description: name of port
+                type: string
+              fips_county_name:
+                description: county name of port location
+                type: string
+              state_postal:
+                description: state abbreviation of port.
+                type: string
+              comm_flag:
+                description: indicate for whether port should be an option on commercial trip.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicate for whether port should be an option on For-Hire Headboat trip.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_ch_flag:
+                description: indicate for whether port should be an option on For-Hire Charter trip.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicate for whether port should be an option on Recreational trip.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - port: '117035'
+            fips_place_name: HOME PORT MARINA
+            fips_county_name: PINELLAS
+            state_postal: FL
+            comm_flag: 'N'
+            for_hire_hb_flag: 'Y'
+            for_hire_ch_flag: 'Y'
+            rec_flag: 'Y'
+          - port: '118435'
+            fips_place_name: DON'S DOCK
+            fips_county_name: PINELLAS
+            state_postal: FL
+            comm_flag: 'N'
+            for_hire_hb_flag: 'Y'
+            for_hire_ch_flag: 'Y'
+            rec_flag: 'Y'
+        status: OK
+        description: 2 Ports(s) Returned
+    dealers_response:
+      title: DEALERS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              corporate_name:
+                description: company name if applicable
+                type: string
+              full_name:
+                description: user's first and last name if applicable
+                type: string
+              license_nbr:
+                description: Permit/License Number of Permit in use.
+                type: string
+              agency:
+                description: 4 character identifier of issuing agency of permit in use
+                type: string
+              permit_id:
+                format: int32
+                description: ACCSP unique permit identifier
+                type: integer
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - corporate_name: AQUACULTURAL RESEARCH CORP
+            full_name: JAMES MADISON
+            license_nbr: '0273'
+            agency: '0003'
+            in_use: 'Y'
+            permit_id: 155928
+          - corporate_name: SAVAGEESE SEAFOODS, INC.
+            full_name: JOHN DOE
+            license_nbr: 283
+            agency: '0003'
+            in_use: 'N'
+            permit_id: 100154
+        status: OK
+        description: 2 Dealers count
+    partner_managed_notifications_response:
+      title: PARTNER_MANAGED_NOTIFICATIONS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              notification_type_id:
+                description: notification type
+                type: string
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                type: string
+              attribute_desc:
+                description: accompanying help text
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in For-Hire Charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in For-Hire Headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in Recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              attribute_count:
+                description: indicates whether a single (S) value is returned or Multiple (M)
+                enum:
+                  - S
+                  - M
+                type: string
+              list_type:
+                description: indicates whether the list is static (S) or Dynamic (D)
+                enum:
+                  - S
+                  - D
+                type: string
+              options:
+                description: display and return value options for this attribute.
+                type: array
+                items:
+                  type: object
+              type:
+                type: string
+              order_seq:
+                format: int32
+                description: display order of attribute relative to others
+                type: integer
+        status:
+          description: status of request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of request status
+          type: string
+      example:
+        row:
+          - notification_type_id: '6'
+            attribute_code: 400
+            attribute_name: Intending to Fish?
+            attribute_desc: Is the vessel leaving the dock with intention to fish? (Y/N)
+            comm_flag: 'N'
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: 'Y'
+            attribute_count: S
+            list_type: S
+            options:
+              - 'Y': 'Yes'
+              - 'N': 'No'
+            type: STRING
+            order_seq: 3
+          - notification_type_id: '6'
+            attribute_code: 401
+            attribute_name: Trip End Date
+            attribute_desc: Intended trip end date
+            comm_flag: 'N'
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: 'N'
+            attribute_count: S
+            type: DATE
+            order_seq: 1
+        status: OK
+        description: Partner_Managed_Notifications count:2
+    sale_dispositions_response:
+      title: SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              sale_disp_flag:
+                description: sale disposition code
+                type: string
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of attribute
+                type: string
+              help_text:
+                description: accompanying help text
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in For-Hire Charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in For-Hire Headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in Recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              attribute_count:
+                description: indicates whether a single (S) value is returned or Multiple (M)
+                enum:
+                  - S
+                  - M
+                type: string
+              list_type:
+                description: indicates whether the list is static (S) or Dynamic (D)
+                enum:
+                  - S
+                  - D
+                type: string
+              options:
+                description: display and return value options for this attribute.
+                type: array
+                items:
+                  type: object
+              type:
+                type: string
+              order_seq:
+                format: int32
+                description: display order of attribute relative to others
+                type: integer
+        status:
+          description: status of request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of request status
+          type: string
+      example:
+        row:
+          - attribute_code: 6005
+            attribute_name: Price
+            sale_disp_flag: S
+            type: NUMBER(13,3)
+            help_text: Price - Dollar value or price for each species that is landed or sold
+            comm_flag: 'Y'
+            for_hire_charter_flag: 'Y'
+            for_hire_hb_flag: 'Y'
+            rec_flag: 'N'
+            order_seq: 10
+          - attribute_code: 6002
+            attribute_name: OFFLOAD PORT
+            sale_disp_flag: 'N'
+            type: NUMBER
+            list_type: D
+            list_name: PORTS
+            help_text: OFFLOAD PORT FOR CATCH
+            comm_flag: 'N'
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            order_seq: 2
+        status: OK
+        description: 'Sale_Dispositions_Additional_Attributes count: 2'
+    attribute_multi_value:
+      title: additional attributes
+      description: ''
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+        values:
+          description: only used when attribute allows multiple values to be selected
+          type: array
+          items:
+            type: string
+        units:
+          type: string
+      example:
+        code: '231'
+        value: '1233'
+        values:
+          - '21312'
+          - '231231'
+        units: CM
+    attribute:
+      title: additional attribute
+      description: ''
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+      example:
+        code: '040'
+        value: 'Y'
+    attribute_with_units:
+      title: gear attributes
+      description: ''
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+        units:
+          type: string
+      example:
+        code: '231'
+        value: '1233'
+        units: CM
+    notification_upload_response:
+      title: Root Type for notification_upload_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              universal_trip_id:
+                format: int32
+                description: accsp unique id for the associated trip
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the result status
+          type: string
+      example:
+        row:
+          - universal_trip_id: '75000695'
+        status: OK
+        'description:': 'trip notification submitted 2020-07-30 12:27:58 with universal trip ID: 75000695 and 0 partner-managed attributes.'
+    partner_attribute:
+      title: partner_attributes
+      description: ''
+      type: object
+      properties:
+        element_id:
+          description: 'element id '
+          type: string
+        element_value:
+          description: element value in string form
+          type: string
+      example:
+        element_id: '400'
+        element_value: 'Y'
+    vessels_on_license_response:
+      title: vessels_on_license
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              Vessel_ID:
+                description: unique identifier of vessel in SAFIS
+                type: string
+              Name:
+                description: vessel name
+                type: string
+              State_Reg:
+                description: state registration number of vessel
+                type: string
+              License_NBR:
+                type: string
+              permits:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    num:
+                      description: permit number of vessel
+                      type: string
+                    agency:
+                      description: 4 character issuing agency of the vessel permit number
+                      type: string
+              In_Use:
+                description: flag indicating whether record is active
+                type: string
+        status:
+          description: status of the request attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status given.
+          type: string
+      example:
+        row:
+          - Vessel_ID: '314544'
+            Name: ROCKIN ROBIN
+            State_Reg: MS8609BL
+            License_NBR: '177095'
+            permits:
+              - num: '3441070'
+                agency: '0012'
+              - num: '556363'
+                agency: 18
+            In_Use: 'Y'
+          - Vessel_ID: '305727'
+            Name: ANNIES SONG
+            State_Reg: MS3314BJ
+            License_NBR: '176219'
+            permits:
+              - num: SERO-1070
+                agency: '0016'
+              - num: '556365'
+                agency: 18
+            In_Use: 'N'
+        status: OK
+        description: 'Vessels assigned for Fisherman endorsement(s): 2'
+    participant:
+      title: Participant
+      description: ''
+      required:
+        - birth_date
+        - first_name
+        - last_name
+        - supplier_user_id
+        - license_type
+      type: object
+      properties:
+        supplier_user_id:
+          description: unique identifier for this user. Used to communicate back errors and for updates
+          type: string
+        email:
+          description: users valid email address
+          type: string
+        first_name:
+          description: user's legal first name
+          type: string
+        last_name:
+          description: users legal last name
+          type: string
+        birth_date:
+          format: date
+          description: date of birth. Format MM/DD/YYYY
+          type: string
+        iss_agency:
+          description: 4 character identification of license issuing agency
+          type: string
+        license_nbr:
+          description: license/permit number given by the issuing agency
+          type: string
+        address_1:
+          description: address line 1
+          type: string
+        address_2:
+          description: address line 2
+          type: string
+        city:
+          description: address city
+          type: string
+        state:
+          description: US State or Territory
+          type: string
+        county:
+          description: address county
+          type: string
+        postal_code:
+          description: US Postal Code
+          type: string
+        phone_nbr:
+          description: users 10 digit phone number
+          type: string
+        license_type:
+          description: 'The type of license based on expected trip types. '
+          enum:
+            - COMMERCIAL
+            - FOR-HIRE
+            - MYFISHCOUNT
+          type: string
+      example:
+        supplier_user_id: '1222'
+        email: testemail@example.com
+        first_name: Jonas
+        last_name: Brother
+        birth_date: 04/13/1980
+        iss_agency: 18
+        license_nbr: '526783'
+        license_type: MYFISHCOUNT
+        address_1: 909 Georgia Ave
+        address_2: Suite 100
+        city: Silver Spring
+        state: MD
+        county: Montgomery
+        postal_code: '20910'
+        phone_nbr: '5559900647'
+    gear_attributes_response:
+      title: GEAR_ATTRIBUTES
+      description: GEAR_ATTRIBUTES
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of the attribute
+                type: string
+              attribute_desc:
+                description: help text of the attribute
+                type: string
+              category_code:
+                description: category of the gear
+                type: string
+              gear_code:
+                description: gear code value to be returned where gear is requested.
+                type: string
+              options:
+                description: static list of options for this attribute
+                type: array
+                items:
+                  type: object
+              order_seq:
+                format: int32
+                description: numerical order of listing relative to other attributes
+                type: integer
+              attribute_count:
+                description: indicates whether a single (S) value is returned or Multiple (M) are
+                enum:
+                  - S
+                  - M
+                type: string
+              list_type:
+                description: indicates whether the list is static (S) or Dynamic (D)
+                enum:
+                  - S
+                  - D
+                type: string
+              list_name:
+                description: The name of the LOOKUP_LIST to be used (if applicable)
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              type:
+                description: format of the attribute
+                type: string
+        status:
+          description: 'status of the request '
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the result status
+          type: string
+      example:
+        row:
+          - attribute_code: 142
+            attribute_name: Number of traps
+            attribute_desc: Number of traps
+            category_code: '160'
+            gear_code: '160'
+            order_seq: 83
+            comm_flag: R
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            type: NUMBER (38,0)
+          - attribute_code: 1321
+            attribute_name: LMA
+            attribute_desc: Lobster Management Area
+            category_code: '160'
+            gear_code: '160'
+            options:
+              - '1': LMA 1
+              - '2': LMA 2
+              - '3': LMA 3
+              - '4': LMA 4
+              - '5': LMA 5
+              - '6': LMA 6
+              - O: OCC
+            order_seq: 25
+            comm_flag: R
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            type: STRING
+        status: OK
+        description: 2 Gear Attribute(s) Returned
+    trip_upload_response:
+      description: 'response to successful trips_upload call. '
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                description: unique ID of this upload process
+                type: string
+              upload_date:
+                description: date the upload was received by server. Format MM/DD/YYYY hh24:mi
+                type: string
+              process_date:
+                description: date the server completed processing upload request. Format MM/DD/YYYY hh24:mi
+                type: string
+              total_count:
+                description: Number of trips found in the upload
+                type: string
+              errored_count:
+                description: Number of trips NOT processed due to one or more errors
+                type: string
+              trips_accepted:
+                description: details for accepted trips
+                type: array
+                items:
+                  type: object
+                  properties:
+                    supplier_trip_id:
+                      description: unique supplier id for supplied to the upload
+                      type: string
+                    accsp_trip_id:
+                      description: accsp internal identifier for this matching the supplier trip id
+                      type: number
+              errors:
+                description: errors messages
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      description: human readable error description
+                      type: string
+                    supplier_trip_id:
+                      description: unique supplier trip id on which this errror occurred
+                      type: string
+                    supplier_effort_id:
+                      description: unique supplier effort id on which this errror occurred
+                      type: string
+                    supplier_catch_id:
+                      description: unique supplier catch id on which this errror occurred
+                      type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row:
+          - event_id: '121582'
+            upload_date: '2018-08-30 12:56:28'
+            process_date: '12:56:32'
+            total_count: '2'
+            errored_count: '0'
+            trips_accepted:
+              - supplier_trip_id: 192929
+                accsp_trip_id: 1231213
+              - supplier_trip_id: 141229
+                accsp_trip_id: 1211213
+            errors:
+              - msg: Gear Used is not valid for this Trip Type
+                supplier_effort_id: 9299393-893
+              - msg: Trip Start Date cannot occur in the future
+                supplier_trip_id: 93939-83838
+        status: OK
+        description: UPDATE EVENTS UPLOAD
+    disposition_response:
+      title: DISPOSITION
+      description: disposition response
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: disposition code. Expected value by trips_upload  and reports_upload
+                type: string
+              desc:
+                description: name of the disposition
+                type: string
+              category_code:
+                description: category code of disposition
+                type: string
+              category_name:
+                description: category name of disposition
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_ch_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rule_groups:
+                description: indicates a letter coded group that this disposition belongs to for the purpose of inclusion and exclusion of certain species fields.
+                type: array
+                items:
+                  enum:
+                    - A
+                    - D
+                    - F
+                    - H
+                    - I
+                    - J
+                    - L
+                    - P
+                  type: string
+        status:
+          description: status of request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of request status
+          type: string
+      example:
+        row:
+          - code: '001'
+            desc: 'General : Food'
+            category_code: '000'
+            category_name: General Utilization
+            comm_flag: 'N'
+            for_hire_ch_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+          - code: '200'
+            desc: 'Discarded Alive : Other'
+            category_code: 8
+            category_name: Discarded Alive
+            comm_flag: 'Y'
+            for_hire_ch_flag: 'Y'
+            for_hire_hb_flag: 'Y'
+            rec_flag: 'Y'
+            rule_groups:
+              - F
+              - A
+        status: OK
+        description: 'Disposition count: 2'
+    partner_managed_species_response:
+      title: PARTNER_MANAGED_SPECIES
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of attribute
+                type: string
+              attribute_desc:
+                description: accompanying help text
+                type: string
+              species_itis:
+                description: ITIS code of species
+                type: string
+              type:
+                description: format of attribute.
+                enum:
+                  - NUMBER*
+                  - STRING
+                  - DATE
+                  - TIMESTAMP
+                type: string
+              list_type:
+                description: denotes whether list returned is static (S) or dynamic(D)
+                enum:
+                  - S
+                  - D
+                type: string
+              options:
+                description: JSON key-value pairs showing the return and display value of static list items respectively
+                type: array
+                items:
+                  type: object
+              order_seq:
+                format: int32
+                description: display order of attribute relative to others
+                type: integer
+              attribute_count:
+                description: expected number of values returned. default is Single(S). Multiple (M).
+                enum:
+                  - S
+                  - M
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              limit_to_groups:
+                description: indicates if element is limited to specific rule groups specified
+                type: object
+                properties:
+                  comm:
+                    description: the commercial trip rule group for which this attribute should display
+                    enum:
+                      - A
+                      - D
+                      - F
+                      - H
+                      - I
+                      - J
+                      - L
+                      - P
+                    type: string
+                  hb:
+                    description: the headboat trip rule group for which this attribute should display
+                    enum:
+                      - A
+                      - D
+                      - F
+                      - H
+                      - I
+                      - J
+                      - L
+                      - P
+                    type: string
+                  charter:
+                    description: the charter trip rule group for which this attribute should display
+                    enum:
+                      - A
+                      - D
+                      - F
+                      - H
+                      - I
+                      - J
+                      - L
+                      - P
+                    type: string
+                  rec:
+                    description: the recreational trip rule group for which this attribute should display
+                    enum:
+                      - A
+                      - D
+                      - F
+                      - H
+                      - I
+                      - J
+                      - L
+                      - P
+                    type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the result status
+          type: string
+      example:
+        row:
+          - attribute_code: 1212
+            attribute_name: Length Qualifier
+            attribute_desc: How was the length taken? (measured or estimated)
+            species_itis: '172421'
+            type: STRING
+            list_type: S
+            options:
+              - M: Measured
+              - E: Estimated
+              - U: Unknown
+            order_seq: 6
+            attribute_count: S
+            limit_to_groups: {}
+            comm_flag: R
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: R
+          - attribute_code: 1200
+            attribute_name: HMS Catch Area
+            attribute_desc: 'Highly Migratory Species: Catch Area'
+            species_itis: '172423'
+            order_seq: 63
+            attribute_count: S
+            type: STRING
+            limit_to_groups:
+              hb: H
+              charter: H
+              rec: H
+            comm_flag: R
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: 'N'
+        status: OK
+        description: 'Partner_Managed_Species count: 2'
+    vms_landing_locations_response:
+      title: VMS_LANDING_LOCATIONS
+      description: List of VMS landing locations.
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              vms:
+                format: int32
+                type: integer
+              area_code:
+                type: string
+              port:
+                type: string
+              name:
+                type: string
+              street:
+                type: string
+              city:
+                type: string
+              zipcode:
+                type: string
+              latitude:
+                type: number
+              longitude:
+                type: number
+              state:
+                type: string
+              county:
+                type: string
+        status:
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          type: string
+      example:
+        row:
+          - vms: 1054
+            area_code: 19
+            port: '460903'
+            name: 909 BEATEN ST.
+            city: FREEPORT
+            street: 909 BEATEN ST
+            zipcode: '77541'
+            latitude: 28.114123
+            longitude: -93.318698
+            state: TX
+            county: BRAZORIA
+          - vms: 1047
+            area_code: 18
+            port: '460911'
+            name: 1904 LOOKOUT LANE
+            city: GALVESTON
+            street: 1904 LOOKOUT LANE
+            zipcode: '77550'
+            latitude: 29.110565
+            longitude: -92.489955
+            state: TX
+            county: GALVESTON
+        status: OK
+        description: 1+ VMS Location(s) Returned
+    lookup_list_responses:
+      oneOf:
+        - $ref: '#/components/schemas/gears_list_response'
+        - $ref: '#/components/schemas/attributes_list_response'
+        - $ref: '#/components/schemas/gear_attributes_response'
+        - $ref: '#/components/schemas/disposition_response'
+        - $ref: '#/components/schemas/partner_managed_species_response'
+        - $ref: '#/components/schemas/areas_fished_response'
+        - $ref: '#/components/schemas/species_response'
+        - $ref: '#/components/schemas/catch_source_response'
+        - $ref: '#/components/schemas/user_notifications_response'
+        - $ref: '#/components/schemas/participants_lookup_response'
+        - $ref: '#/components/schemas/vessels_response'
+        - $ref: '#/components/schemas/swipe_cards_response'
+        - $ref: '#/components/schemas/ports_response'
+        - $ref: '#/components/schemas/dealers_response'
+        - $ref: '#/components/schemas/partner_managed_notifications_response'
+        - $ref: '#/components/schemas/sale_dispositions_response'
+        - $ref: '#/components/schemas/vms_landing_locations_response'
+        - $ref: '#/components/schemas/lookup_list_responses'
+        - $ref: '#/components/schemas/trip_activity_response'
+        - $ref: '#/components/schemas/SCIFISH_SPECIES_RESPONCE'
+        - $ref: '#/components/schemas/SCIFISH_TRIP_ACTIVITY_RESPONCE'
+        - $ref: '#/components/schemas/SCIFISH_GEARS'
+        - $ref: '#/components/schemas/trip_processed_response'
+        - $ref: '#/components/schemas/hms_target_species_response'
+        - $ref: '#/components/schemas/hms_gears_response'
+        - $ref: '#/components/schemas/partner_managed_footer_response'
+        - $ref: '#/components/schemas/sector_response'
+        - $ref: '#/components/schemas/trip_type_response'
+        - $ref: '#/components/schemas/report_additional_attributes'
+        - $ref: '#/components/schemas/landings_additional_attributes'
+        - $ref: '#/components/schemas/LANDING_SPECIES_ATTRIBUTES'
+        - $ref: '#/components/schemas/FISHERS'
+      description: ''
+      type: object
+    trip_activity_response:
+      title: TRIP_ACTIVITY
+      description: Provides a list of trip activity types for a given partner (p_partner). List types for older applications and versions are available by specifying a listtype using the p_listtype parameter (e.g. p_listtype = "ETRIPS").
+      type: object
+      example:
+        activity_type: 1
+        activity_description: Set only trip
+        comm_flag: 'Y'
+        for_hire_charter_flag: 'Y'
+        for_hire_hb_flag: 'Y'
+        rec_flag: 'N'
+        status: 'Y'
+    catch:
+      title: Catch
+      description: ''
+      required:
+        - disposition
+        - species_itis
+        - supplier_catch_id
+        - unit_of_measure
+        - reported_quantity
+        - catch_source
+        - grade_code
+        - market_code
+      type: object
+      properties:
+        species_itis:
+          description: ITIS code of the fish caught
+          type: string
+        disposition:
+          description: The final disposition or fate of the catch.
+          type: string
+        unit_of_measure:
+          description: Code for unit of measure used to reference the reported_quantity field
+          type: string
+        market_code:
+          description: Factors affecting market price (such as size).
+          type: string
+        grade_code:
+          description: Grade, or how catch was processed.
+          type: string
+        reported_quantity:
+          description: 'Numeric quantity of fish caught. Always used in conjunction with unit_of_measure field. '
+          type: string
+        nbr_of_fish:
+          description: Count of fish caught
+          type: string
+        supplier_catch_id:
+          description: Unique catch id given by the caller. Only used to communicate errors and for updates.
+          type: string
+        catch_source:
+          description: Source of a fisher’s catch (S = Standard wild-caught; A = Aquaculture; R = Research Set Aside; C = Carred).
+          enum:
+            - S
+            - A
+            - R
+            - C
+          type: string
+        sale_disposition_flag:
+          description: Code indicating whether catch was sold, kept, or discarded.
+          type: string
+        catch_additional_attributes:
+          description: Collection of supplemental attributes defining the catch.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute'
+        sale_disposition_attributes:
+          description: Collection of supplemental attributes defining the sale.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute'
+        species_attributes:
+          description: Collection of species-specific supplemental attributes defining the catch.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute'
+      example:
+        species_itis: '170425'
+        disposition: '001'
+        unit_of_measure: LB
+        market_code: UN
+        grade_code: '01'
+        reported_quantity: '25'
+        nbr_of_fish: '4'
+        catch_source: S
+        supplier_catch_id: '6'
+    gears_list_response:
+      title: GEARS
+      description: GEARS
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: gear code. Returned by the upload requests where gear is requested.
+                type: string
+              desc:
+                description: gear name.
+                type: string
+              category_code:
+                description: gear category code
+                type: string
+              category_name:
+                description: gear category description
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_ch_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for-hire headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              status:
+                description: indicates if attribute is active (A), inactive (I)
+                enum:
+                  - A
+                  - I
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the result status
+          type: string
+      example:
+        row:
+          - code: '077'
+            desc: HOOP NET
+            category_code: '070'
+            category_name: OTHER FIXED NETS
+            comm_flag: 'Y'
+            for_hire_ch_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            status: A
+            type: Number(10,3)
+          - code: '407'
+            desc: LONG LINES, DRIFT W/HOOKS
+            category_code: '400'
+            category_name: LONG LINES
+            comm_flag: 'Y'
+            for_hire_ch_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            status: A
+            type: Number(10,3)
+        status: OK
+        description: 2 Gear(s) Returned
+    neg_trips_download_request:
+      title: Root Type for neg_trips_download_request
+      description: ''
+      required:
+        - p_license_nbr
+        - p_date
+      type: object
+      properties:
+        p_license_nbr:
+          description: permit number/license number of the requested trips
+          type: string
+        p_date:
+          format: date
+          description: earliest negative trip report date requested. Format MM/DD/YYYY
+          type: string
+      example:
+        p_license_nbr: '112233'
+        p_date: 11/14/2020
+    location:
+      title: Root Type for location
+      description: single location
+      required:
+        - latitude
+        - longitude
+        - timestamp
+      type: object
+      properties:
+        latitude:
+          description: latitude in decimal degrees of 5 decimal precision and (range 20 to 50)
+          type: string
+        longitude:
+          description: longitude in decimal degrees of 5 decimal precision and (range -100 to -60)
+          type: string
+        timestamp:
+          format: date-time
+          description: 'timestamp in UTC format: YYYY-MM-DDThh24:mi:ssZ'
+          type: string
+        horizontal_acc:
+          description: horizontal accuracy
+          type: string
+      example:
+        latitude: some text
+        longitude: some text
+        timestamp: 2018-02-10T09:30Z
+        horizontal_acc: '1.0'
+    effort:
+      title: Effort
+      description: ''
+      required:
+        - distance
+        - in_state
+        - area_code
+        - sub_area_code
+        - gear
+        - gear_quantity
+        - fishing_hours
+      type: object
+      properties:
+        distance:
+          description: Distance from shore of fishing location.
+          type: string
+        in_state:
+          description: State postal if fishing in state waters.  'US' if fishing in federal waters.
+          type: string
+        area_code:
+          description: 3 character area-code of fishing location.
+          type: string
+        sub_area_code:
+          description: 4 character sub-area code of fishing location.
+          type: string
+        local_area_code:
+          description: Local-area code of fishing location.
+          type: string
+        latitude:
+          description: Latitude of effort in decimal degrees.
+          type: string
+        longitude:
+          description: Longitude of effort in decimal degrees.
+          type: string
+        gear:
+          description: Gear code used in this effort.
+          type: string
+        gear_quantity:
+          format: int32
+          description: Quantity of gear used.
+          type: string
+        fishing_hours:
+          description: Total amount of active fishing time in this effort.
+          type: string
+        hours_days:
+          description: Hours or Days indicator of fishing time
+          enum:
+            - H
+            - D
+          type: string
+        total_gear:
+          description: Total gear in water.
+          type: string
+        gear_size:
+          description: Indicates how mesh size wass measured. Stretch Size (S) or Mesh length and width (M).
+          type: string
+        supplier_effort_id:
+          description: Unique effort id given by the caller. Only used to communicate errors and updates.
+          type: string
+        anything_caught:
+          description: anything caught flag (Y, N for YES, NO respectively).
+          type: string
+        catches:
+          description: Collection of catches made with this effort
+          type: array
+          items:
+            $ref: '#/components/schemas/catch'
+        gear_attributes:
+          description: Collection of supplemental attributes defining the gear configuration or effort.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute_with_units'
+        effort_additional_attributes:
+          description: Collection of supplemental attributes defining the effort.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute_multi_value'
+      example:
+        distance: '1'
+        in_state: RI
+        area_code: '539'
+        sub_area_code: '0132'
+        local_area_code: '00'
+        latitude: '41.4450635115479'
+        longitude: '-71.3559923529778'
+        gear: '300'
+        gear_quantity: '16'
+        fishing_hours: '6.0'
+        hours_days: H
+        total_gear: '0'
+        gear_size: ''
+        supplier_effort_id: '120119073102827'
+    vessels_response:
+      title: VESSELS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                format: int32
+                description: unique id of vessel
+                type: string
+              name:
+                description: name of vessel
+                type: string
+              state:
+                description: US state abbreviation for registered state
+                type: string
+              coast_guard:
+                description: US Coast Guard Number of vessel
+                type: string
+              state_reg:
+                description: State Registration Number of vessel
+                type: string
+              permits:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    num:
+                      description: permit number of vessel
+                      type: string
+                    agency:
+                      description: 4 character issuing agency of the vessel permit number
+                      type: string
+                    in_use:
+                      description: indicator of whether the permit record is in use currently.
+                      enum:
+                        - 'Y'
+                        - 'N'
+                      type: string
+                    start_date:
+                      description: Effective Start Date for valid period of this vessel permit.
+                      type: string
+                    End_date:
+                      description: Effective end date for valid period use of this vessel permit.
+                      type: string
+              in_use:
+                description: indicator of whether the vessel record is in use currently.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - id: '1234'
+            name: RUTHIE B
+            state: MA
+            coast_guard: '121212'
+            permits:
+              - num: SERO-4321
+                agency: '0016'
+                in_use: 'Y'
+                start_date: 08/05/2022
+                end_date: 07/31/2023
+                permit_type_list: BLU 1
+              - num: '332211'
+                agency: 18
+                in_use: 'Y'
+                start_date: 03/01/2022
+                end_date: 04/30/2023
+                permit_type_list: BLU 1
+            in_use: 'Y'
+          - id: '111222'
+            name: THE GIPPER
+            state: NJ
+            coast_guard: '441122'
+            permits:
+              - num: SERO-123456
+                agency: '0016'
+                in_use: 'Y'
+                start_date: 08/01/2022
+                end_date: 07/31/2023
+                permit_type_list: BLU 1
+              - num: '9876543'
+                agency: 18
+                in_use: 'Y'
+                start_date: 04/01/2022
+                end_date: 04/30/2023
+                permit_type_list: BLU 1
+            in_use: 'Y'
+        status: OK
+        description: 1+ Vessel(s) Returned
+    locations:
+      title: Root Type for locations
+      description: ''
+      required:
+        - locations
+        - p_device_id
+      type: object
+      properties:
+        p_supplier_trip_id:
+          description: unique trip id given by the requesting entity
+          type: string
+        p_vendor_id:
+          description: vendor id of the device sending records
+          type: string
+        p_vessel_cgn:
+          description: US Coast Guard number
+          type: string
+        p_vessel_srn:
+          description: vessel state registration number
+          type: string
+        p_device_id:
+          description: unique identifier of device sending location data
+          type: string
+        locations:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/location'
+      example:
+        p_device_id: ABC123CDE456
+        p_supplier_trip_id: '55590000003'
+        p_vendor_id: '1233345'
+        p_vessel_cgn: '123456'
+        p_vessel_srn: ''
+        locations:
+          - latitude: '43.31238'
+            longitude: '-70.11428'
+            timestamp: '2021-10-26T18:31:30Z'
+            horizontal_acc: '1.0'
+          - latitude: '42.32238'
+            longitude: '-70.11628'
+            timestamp: '2021-10-26T18:31:44Z'
+            horizontal_acc: '1.0'
+    neg_trips_download_response:
+      title: Root Type for neg_trips_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure
+          type: string
+      example:
+        row:
+          - neg_trips:
+              - trip_date: 01/12/2022
+                cf_license_nbr: MAFISHER2
+                issuing_agency: 18
+                vessel_name: Deborah Ann
+                coast_guard_nbr: '8877991'
+                vessel_permit: '555555'
+                sector: C
+                date_entered: 14-DEC-2022
+              - trip_date: 05/12/2022
+                cf_license_nbr: MAFISHER2
+                issuing_agency: 18
+                vessel_name: DUAL-PERMIT FED TEST VESSEL
+                coast_guard_nbr: '8877991'
+                vessel_permit: '555555'
+                sector: F
+                date_entered: 14-DEC-2022
+        status: OK
+        'description:': 'retrieved negative trip count: 5'
+    SCIFISH_SPECIES_RESPONCE:
+      title: SCIFISH_SPECIES
+      description: Provides a list of scifish species using the p_listname parameter (e.g. "p_listname":"SCIFISH_SPECIES")
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: ITIS code of species.
+                type: string
+              description:
+                description: common name of species.
+                type: string
+              in_use:
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - code: 81763
+            description: PROPELLERCLAM, NORTHERN
+            in_use: 'Y'
+        status: OK
+        description: 1003 Species(s) Returned.
+    SCIFISH_TRIP_ACTIVITY_RESPONCE:
+      title: SCIFISH_TRIP_ACTIVITY
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                description: code of activity_type.
+                type: integer
+              description:
+                description: description of trip taken.
+                type: string
+              in_use:
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - code: 80
+            description: Trip, but was not able to fish
+            in_use: 'Y'
+        status: OK
+        description: 'Scifish_Trip_Activity count: 10'
+    trip:
+      description: 'trip level information. Either of state_reg_nbr or coast_guard_nbr is required. '
+      required:
+        - trip_start_date
+        - trip_end_date
+        - trip_type
+        - cf_license_nbr
+        - port
+        - iss_agency
+        - supplier_trip_id
+      type: object
+      properties:
+        accsp_trip_id:
+          description: uniquie character number of trip
+          type: string
+        trip_start_date:
+          format: date
+          description: Calendar date of beginning of fishing trip. Format MM/DD/YYYY
+          type: string
+        trip_end_date:
+          format: date
+          description: Calendar date of end of fishing trip. Format MM/DD/YYYY
+          type: string
+        trip_type:
+          description: Trip Type undertaken. Commercial (C), Recreational (R), For Hire-Charter(A), For Hire-Headboat (H)
+          enum:
+            - C
+            - R
+            - A
+            - H
+          type: string
+        trip_start_time:
+          description: Calendar time of start of fishing trip. Format hh24:mi
+          type: string
+        trip_end_time:
+          description: Calendar time of end of fishing trip. Format hh24:mi
+          type: string
+        vessel_permit:
+          description: Vessel Permit number of vessel in use.
+          type: string
+        trip_activity:
+          description: Indicator for intended/final outcome of fishing trip.
+          type: string
+        state_reg_nbr:
+          description: State Registration number of vessel. If no vessel used, provide 'FROM_SHORE'. Required to provide either coast_guard_nbr or state_reg_nbr.
+          type: string
+        coast_guard_nbr:
+          description: Coast Guard Number/Hull Number of vessel. Required to provide either coast_guard_nbr or state_reg_nbr.
+          type: string
+        port:
+          description: End Port of vessel.
+          type: string
+        device_id:
+          description: id number of the device.
+          type: string
+        supplier_trip_id:
+          description: Unique trip id given by the caller. Only used to communicate errors and updates.
+          type: string
+        participant_id:
+          description: ACCSP Participant idenitifier of captain reporting.
+          type: string
+        iss_agency:
+          description: 4 character identifier of issuing agency of permit in use
+          type: string
+        cf_license_nbr:
+          description: Permit/License Number of Permit in use.
+          type: string
+        garfo_vendor_id:
+          description: GARFO vendor ID
+          type: string
+        garfo_client_id:
+          description: GARFO client ID
+          type: string
+        garfo_token:
+          description: GARFO Open ID token
+          type: string
+        vtr_number:
+          description: Vessel Trip Report number. Auto-generated by the application.
+          type: string
+        efforts:
+          description: Collection of efforts made with this trip.
+          type: array
+          items:
+            $ref: '#/components/schemas/effort'
+        trip_additional_attributes:
+          description: Collection of supplemental attributes collected at the trip-header level.
+          type: array
+          items:
+            $ref: '#/components/schemas/attribute'
+        trip_update:
+          description: whether a trip is resubmitted or not
+          enum:
+            - 'Y'
+            - 'N'
+          type: string
+      example:
+        accsp_trip_id: '11223'
+        trip_update: 'Y'
+        cf_license_nbr: CTFISHER
+        iss_agency: '0005'
+        trip_type: C
+        supplier_trip_id: 62220035128937
+        port: '071001'
+        device_id: '4321'
+        state: '23'
+        coast_guard_nbr: '1093639'
+        state_reg_nbr: ''
+        trip_start_date: 06/21/2020
+        trip_start_time: '2142'
+        trip_end_date: 06/21/2020
+        report_completion_date: 06/21/2020
+        trip_end_time: '2252'
+        garfo_vendor_id: '123456'
+        garfo_client_id: '112233'
+        garfo_token: AAA123BBB123CCC123DDD123EEE123FFF123GGGG
+        vtr_number: '9929220020912'
+        vessel_permit: '12345'
+        trip_activity: '0'
+        efforts:
+          - distance: '1'
+            in_state: RI
+            area_code: '539'
+            sub_area_code: '0132'
+            local_area_code: '00'
+            latitude: '41.4450635115479'
+            longitude: '-71.3559923529778'
+            gear: '300'
+            lma: ''
+            gear_quantity: '16'
+            gear_sets: '23'
+            fishing_hours: '6.0'
+            hours_days: H
+            total_gear: '0'
+            gear_size: ''
+            mesh_ring_length: ''
+            mesh_ring_width: ''
+            stretch_size: ''
+            target_species: ''
+            avg_depth: '55'
+            supplier_effort_id: '120119073102827'
+            anything_caught: 'Y'
+            catches:
+              - species_itis: '161706'
+                disposition: '001'
+                market_code: UN
+                grade_code: '01'
+                unit_of_measure: LB
+                sale_disposition_flag: D
+                dealer_license_nbr: ''
+                date_sold: ''
+                reported_quantity: '2'
+                price: '0.00'
+                dea_iss_agency: ''
+                catch_source: S
+                catch_latitude: ''
+                catch_longitude: ''
+                supplier_catch_id: 62220035129010
+                nbr_of_fish: '0'
+                offload_port: ''
+                unit_of_length: ''
+                length: ''
+                species_attributes: []
+                sale_disposition_attributes:
+                  - code: '6011'
+                    value: '192938'
+            gear_attributes:
+              - code: '1563'
+                value: '13'
+                values: []
+                units: ''
+              - code: '2415'
+                value: '10'
+                values: []
+                units: ''
+              - code: '2450'
+                value: '1'
+                values: []
+                units: ''
+            effort_additional_attributes:
+              - code: '1'
+                value: ''
+                values: []
+              - code: '3'
+                value: ''
+                values: []
+        trip_additional_attributes:
+          - code: '040'
+            value: 'Y'
+    notification_upload_request:
+      title: Root Type for notification_upload_request
+      description: "The calling app sends a notification record in JSON format.  The record consists of core notification details submitted as parameter values, and optional partner-managed notification attributes submitted as a JSON array.  See example request.  The response, also in JSON format, includes the universal trip ID for the trip.  The universal trip ID is created when a notification record is submitted if this is the first notification associated with the trip.  If an existing universal trip ID already exists for the same trip, the previously generated universal trip ID is returned.  \r\n"
+      required:
+        - p_arrival_port
+        - p_license_nbr
+        - p_notif_type
+        - p_trip_type
+        - p_start_time
+        - p_start_date
+      type: object
+      properties:
+        p_license_nbr:
+          description: alphanumeric value representing a user's license number.
+          type: string
+        p_partner:
+          description: Partner or issuing agency code.
+          type: string
+        p_participant_id:
+          description: Participant id of a participant associated with p_license_nbr
+          type: string
+        p_vessel_cgn:
+          description: vessel coast guard number.  a vessel coast guard or state registration number is required.
+          type: string
+        p_vessel_srn:
+          description: vessel state registration number.  a vessel coast guard or state registration number is required.
+          type: string
+        p_trip_type:
+          description: 'code to define the type of trip.  allowed values are C = Commercial, R = Recreational, H = For Hire-Headboat, A = For Hire-Charter. '
+          type: string
+        p_device_id:
+          description: 'unique identification of a device. '
+          type: string
+        p_start_date:
+          format: date
+          description: trip start date in format MM/DD/YYYY.
+          type: string
+        p_start_time:
+          description: trip start time in format HHMM.
+          type: string
+        p_arrival_port:
+          description: port code for the arrival (ending) port.
+          type: string
+        p_notif_type:
+          description: trip notification type being submitted.  Allowed values are 1 = Pre Trip, 2 =    Fishing, 3 = Landing, 4 = Post-Trip, 5 = Cancellation, 6 = Hail Out, and 7 = Closed.  If no value is provided, Hail Out (Type = 6) is used as the default.
+          type: string
+        partner_attributes:
+          description: list of optional partner-managed notification attributes submitted as a JSON array.
+          type: array
+          items:
+            $ref: '#/components/schemas/partner_attribute'
+      example:
+        p_license_nbr: '991011'
+        p_vessel_cgn: ''
+        p_vessel_srn: NH0258BA
+        p_trip_type: C
+        p_device_id: '4321'
+        p_start_date: 05/03/2020
+        p_start_time: '1845'
+        p_arrival_port: '222109'
+        p_notif_type: '6'
+        partner_attributes:
+          - element_id: '400'
+            element_value: 'Y'
+          - element_id: '401'
+            element_value: 05/06/2022
+          - element_id: '402'
+            element_value: '1400'
+          - element_id: '406'
+            element_value: EST
+          - element_id: '405'
+            element_value: '1077'
+    trip_locations_response:
+      title: Root Type for trip_locations_response
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              supplier_trip_id:
+                description: Associated supplier_trip that was given in the request.
+                type: string
+              upload_date:
+                format: date-time
+                description: date of upload request.
+                type: string
+              total_count:
+                description: Total number of location records that were passed into the upload.
+                type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure.
+          type: string
+      example:
+        row:
+          - supplier_trip_id: '55590000003'
+            upload_date: '2019-12-06 10:25:03'
+            total_count: '3'
+        status: OK
+        description: Total rows inserted 3
+    trip_processed_request:
+      title: Root Type for trip_processed
+      description: ''
+      type: object
+      properties:
+        p_listname:
+          description: ''
+          type: string
+        p_supplier_trip_id:
+          description: Associated supplier_trip that was given in the request.
+          type: string
+      example:
+        p_listname: TRIP_PROCESSED
+        p_supplier_trip_id: '123456789'
+    trip_processed_response:
+      title: TRIP_PROCESSED
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                description: the last event_id assosiated with trip_processed.
+                type: string
+              accsp_trip_id:
+                description: Associated accsp trip id that was given  if trip is processed.
+                type: string
+              processed:
+                description: trip is processed or not on accsp database.
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - event_id: '12345'
+            accsp_trip_id: '012345'
+            processed: 'Y'
+        status: OK
+        description: processed status of trip returned.
+    hms_target_species_request:
+      title: hms_target_species_request
+      description: ''
+      type: object
+      properties:
+        p_listname:
+          type: string
+      example:
+        p_listname: HMS_TARGET_SPECIES
+    hms_target_species_response:
+      title: HMS_TARGET_SPECIES
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              species_itis:
+                description: ITIS code of species
+                type: string
+              common_name:
+                type: string
+              scientific_name:
+                type: string
+              status:
+                description: indicator for whether record is in-use currently
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - species_itis: '172423'
+            common_name: TUNA, YELLOWFIN
+            scientific_name: THUNNUS ALBACARES
+            status: 'Y'
+          - species_itis: '159785'
+            common_name: SHARK, UNC
+            scientific_name: CHONDRICHTHYES
+            status: 'Y'
+        status: OK
+        description: 2 hms Species(s) Returned.
+    hms_gears_request:
+      title: hms_gears_request
+      description: ''
+      type: object
+      properties:
+        p_listname:
+          type: string
+      example:
+        p_listname: HMS_GEARS
+    hms_gears_response:
+      title: HMS_GEARS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              gear_code:
+                description: gear code. Returned by the upload requests where gear is requested.
+                type: string
+              gear_name:
+                description: gear name.
+                type: string
+              status:
+                description: indicator for whether record is in-use currently
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - gear_code: '650'
+            gear_name: HARPOONS
+            status: 'Y'
+          - gear_code: '324'
+            gear_name: TROLL LINE, GREEN-STICK
+            status: 'Y'
+          - gear_code: '409'
+            gear_name: LONG LINE, PELAGIC
+            status: 'Y'
+          - gear_code: '411'
+            gear_name: BUOY GEAR, PELAGIC
+            status: 'Y'
+        status: OK
+        description: 4 hms gears(s) Returned.
+    lookup_list_date_changed_request:
+      title: Root Type for lookup_list_date_changed_request
+      description: ''
+      required:
+        - p_listnames
+        - p_partner
+      type: object
+      properties:
+        p_partner:
+          description: |
+            4 character value of permit issuing agency
+          type: string
+        p_listnames:
+          description: |
+            One or more list names from:
+
+            GEARS,
+            GEAR_ATTRIBUTES,
+            TRIP_ADDITIONAL_ATTRIBUTES,
+            EFFORT_ADDITIONAL_ATTRIBUTES, 
+            PARTNER_MANAGED_SPECIES, 
+            DISPOSITION, 
+            AREASFISHED, 
+            SPECIES, 
+            CATCH_SOURCE, 
+            USER_NOTIFICATIONS, 
+            PARTICIPANTS, 
+            VESSELS,
+            SWIPE_CARDS, 
+            TRIP_ACTIVITY, 
+            PORTS , 
+            DEALERS, 
+            PARTNER_MANAGED_NOTIFICATIONS, 
+            SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES,
+            GARFO_ACCSP_GEAR_MAPPING,
+            HMS_SPECIES,
+            HMS_GEARS
+          type: array
+          items:
+            type: string
+      example:
+        p_partner: '0023'
+        p_listnames:
+          - GEARS
+          - VESSELS
+          - GEAR_ATTRIBUTES
+          - TRIP_ADDITIONAL_ATTRIBUTES
+          - EFFORT_ADDITIONAL_ATTRIBUTES
+          - HMS_GEARS
+          - HMS_SPECIES
+    SCIFISH_GEARS:
+      title: SCIFISH_GEARS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              desc:
+                type: string
+              category_code:
+                type: string
+              category_name:
+                type: string
+              in_use:
+                type: string
+        status:
+          type: string
+        description:
+          type: string
+      example:
+        row:
+          - code: '631'
+            desc: RAKES/SHOVELS/PITCHFORKS
+            category_code: '631'
+            category_name: RAKES/SHOVELS/PITCHFORKS
+            in_use: 'Y'
+          - code: '632'
+            desc: PICKS
+            category_code: '632'
+            category_name: PICKS
+            in_use: 'Y'
+          - code: '306'
+            desc: HOOK AND LINE, TROLL
+            category_code: '300'
+            category_name: HOOK AND LINE
+            in_use: 'Y'
+        status: OK
+        description: 3 Gear(s) Returned
+    areas_fished_response:
+      title: AREAS_FISHED
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              area_code:
+                description: 3 character ACCSP standard area code
+                type: string
+              area_name:
+                description: area name
+                type: string
+              sub_area_code:
+                description: 4 character ACCSP standard sub area code
+                type: string
+              sub_area_name:
+                description: sub area name
+                type: string
+              local_area_code:
+                description: ACCSP local area code
+                type: string
+              local_area_name:
+                description: Name of local area
+                type: string
+              state:
+                description: 2 character state abbreviation.
+                type: string
+              area_display_name:
+                description: area fished name.
+                type: string
+              waters:
+                description: indicator for state or federal waters fished
+                type: string
+              in_use:
+                description: indicator for whether area is currently active
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - area_code: '514'
+            area_name: EASTERN MASS
+            sub_area_code: '0106'
+            sub_area_name: MASSACHUSETTS BAY
+            local_area_code: GBH3
+            local_area_name: MA GBH3 - NEPONSET RIV AND DORCHESTER BAY
+            state: MA
+            area_display_name: MA GBH3 - NEPONSET RIV AND DORCHESTER BAY
+            waters: S
+            in_use: 'Y'
+          - area_code: '011'
+            area_name: ALABAMA-MISSISSIPPI
+            sub_area_code: '0000'
+            sub_area_name: OFFSHORE WATERS
+            local_area_code: '00'
+            state: MS
+            area_display_name: 'ALABAMA-MISSISSIPPI 011: OFFSHORE WATERS'
+            waters: S
+            in_use: 'Y'
+        status: OK
+        description: 2 Areas(s) Returned
+    landing:
+      title: Root Type for landing
+      description: ''
+      required:
+        - disposition_code
+        - market_code
+        - reported_quantity
+        - species_itis
+        - unit_measure
+      type: object
+      properties:
+        supplier_landing_id:
+          description: unique identifier for landing supplied by sender
+          type: string
+        species_itis:
+          description: ITIS code of the fish caught
+          type: string
+        disposition_code:
+          description: the final disposition of the catch made
+          type: string
+        gear_code:
+          description: gear used to catch the landing
+          type: string
+        grade_code:
+          description: Grade of catch
+          type: string
+        unit_measure:
+          description: Code for unit of measure used to reference the reported_quantity field
+          type: string
+        reported_quantity:
+          description: numeric quantity of fish caught. Always used in conjunction with unit_of_measure field.
+          type: string
+        price:
+          description: US Dollar price of landing per specified unit
+          type: string
+        market_code:
+          description: Market code of catch
+          type: string
+        area_fished:
+          description: 3 character area-code for effort location
+          type: string
+        sub_area_fished:
+          description: 4 character area-code for effort location
+          type: string
+        local_area_code:
+          description: 5 character area-code for effort location
+          type: string
+        hms_area_code:
+          description: character hms area code
+          type: string
+        catch_source:
+          description: source of catch. Defaults to Standard (S) for wild-caught catch
+          type: string
+        temp_unit:
+          description: unit of temperature used
+          type: string
+        gear_quantity:
+          description: Numerical gear quantity of gear reflected in gear code
+          type: string
+        in_state:
+          description: 2 character state abreviations
+          type: string
+        total_gear_in_water:
+          type: string
+        fishing_hours:
+          description: Amount of fishing hours
+          type: string
+        hours_days_flag:
+          type: string
+        bft_sale_nature":
+          description: bft sale description
+          type: string
+        bft_color:
+          description: color of the species
+          type: string
+        bft_shape:
+          description: shape of the species
+          type: string
+        bft_fat:
+          description: bft fat
+          type: string
+        bft_freshness:
+          description: bft freshness
+          type: string
+        bft_tag_prefix:
+          description: bft tag prefix
+          type: string
+        bft_tag_nbr:
+          description: bft tag number
+          type: string
+        bft_length:
+          description: bft length
+          type: string
+        bft_area_code:
+          description: bft area code
+          type: string
+        bft_destination_code:
+          description: bft destination code
+          type: string
+        bft_measure_type:
+          description: bft measure type
+          type: string
+        hms_fins_attached:
+          description: is HMS fins attached
+          type: string
+        hms_explanation:
+          description: hms explanation
+          type: string
+        landings_additional_attributes:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/landings_additional_attributes'
+      example:
+        species_itis: 79872
+        disposition_code: '001'
+        gear_code: '500'
+        grade_code: '02'
+        unit_measure: CN
+        reported_quantity: '2500'
+        price: '.65'
+        market_code: UN
+        area_fished: '514'
+        sub_area_fished: '0057'
+        local_area_code: CCB42
+        hms_area_code: BF56B
+        supplier_landing_id: ZCB41-888448-HSHSh-39LksksL
+        catch_source: A
+        temp_unit: F
+        gear_quantity: '1'
+        in_state: MA
+        total_gear_in_water: '1'
+        fishing_hours: '3'
+        hours_days_flag: H
+        bft_sale_nature: D
+        bft_color: B
+        bft_shape: C
+        bft_fat: A
+        bft_freshness: A
+        bft_tag_prefix: 3
+        bft_tag_nbr: 48322
+        bft_length: 27
+        bft_area_code: 3
+        bft_destination_code: X
+        bft_measure_type: 2
+        hms_fins_attached: U
+        hms_explanation": we're not sure what happened to fins
+        landings_additional_attributes:
+          - code: '321'
+            value: Z
+          - code: '5432'
+            value: '7'
+    partner_managed_footer_response:
+      title: PARTNER_MANAGED_FOOTER
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              partner_id:
+                type: string
+              attribute_code:
+                format: int32
+                type: integer
+              partner_element_name:
+                type: string
+              partner_help_text:
+                type: string
+              switchboard_behavior:
+                type: string
+              condition_field:
+                type: string
+              condition_value:
+                type: string
+              type:
+                type: string
+              list_type:
+                type: string
+              component_id:
+                type: string
+              component_desc:
+                type: string
+              comm_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in commercial trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_charter_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in for hire charter trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              for_hire_hb_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in For-Hire Headboat trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              rec_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N) in Recreational trip
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              in_use:
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the result status
+          type: string
+      example:
+        row:
+          - partner_id: '0016'
+            attribute_code: 180
+            partner_element_name: Total Number of Pots in Water
+            partner_help_text: At the start of the trip, the total number of pots in all areas.
+            switchboard_behavior: G
+            condition_field: GEAR_CODE
+            condition_value: '160'
+            type: NUMBER
+            list_type: D
+            component_id: T
+            component_desc: Trip Header
+            comm_flag: R
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: R
+            in_use: 'Y'
+          - partner_id: '0016'
+            attribute_code: 181
+            partner_element_name: Total Number of Buoy Lines in Water
+            partner_help_text: At the start of the trip, the total number of buoy lines in all areas.
+            switchboard_behavior: G
+            condition_field: GEAR_CODE
+            condition_value: '160'
+            type: NUMBER
+            list_type: S
+            component_id: T
+            component_desc: Trip Header
+            comm_flag: R
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: R
+            in_use: 'Y'
+          - partner_id: '0016'
+            attribute_code: 182
+            partner_element_name: Total Average Number of Pots Per String in Water
+            partner_help_text: At the start of the trip, the average number of pots per string in all areas.
+            switchboard_behavior: G
+            condition_field: GEAR_CODE
+            condition_value: '160'
+            type: NUMBER
+            list_type: D
+            component_id: T
+            component_desc: Trip Header
+            comm_flag: R
+            for_hire_charter_flag: R
+            for_hire_hb_flag: R
+            rec_flag: R
+            in_use: 'Y'
+          - partner_id: 18
+            attribute_code: 3
+            partner_element_name: Target Species
+            partner_help_text: Choose one or more targeted species.
+            switchboard_behavior: G
+            condition_field: GEAR_CODE
+            condition_value: '411'
+            type: STRING
+            list_type: D
+            list_name: SPECIES
+            component_id: E
+            component_desc: Trip Effort
+            comm_flag: R
+            for_hire_charter_flag: 'N'
+            for_hire_hb_flag: 'N'
+            rec_flag: 'N'
+            in_use: 'Y'
+        status: OK
+        description: 3 Attribute(s) Returned.
+    species_response:
+      title: SPECIES
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              species_qc_id:
+                format: int32
+                description: unique row id used to detect changes to current records.
+                type: integer
+              species_itis:
+                description: ITIS code of species
+                type: string
+              species_name:
+                description: common name of species
+                type: string
+              scientific_name:
+                description: scientific name of the species
+                type: string
+              uom:
+                description: unit of measure
+                type: string
+              grade:
+                description: grade code
+                type: string
+              grade_description:
+                description: description of grade code
+                type: string
+              market:
+                description: market code
+                type: string
+              market_description:
+                description: description of market code
+                type: string
+              min_price:
+                format: double
+                description: expected minimum price in US dollars.
+                type: number
+              max_price:
+                format: double
+                description: expected maximum price in US dollars.
+                type: number
+              in_use:
+                description: indicator for whether record is in-use currently
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              hms:
+                description: HMS Flag indicator
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              shark:
+                description: Shark Flag indicator
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              area:
+                description: Flag on whether to collect Area Fished for this species.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+        status:
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: human readable description of the status of request
+          type: string
+      example:
+        row:
+          - species_qc_id: 81715
+            species_itis: '171671'
+            species_name: LANCES, SAND
+            scientific_name: AMMODYTES
+            uom: LB
+            grade: '01'
+            grade_description: ROUND
+            market: UN
+            market_description: UNCLASSIFIED
+            min_price: 0.1
+            max_price: 0.5
+            in_use: 'N'
+            hms: 'N'
+            shark: 'N'
+            area: 'N'
+            comm_flag: 'Y'
+            for_hire_ch_flag: 'Y'
+            for_hire_hb_flag: 'Y'
+            rec_flag: 'Y'
+            dealer_rpt_flag: 'Y'
+          - species_qc_id: 81768
+            species_itis: '170333'
+            species_name: MULLETS
+            scientific_name: MUGILIDAE
+            uom: LB
+            grade: '01'
+            grade_description: ROUND
+            market: UN
+            market_description: UNCLASSIFIED
+            min_price: 0.01
+            max_price: 1.5
+            in_use: 'N'
+            hms: 'N'
+            shark: 'N'
+            area: 'N'
+            comm_flag: 'Y'
+            for_hire_ch_flag: 'Y'
+            for_hire_hb_flag: 'Y'
+            rec_flag: 'Y'
+            dealer_rpt_flag: 'Y'
+        status: OK
+        description: 2 Species(s) Returned
+    neg_trips:
+      description: An Array of negative trips.
+      required:
+        - neg_trips
+      type: object
+      properties:
+        neg_trips:
+          description: Collection of negative trip reports
+          type: array
+          items:
+            $ref: '#/components/schemas/neg_trip'
+      example:
+        neg_trips:
+          - supplier_row_id: '12345611'
+            iss_agency: '0004'
+            start_date: 11/22/2017
+            end_date: 11/22/2017
+            cf_license_nbr: '123456'
+            state_reg_nbr: ''
+            coast_guard_nbr: '8877990'
+            device_id: '4321'
+            sector: C
+          - supplier_row_id: '12345612'
+            iss_agency: '0004'
+            start_date: 11/23/2017
+            end_date: 11/23/2017
+            cf_license_nbr: '123456'
+            state_reg_nbr: ''
+            coast_guard_nbr: '8877990'
+            device_id: '4321'
+            sector: F
+    neg_trip:
+      title: negative trip
+      description: no-fishing report/negative trip
+      required:
+        - cf_license_nbr
+        - start_date
+        - supplier_row_id
+        - iss_agency
+      type: object
+      properties:
+        supplier_row_id:
+          description: 'unique identifier given by sender. Useful for updating information and retrieving errors. '
+          type: string
+        iss_agency:
+          description: 4 digit identification of the issuing agency of permit
+          type: string
+        start_date:
+          format: date
+          description: start date of the negative/no fishing report
+          type: string
+        end_date:
+          format: date
+          description: last date of negative report if a range is being given
+          type: string
+        cf_license_nbr:
+          description: license number given by issuing agency
+          type: string
+        state_reg_nbr:
+          description: State Registration number of vessel. If no vessel used, provide 'FROM_SHORE'.
+          type: string
+        coast_guard_nbr:
+          description: Coast Guard Number/Hull Number of vessel.
+          type: string
+        sector:
+          description: sector is a trip type value for DNF reports. for COMM_FLAG use sector = 'C' and for FH_FLAG would include ("Charter" and "Headboat") use sector = 'F'. The sector is a required value for SERO.
+          type: string
+      example:
+        supplier_row_id: '1231231'
+        iss_agency: 18
+        start_date: 11/23/2017
+        end_date: 11/23/2017
+        cf_license_nbr: '123456'
+        state_reg_nbr: ''
+        coast_guard_nbr: '12345689'
+        device_id: '4321'
+        sector: F
+    sector_response:
+      title: SECTOR
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              sector:
+                description: sector type.
+                type: string
+              sector_desc:
+                description: description of the sector.
+                type: string
+              in_use:
+                description: status of the sector.
+                type: string
+        status:
+          description: status of the request
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status request
+          type: string
+      example:
+        row:
+          - sector: C
+            sector_desc: Commercial
+            in_use: 'Y'
+          - sector: F
+            sector_desc: for-hire charter and for-hire headboat
+            in_use: 'Y'
+        status: OK
+        description: 2 sector(s) Returned
+    trip_type_response:
+      title: TRIP_TYPE
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              trip_type:
+                description: trip type of the vessel used.
+                type: string
+              trip_type_desc:
+                description: discription of the trip type.
+                type: string
+              in_use:
+                description: status of the trip type.
+                type: string
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure
+          type: string
+      example:
+        row:
+          - trip_type: C
+            trip_type_desc: Commercial
+            in_use: ACTIVE
+          - trip_type: P
+            trip_type_desc: For-Hire (keep-historical)
+            in_use: INACTIVE
+          - trip_type: A
+            trip_type_desc: 'For-Hire: Charter'
+            in_use: ACTIVE
+          - trip_type: H
+            trip_type_desc: 'For-Hire: Headboat/Party'
+            in_use: ACTIVE
+          - trip_type: R
+            trip_type_desc: Recreational
+            in_use: ACTIVE
+        status: OK
+        description: 5 trip_types(s) Returned
+    dealer_reports_response:
+      title: dealer_report_response
+      description: ''
+      required:
+        - status
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                description: the unique job-id/event_id for this upload assigned by the system
+                type: string
+              upload_date:
+                format: date-time
+                description: when the upload was received
+                type: string
+              process_date:
+                description: When the upload was processed.
+                type: string
+              total_report_count:
+                description: total count of dealer reports records received.
+                type: string
+              total_landing_count:
+                description: total count of landings records received.
+                type: string
+              errored_report_count:
+                description: total count of dealer reports that were not processed due to one or more errors.
+                type: string
+              errored_landing_count:
+                description: total count of landings that were not processed due to one or more errors.
+              errored_report_Attr_count:
+                description: total count of reports attributes that were not processed due to one or more errors.
+              errored_landing_Attr_count:
+                description: total count of landings attributes that were not processed due to one or more errors.
+                type: string
+              reports_accepted:
+                description: details for accepted dealer reports
+                type: array
+                items:
+                  type: object
+                  properties:
+                    supplier_dr_id:
+                      description: unique supplier id for report supplied to the upload
+                      type: string
+                    accsp_dealer_rpt_id:
+                      description: accsp internal identifier for this matching the supplier_dr_id
+                      type: number
+              errors:
+                description: errors messages
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      description: human readable error description
+                      type: string
+                    supplier_dr_id:
+                      description: unique supplier_dr_id on which this errror occurred
+                      type: string
+                    supplier_landing_id:
+                      description: unique supplier landing id on which this errror occurred
+        status:
+          description: status of the upload attempt
+          enum:
+            - OK
+            - FAIL
+          type: string
+        description:
+          description: Human readable description of the status reason or failure
+          type: string
+      example:
+        row:
+          - event_id: '765841'
+            upload_date: '2020-04-16 15:12:14'
+            process_date: '15:12:15'
+            total_report_count: '3'
+            total_landing_count: '3'
+            errorred_report_count: '1'
+            errorred_landing_count: '1'
+            errored_report_Attr_count: '2'
+            errored_landing_Attr_count: '2'
+            reports_accepted:
+              - supplier_dr_id: 0192929-JSJSJ-LLJS
+                accsp_dealer_rpt_id: 103121395
+              - supplier_dr_id: 0141229-KAK-1221-U
+                accsp_dealer_rpt_id: 121121343
+            errors:
+              - msg: Landing date cannot be later than the purchase date.
+                supplier_dr_id: 9299393-893
+              - msg: Species unit of measure combination is not valid
+                supplier_landing_id: 93939-83838
+        status: OK
+        description: Total rows inserted 3
+    report_additional_attributes:
+      title: REPORT_ADDITIONAL_ATTRIBUTE
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of attribute
+                type: string
+              attribute_desc:
+                description: attribute description
+                type: string
+              options:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    FIN:
+                      description: Finfish
+                      type: string
+                    SHE:
+                      description: Shellfish
+                      type: string
+                    NOR:
+                      description: Unknown
+                      type: string
+              attribute_count:
+                description: attribute count
+                type: string
+              partner_id:
+                description: partner id
+                type: string
+              type:
+                description: type
+                type: string
+              dealer_rpt_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N)
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              in_use:
+                description: indicates if attribute is in use (Y), not in use (N)
+                type: string
+        status:
+          type: string
+        description:
+          type: string
+      example:
+        row:
+          - attribute_code: 5001
+            attribute_name: VTR number
+            attribute_desc: VTR or Trip ID
+            attribute_count: S
+            partner_id: '0016'
+            type: STRING
+            dealer_rpt_flag: 'Y'
+            in_use: 'Y'
+          - attribute_code: 5003
+            attribute_name: REP_TYPE
+            attribute_desc: Attribute 2 (test only)
+            options:
+              - FIN: Finfish
+              - SHE: Shellfish
+              - NOR: Unknown
+            attribute_count: S
+            list_type: S
+            partner_id: '0016'
+            type: STRING
+            dealer_rpt_flag: 'Y'
+            in_use: 'Y'
+        status: OK
+        description: 2 Attribute(s) Returned
+    landings_additional_attributes:
+      title: LANDING_ADDITIONAL_ATTRIBUTE
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              attribute_code:
+                format: int32
+                description: unique attribute code/id
+                type: integer
+              attribute_name:
+                description: name of attribute
+                type: string
+              attribute_desc:
+                description: attribute description
+                type: string
+              options:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    'Y':
+                      description: 'Yes'
+                      type: string
+                    'N':
+                      description: 'No'
+                      type: string
+              attribute_count:
+                description: attribute count
+                type: string
+              list_type:
+                description: list type
+                type: string
+              partner_id:
+                description: partner id
+                type: string
+              type:
+                description: type
+                type: string
+              dealer_rpt_flag:
+                description: indicates if attribute is required (R), optional (Y) or Not displayed (N)
+                enum:
+                  - R
+                  - 'Y'
+                  - 'N'
+                type: string
+              in_use:
+                description: indicates if attribute is in use (Y), not in use (N)
+                type: string
+      example:
+        row:
+          - attribute_code: 1234
+            attribute_name: Fins Attached
+            attribute_desc: Fins Attached
+            options:
+              - 'Y': 'Yes'
+              - 'N': 'No'
+            attribute_count: S
+            list_type: S
+            partner_id: '0031'
+            type: STRING
+            dealer_rpt_flag: R
+            in_use: 'Y'
+          - attribute_code: 1234
+            attribute_name: Fins Explanation
+            attribute_desc: Fins Explanation
+            attribute_count: S
+            partner_id: '0031'
+            type: STRING
+            dealer_rpt_flag: 'Y'
+            in_use: 'Y'
+          - attribute_code: 1234
+            attribute_name: HMS Area Code
+            attribute_desc: HMS Area Code
+            options:
+              - BF123: BF123
+              - BF12356: BF12356
+              - BF12378: BF12378
+              - BF12391: BF12391
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+              - BF123: BF123
+            attribute_count: S
+            partner_id: '0031'
+            type: STRING
+            dealer_rpt_flag: R
+            in_use: 'Y'
+        status: OK
+        description: 3 Attribute(s) Returned.
+    dealer_report:
+      title: Root Type for dealer_report
+      description: ''
+      required:
+        - coast_guard_nbr
+        - state_reg_nbr
+        - landings
+        - date_of_pur
+        - cf_partner_id
+        - cf_license_nbr
+        - landing_date
+        - port
+        - supplier_dr_id
+      type: object
+      properties:
+        report_update:
+          description: is this a report update or an insertion..
+          type: string
+        accsp_report_id:
+          description: accsp report id of the report to be updated.
+          type: string
+        state_reg_nbr:
+          description: State Registration number of vessel. If no vessel used, provide 'FROM_SHORE'. Required to provide either coast_guard_nbr or state_reg_nbr.
+          type: string
+        coast_guard_nbr:
+          description: coast guard number of a vessel. If no vessel used, provide 'FROM_SHORE'. Required to provide either coast_guard_nbr or state_reg_nbr.
+          type: string
+        landing_date:
+          format: date
+          description: Landing Date of report. Format MM/DD/YYYY
+          type: string
+        date_of_pur:
+          format: date
+          description: Purchase date. Format MM/DD/YYYY
+          type: string
+        dea_license_nbr:
+          description: Permit/License Number of Dealer in use
+          type: string
+        dea_partner_id:
+          description: 4 character identifier of issuing agency of dealer permit in use
+          type: string
+        supplier_dr_id:
+          description: unique report id given by the caller. Only used to communicate errors and updates.
+          type: string
+        cf_license_nbr:
+          description: Permit/License Number of fisherman purchased from.
+          type: string
+        cf_partner_id:
+          description: 4 character identifier of issuing agency of fisherman permit in use
+          type: string
+        submit_method:
+          type: string
+        date_submitted:
+          description: date submitted
+          type: string
+        port:
+          description: Landing Port of Vessel
+          type: string
+        applicationversion:
+          description: version number of the application
+          type: string
+        platform:
+          description: platform used
+          type: string
+        user_submission_handle:
+          description: file name
+          type: string
+        report_additional_attributes:
+          description: Collection of additional attribute
+          type: array
+          items:
+            $ref: '#/components/schemas/report_additional_attributes'
+        landings:
+          description: Collection of landings in this dealer report.
+          type: array
+          items:
+            $ref: '#/components/schemas/landing'
+      example:
+        reports:
+          - report_update: 'N'
+            accsp_report_id: '336115'
+            state_reg_nbr: NC9303BD
+            landing_date: 01/22/2025
+            date_of_pur: 01/22/2025
+            dea_license_nbr: '4835'
+            dea_partner_id: '0016'
+            supplier_dr_id: 5202312052061772000
+            cf_license_nbr: UNK_0001_CF
+            cf_partner_id: '0001'
+            submit_method: M
+            date_submitted: 01/22/2025 16:23
+            port: '010203'
+            applicationversion: 1.0.0
+            platform: PCTT
+            user_submission_handle: second_file_name_handle.zip
+            report_additional_attributes:
+              - code: '5020'
+                value: '23452'
+              - code: '5008'
+                value: '23452120091826'
+              - code: '5003'
+                value: FIN
+            landings:
+              - supplier_landing_id: '01168_20231205_2061771292:0'
+                species_itis: '172423'
+                disposition_code: '001'
+                grade_code: '01'
+                unit_measure: LB
+                reported_quantity: '15.00'
+                price: '1.00'
+                market_code: UN
+                catch_source: A
+            landings_additional_attributes:
+              - code: '5516'
+                value: BF51
+    LANDING_SPECIES_ATTRIBUTES:
+      title: LANDING_SPECIES_ATTRIBUTES
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              partner_id:
+                type: string
+              attribute_code:
+                format: int32
+                type: integer
+              attribute_name:
+                type: string
+              attribute_desc:
+                type: string
+              species_itis:
+                type: string
+              attribute_count:
+                type: string
+              type:
+                type: string
+              dealer_rpt_flag:
+                type: string
+              in_use:
+                type: string
+        status:
+          type: string
+        description:
+          type: string
+      example:
+        row:
+          - partner_id: '0016'
+            attribute_code: 5518
+            attribute_name: Species Length
+            attribute_desc: '** EXAMPLE ATTRIBUTE: From the HMS Bluefin Tuna extra questions **'
+            species_itis: '172421'
+            attribute_count: S
+            type: NUMBER(3)
+            dealer_rpt_flag: R
+            in_use: 'Y'
+          - partner_id: '0016'
+            attribute_code: 5520
+            attribute_name: BFT Area Code
+            attribute_desc: '** EXAMPLE ATTRIBUTE: From the HMS Bluefin Tuna extra questions **'
+            species_itis: '172421'
+            attribute_count: S
+            list_type: D
+            list_name: BFT_AREAS
+            type: NUMBER(2)
+            dealer_rpt_flag: R
+            in_use: 'Y'
+        status: OK
+        description: 2 Attribute(s) Returned.
+    lookup_list_request:
+      title: Root Type for lookup_list_request
+      description: ''
+      required:
+        - p_listname
+        - p_partner
+      type: object
+      properties:
+        p_partner:
+          description: 4 character value of permit issuing agency
+          type: string
+        p_listname:
+          description: Lookup list name being requested
+          enum:
+            - GEARS
+            - GEAR_ATTRIBUTES
+            - TRIP_ADDITIONAL_ATTRIBUTES
+            - EFFORT_ADDITIONAL_ATTRIBUTES
+            - PARTNER_MANAGED_SPECIES
+            - PARTNER_MANAGED_FOOTER
+            - DISPOSITION
+            - AREASFISHED
+            - SPECIES
+            - CATCH_SOURCE
+            - USER_NOTIFICATIONS
+            - PARTICIPANTS
+            - VESSELS
+            - SWIPE_CARDS
+            - TRIP_ACTIVITY
+            - PORTS
+            - DEALERS
+            - PARTNER_MANAGED_NOTIFICATIONS
+            - SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES
+            - LANDING_ADDITIONAL_ATTRIBUTES
+            - LANDING_SPECIES_ATTRIBUTES
+            - REPORT_ADDITIONAL_ATTRIBUTES
+            - VMS_LANDING_LOCATIONS
+            - GARFO_ACCSP_GEAR_MAPPING
+            - SCIFISH_SPECIES
+            - SCIFISH_GEARS
+            - SCIFISH_TRIP_ACTIVITY
+            - TRIP_PROCESSED
+            - HMS_TARGET_SPECIES
+            - HMS_GEARS
+            - TRIP_TYPE
+            - FISHERS
+            - SECTOR
+          type: string
+        p_lastdate:
+          format: date-time
+          description: oldest date of changes requested. Format MM/DD/YYYY hh24:mi
+          type: string
+      example:
+        p_partner: '0023'
+        p_listname: GEARS
+        p_listtype: EDR
+        p_lastdate: '12/27/2010 14:45:00 '
+    FISHERS:
+      title: FISHERS
+      description: ''
+      type: object
+      properties:
+        row:
+          type: array
+          items:
+            type: object
+            properties:
+              corporate_name:
+                description: corporate name of the fisher
+                type: string
+              first_name:
+                description: first name of the fisher.
+                type: string
+              last_name:
+                description: last name of the fisher
+                type: string
+              license_nbr:
+                description: License number of the fisher
+                type: string
+              license_type:
+                description: License type of the fisher
+                type: string
+              permit_type:
+                description: permit type of the fisher holding
+                type: string
+              agency:
+                description: partner id of the fisher.
+                type: string
+              in_use:
+                description: if the permit is in use or Not.
+                enum:
+                  - 'Y'
+                  - 'N'
+                type: string
+              permit_id:
+                description: permit id of the user.
+                type: string
+        status:
+          type: string
+        description:
+          type: string
+      example:
+        row:
+          - corporate_name: TEST NE FED OPERATOR
+            first_name: GAR OPERATOR
+            last_name: TEST
+            license_nbr: '99999999'
+            license_type: TEST GARFO OPERATOR
+            permit_type: FED OPERATOR
+            agency: '0016'
+            in_use: 'Y'
+            permit_id: 123456
+          - first_name: FREDERICK
+            middle_name: A
+            last_name: BACKMAN
+            license_nbr: '888888888'
+            license_type: OPERATOR
+            permit_type: FED OPERATOR
+            agency: '0016'
+            in_use: 'Y'
+            permit_id: 123456
+        status: OK
+        description: 11447 Fishers count
+  securitySchemes:
+    Confidential-API:
+      scheme: basic
+      type: http
+      description: username@apikey:password
+    Non-Confidential:
+      scheme: basic
+      type: http
+      description: '@apikey'

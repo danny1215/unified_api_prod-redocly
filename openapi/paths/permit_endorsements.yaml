@@ -1,0 +1,20 @@
+post:
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/permit_endorsements_request.yaml
+    required: true
+  tags:
+    - eDR
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/permit_endorsements_responses.yaml
+      description: output of the endpoint
+  security:
+    - Confidential-API: []
+  summary: 'permit_endorsements '
+  description: fetch a list of endorsements for a given a partner

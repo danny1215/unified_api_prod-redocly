@@ -1,0 +1,49 @@
+title: Root Type for lookup_list_date_changed_request
+description: ''
+required:
+  - p_listnames
+  - p_partner
+type: object
+properties:
+  p_partner:
+    description: |
+      4 character value of permit issuing agency
+    type: string
+  p_listnames:
+    description: |
+      One or more list names from:
+
+      GEARS,
+      GEAR_ATTRIBUTES,
+      TRIP_ADDITIONAL_ATTRIBUTES,
+      EFFORT_ADDITIONAL_ATTRIBUTES, 
+      PARTNER_MANAGED_SPECIES, 
+      DISPOSITION, 
+      AREASFISHED, 
+      SPECIES, 
+      CATCH_SOURCE, 
+      USER_NOTIFICATIONS, 
+      PARTICIPANTS, 
+      VESSELS,
+      SWIPE_CARDS, 
+      TRIP_ACTIVITY, 
+      PORTS , 
+      DEALERS, 
+      PARTNER_MANAGED_NOTIFICATIONS, 
+      SALE_DISPOSITIONS_ADDITIONAL_ATTRIBUTES,
+      GARFO_ACCSP_GEAR_MAPPING,
+      HMS_SPECIES,
+      HMS_GEARS
+    type: array
+    items:
+      type: string
+example:
+  p_partner: '0023'
+  p_listnames:
+    - GEARS
+    - VESSELS
+    - GEAR_ATTRIBUTES
+    - TRIP_ADDITIONAL_ATTRIBUTES
+    - EFFORT_ADDITIONAL_ATTRIBUTES
+    - HMS_GEARS
+    - HMS_SPECIES

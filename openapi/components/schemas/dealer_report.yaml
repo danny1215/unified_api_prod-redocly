@@ -1,0 +1,120 @@
+title: Root Type for dealer_report
+description: ''
+required:
+  - coast_guard_nbr
+  - state_reg_nbr
+  - landings
+  - date_of_pur
+  - cf_partner_id
+  - cf_license_nbr
+  - landing_date
+  - port
+  - supplier_dr_id
+type: object
+properties:
+  report_update:
+    description: is this a report update or an insertion..
+    type: string
+  accsp_report_id:
+    description: accsp report id of the report to be updated.
+    type: string
+  state_reg_nbr:
+    description: >-
+      State Registration number of vessel. If no vessel used, provide
+      'FROM_SHORE'. Required to provide either coast_guard_nbr or state_reg_nbr.
+    type: string
+  coast_guard_nbr:
+    description: >-
+      coast guard number of a vessel. If no vessel used, provide 'FROM_SHORE'.
+      Required to provide either coast_guard_nbr or state_reg_nbr.
+    type: string
+  landing_date:
+    format: date
+    description: Landing Date of report. Format MM/DD/YYYY
+    type: string
+  date_of_pur:
+    format: date
+    description: Purchase date. Format MM/DD/YYYY
+    type: string
+  dea_license_nbr:
+    description: Permit/License Number of Dealer in use
+    type: string
+  dea_partner_id:
+    description: 4 character identifier of issuing agency of dealer permit in use
+    type: string
+  supplier_dr_id:
+    description: >-
+      unique report id given by the caller. Only used to communicate errors and
+      updates.
+    type: string
+  cf_license_nbr:
+    description: Permit/License Number of fisherman purchased from.
+    type: string
+  cf_partner_id:
+    description: 4 character identifier of issuing agency of fisherman permit in use
+    type: string
+  submit_method:
+    type: string
+  date_submitted:
+    description: date submitted
+    type: string
+  port:
+    description: Landing Port of Vessel
+    type: string
+  applicationversion:
+    description: version number of the application
+    type: string
+  platform:
+    description: platform used
+    type: string
+  user_submission_handle:
+    description: file name
+    type: string
+  report_additional_attributes:
+    description: Collection of additional attribute
+    type: array
+    items:
+      $ref: ./report_additional_attributes.yaml
+  landings:
+    description: Collection of landings in this dealer report.
+    type: array
+    items:
+      $ref: ./landing.yaml
+example:
+  reports:
+    - report_update: 'N'
+      accsp_report_id: '336115'
+      state_reg_nbr: NC9303BD
+      landing_date: 01/22/2025
+      date_of_pur: 01/22/2025
+      dea_license_nbr: '4835'
+      dea_partner_id: '0016'
+      supplier_dr_id: 5202312052061772000
+      cf_license_nbr: UNK_0001_CF
+      cf_partner_id: '0001'
+      submit_method: M
+      date_submitted: 01/22/2025 16:23
+      port: '010203'
+      applicationversion: 1.0.0
+      platform: PCTT
+      user_submission_handle: second_file_name_handle.zip
+      report_additional_attributes:
+        - code: '5020'
+          value: '23452'
+        - code: '5008'
+          value: '23452120091826'
+        - code: '5003'
+          value: FIN
+      landings:
+        - supplier_landing_id: '01168_20231205_2061771292:0'
+          species_itis: '172423'
+          disposition_code: '001'
+          grade_code: '01'
+          unit_measure: LB
+          reported_quantity: '15.00'
+          price: '1.00'
+          market_code: UN
+          catch_source: A
+      landings_additional_attributes:
+        - code: '5516'
+          value: BF51

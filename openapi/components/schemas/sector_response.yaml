@@ -1,0 +1,37 @@
+title: SECTOR
+description: ''
+type: object
+properties:
+  row:
+    type: array
+    items:
+      type: object
+      properties:
+        sector:
+          description: sector type.
+          type: string
+        sector_desc:
+          description: description of the sector.
+          type: string
+        in_use:
+          description: status of the sector.
+          type: string
+  status:
+    description: status of the request
+    enum:
+      - OK
+      - FAIL
+    type: string
+  description:
+    description: Human readable description of the status request
+    type: string
+example:
+  row:
+    - sector: C
+      sector_desc: Commercial
+      in_use: 'Y'
+    - sector: F
+      sector_desc: for-hire charter and for-hire headboat
+      in_use: 'Y'
+  status: OK
+  description: 2 sector(s) Returned
