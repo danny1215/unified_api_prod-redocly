@@ -46,9 +46,6 @@ properties:
   local_area_code:
     description: 5 character area-code for effort location
     type: string
-  hms_area_code:
-    description: character hms area code
-    type: string
   catch_source:
     description: source of catch. Defaults to Standard (S) for wild-caught catch
     type: string
@@ -68,45 +65,6 @@ properties:
     type: string
   hours_days_flag:
     type: string
-  bft_sale_nature":
-    description: bft sale description
-    type: string
-  bft_color:
-    description: color of the species
-    type: string
-  bft_shape:
-    description: shape of the species
-    type: string
-  bft_fat:
-    description: bft fat
-    type: string
-  bft_freshness:
-    description: bft freshness
-    type: string
-  bft_tag_prefix:
-    description: bft tag prefix
-    type: string
-  bft_tag_nbr:
-    description: bft tag number
-    type: string
-  bft_length:
-    description: bft length
-    type: string
-  bft_area_code:
-    description: bft area code
-    type: string
-  bft_destination_code:
-    description: bft destination code
-    type: string
-  bft_measure_type:
-    description: bft measure type
-    type: string
-  hms_fins_attached:
-    description: is HMS fins attached
-    type: string
-  hms_explanation:
-    description: hms explanation
-    type: string
   landings_additional_attributes:
     description: ''
     type: array
@@ -124,7 +82,6 @@ example:
   area_fished: '514'
   sub_area_fished: '0057'
   local_area_code: CCB42
-  hms_area_code: BF56B
   supplier_landing_id: ZCB41-888448-HSHSh-39LksksL
   catch_source: A
   temp_unit: F
@@ -133,19 +90,6 @@ example:
   total_gear_in_water: '1'
   fishing_hours: '3'
   hours_days_flag: H
-  bft_sale_nature: D
-  bft_color: B
-  bft_shape: C
-  bft_fat: A
-  bft_freshness: A
-  bft_tag_prefix: 3
-  bft_tag_nbr: 48322
-  bft_length: 27
-  bft_area_code: 3
-  bft_destination_code: X
-  bft_measure_type: 2
-  hms_fins_attached: U
-  hms_explanation": we're not sure what happened to fins
   landings_additional_attributes:
     - code: '321'
       value: Z

@@ -139,19 +139,12 @@ openapi.yaml:
     - '#/components/schemas/landings_additional_attributes/example/status'
     - '#/components/schemas/landings_additional_attributes/example/description'
     - '#/components/schemas/landing/example/species_itis'
-    - '#/components/schemas/landing/example/bft_tag_prefix'
-    - '#/components/schemas/landing/example/bft_tag_nbr'
-    - '#/components/schemas/landing/example/bft_length'
-    - '#/components/schemas/landing/example/bft_area_code'
-    - '#/components/schemas/landing/example/bft_measure_type'
     - '#/components/schemas/landing/example/landings_additional_attributes/0/code'
     - >-
       #/components/schemas/landing/example/landings_additional_attributes/0/value
     - '#/components/schemas/landing/example/landings_additional_attributes/1/code'
     - >-
       #/components/schemas/landing/example/landings_additional_attributes/1/value
-    - '#/components/schemas/landing/example/bft_sale_nature'
-    - '#/components/schemas/landing/example/hms_explanation"'
     - '#/components/schemas/dealer_report/example'
     - '#/components/schemas/dealer_report/example/reports'
     - '#/components/schemas/dealer_reports_response/example/row/0/upload_date'
