@@ -2880,7 +2880,8 @@
           "cf_license_nbr",
           "landing_date",
           "port",
-          "supplier_dr_id"
+          "supplier_dr_id",
+          "submit_method"
         ],
         "type": "object",
         "properties": {
